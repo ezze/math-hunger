@@ -1,4 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-// console.log('hello world');
+function onDocumentReady() {
+  const appElement = document.createElement('div');
+  appElement.className = 'app';
+  document.body.appendChild(appElement);
+}
+
+document.addEventListener('DOMContentLoaded', onDocumentReady);

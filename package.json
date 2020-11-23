@@ -6,6 +6,7 @@
   "scripts": {
     "wds": "webpack serve --mode=production",
     "wds:dev": "webpack serve --mode=development",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,9 +35,15 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/webpack": "^4.41.25",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
     "css-loader": "^5.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-ezze-react-ts": "^0.9.1",
+    "eslint-plugin-react": "^7.21.5",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.0.0-alpha.14",
+    "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.11",

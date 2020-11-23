@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "ezze-react-ts"
+  ]
+}
