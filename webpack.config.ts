@@ -3,6 +3,7 @@ import path from 'path';
 import webpack from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlPlugin from 'html-webpack-plugin';
+import ForkTsCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 import packageJson from './package.json';
 
@@ -44,8 +45,11 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
     module: {
       rules: [{
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          transpileOnly: true
+        }
       }]
     },
     resolve: {
@@ -55,7 +59,8 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
       new CleanWebpackPlugin(),
       new HtmlPlugin({
         title: packageJson.description
-      })
+      }),
+      new ForkTsCheckerPlugin()
     ]
   };
 };

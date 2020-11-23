@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 
+import { createStores } from './store';
+
 import App from './components/app/App';
 
 function onDocumentReady() {
