@@ -13,11 +13,11 @@ const distDirPath = path.resolve(__dirname, 'dist');
 const port = process.env.PORT || 6664;
 
 declare interface ObjectWithAnyProps {
-  [index: string]: any
+  [index: string]: any;
 }
 
 declare interface WebpackConfiguration extends webpack.Configuration {
-  devServer?: ObjectWithAnyProps
+  devServer?: ObjectWithAnyProps;
 }
 
 const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => {
