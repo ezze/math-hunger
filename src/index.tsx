@@ -1,15 +1,31 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'mobx-react';
 
-import { createStores } from './store';
+import { getStores } from './store';
 
 import App from './components/app/App';
 
 function onDocumentReady() {
-  const appElement = document.createElement('div');
-  appElement.className = 'app';
-  document.body.appendChild(appElement);
-  render(<App />, appElement);
+  const appContainer = createAppContainer();
+  createApp(appContainer).catch(e => console.error(e));
+}
+
+function createAppContainer(): HTMLElement {
+  const appContainer = document.createElement('div');
+  appContainer.className = 'app';
+  document.body.appendChild(appContainer);
+  return appContainer;
+}
+
+async function createApp(appContainer: HTMLElement) {
+  const stores = await getStores();
+  render(
+    <Provider {...stores}>
+      <App />
+    </Provider>,
+    appContainer
+  );
 }
 
 document.addEventListener('DOMContentLoaded', onDocumentReady);
