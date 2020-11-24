@@ -13,7 +13,7 @@ function onDocumentReady() {
 
 function createAppContainer(): HTMLElement {
   const appContainer = document.createElement('div');
-  appContainer.className = 'app';
+  appContainer.className = 'container';
   document.body.appendChild(appContainer);
   return appContainer;
 }
