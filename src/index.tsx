@@ -1,12 +1,12 @@
+import './index.less';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 
 import { getStores } from './store';
 
-import './index.less';
-
-import App from './components/app/App';
+import App from './components/App';
 
 function onDocumentReady() {
   const appContainer = createAppContainer();

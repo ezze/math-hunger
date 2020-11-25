@@ -6,24 +6,36 @@ import {
 
 import Store from './Store';
 
+import { durations } from '../constants';
+
 class GameStore extends Store {
   playing = false;
+  duration = durations[0];
 
   constructor(options: StoreOptions) {
-    super(options);
+    super({
+      ...options,
+      include: [
+        'duration'
+      ]
+    });
 
     makeObservable(this, {
       playing: observable,
-      setPlaying: action
+      setPlaying: action,
+      duration: observable,
+      setDuration: action
     });
-
-    window.setTimeout(() => {
-      this.setPlaying(!this.playing);
-    }, 2000);
   }
 
   setPlaying(playing: boolean): void {
     this.playing = playing;
+  }
+
+  setDuration(duration: number): void {
+    if (durations.includes(duration)) {
+      this.duration = duration;
+    }
   }
 }
 
