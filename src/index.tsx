@@ -4,6 +4,8 @@ import { Provider } from 'mobx-react';
 
 import { getStores } from './store';
 
+import './index.less';
+
 import App from './components/app/App';
 
 function onDocumentReady() {
