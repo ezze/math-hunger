@@ -38,23 +38,23 @@ class Sprite {
 
   crop(): void {
     if (this.image === null || this.imageWidth === null || this.imageHeight === null) {
-      throw new TypeError('Image is not loaded.');
+      throw new TypeError('Image is not loaded');
     }
     this.sprites = [];
     const columns = Math.floor(this.imageWidth / this.width);
-    const row = Math.floor(this.imageHeight / this.height);
-    for (let i = 0; i < this.count; i++) {
+    for (let index = 0; index < this.count; index++) {
       const sprite = document.createElement('canvas');
       sprite.width = this.width;
       sprite.height = this.height;
-      const column = i - row * columns;
+      const row = Math.floor(index / columns);
+      const column = index - row * columns;
       const x = column * this.width;
       const y = row * this.height;
       const context = sprite.getContext('2d');
       if (!context) {
-        throw new Error('Unable to get 2D context.');
+        throw new Error('Unable to get 2D context');
       }
-      context.drawImage(this.image, x, y, this.imageWidth, this.imageHeight, 0, 0, this.width, this.height);
+      context.drawImage(this.image, x, y, this.width, this.height, 0, 0, this.width, this.height);
       this.sprites.push(sprite);
     }
   }

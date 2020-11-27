@@ -42,6 +42,12 @@ declare interface SpriteOptions {
 }
 
 declare class Sprite {
+  url: string;
+  width: number;
+  height: number;
+  count: number;
+  image: HTMLImageElement | null;
+  sprites: Array<HTMLCanvasElement>;
   constructor(options: SpriteOptions)
   init: () => Promise<void>;
   draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number) => void

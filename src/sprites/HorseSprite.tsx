@@ -6,9 +6,9 @@ class HorseSprite extends Sprite {
   constructor() {
     super({
       url: horseUrl,
-      width: 227,
-      height: 149,
-      count: 8
+      width: 272,
+      height: 233,
+      count: 16
     });
   }
 }

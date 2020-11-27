@@ -3,6 +3,7 @@ class Game {
   canvas: HTMLCanvasElement;
   sprites: Sprites;
   duration: number;
+  i = 0;
 
   constructor(options: GameOptions) {
     const {
@@ -19,8 +20,6 @@ class Game {
 
     this.animationFrame = this.animationFrame.bind(this);
     window.requestAnimationFrame(this.animationFrame);
-
-    console.log(this.sprites);
   }
 
   destroy() {
@@ -37,10 +36,18 @@ class Game {
 
   render(context: CanvasRenderingContext2D, time: number): void {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    context.fillStyle = 'green';
-    context.fillRect(0, 0, 100, 100);
     const { horse } = this.sprites;
-    horse.draw(context, 0, 0, 0);
+    const delay = 3;
+    const index = Math.floor(this.i / delay);
+    horse.draw(context, index, 0, 0);
+    horse.draw(context, index, 0, 233);
+    horse.draw(context, index, 0, 466);
+    this.i++;
+    if (this.i === delay * horse.count) {
+      this.i = 0;
+    }
+    context.strokeStyle = 'green';
+    context.strokeText(`${index}`, 300, 50);
   }
 }
 
