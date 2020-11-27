@@ -25,6 +25,13 @@ declare class SettingsStore extends Store {
 declare class GameStore extends Store {
   playing: boolean;
   setPlaying(playing: boolean): void;
+  correctCount: number;
+  increaseCorrectCount(): void;
+  wrongCount: number;
+  increaseWrongCount(): void;
+  missedCount: number;
+  increaseMissedCount(): void;
+  overallCount: number;
 }
 
 declare interface GameOptions {
@@ -71,6 +78,9 @@ interface Operation {
 declare interface Challenge {
   startTime: number;
   duration: number;
+  fadeOutStartTime: number;
   operation: Operation;
   horseRenderFrame: number;
+  answer?: number;
+  correct?: boolean;
 }

@@ -28,6 +28,7 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   }
 
   const { duration } = settingsStore;
+  const { correctCount, wrongCount, missedCount, overallCount } = gameStore;
 
   const gameFieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -79,6 +80,10 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   return (
     <div ref={gameFieldRef} className="game-field">
       {canvas}
+      <div className="game-field-score">
+        <div>{correctCount} / {wrongCount} / {missedCount}</div>
+        <div>{overallCount}</div>
+      </div>
     </div>
   );
 };

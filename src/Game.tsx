@@ -2,18 +2,21 @@ import { random, createOperation, getOperationText } from './utils';
 
 import { operationZoneWidth, splitGapSize, colors } from './constants';
 
+const challengeFadeTimeoutMs = 1000;
+const maxAnswerDigitsCount = 3;
+
 class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
   sprites: Sprites;
   duration: number;
   challenges: Array<Challenge | null>;
-  challengeConcurrency = 5;
-  maxChallengesCount = 5;
+  challengeConcurrency = 3;
+  maxChallengesCount = 4;
   minChallengeDuration = 5;
   maxChallengeDuration = 10;
   minChallengeDelay = 1;
-  maxChallengeDelay = 3;
+  maxChallengeDelay = 1;
   challengeDelay = 0;
   activeChallengeIndex: number | null = null;
   horseZoneWidth: number;
@@ -57,6 +60,18 @@ class Game {
     else if (event.key === 'ArrowDown') {
       this.moveToNextChallenge();
     }
+    else if (event.keyCode >= 48 && event.keyCode <= 57) {
+      this.addAnswerDigit(parseInt(event.key, 10));
+    }
+    else if (event.key === 'Enter') {
+      this.checkAnswer();
+    }
+    else if (event.key === 'Backspace') {
+      this.removeAnswerDigit();
+    }
+    else if (event.key === 'Escape') {
+      this.clearAnswer();
+    }
     else if (event.ctrlKey && event.key === 'c') {
       this.store.setPlaying(false);
     }
@@ -64,6 +79,19 @@ class Game {
 
   onWindowResize(): void {
     this.horseZoneWidth = this.calculateHorseZoneWidth();
+  }
+
+  get challengesCount(): number {
+    return this.challenges.reduce((count, challenge) => {
+      return challenge ? count + 1 : count;
+    }, 0);
+  }
+
+  getActiveChallenge(): Challenge | null {
+    if (this.activeChallengeIndex !== null && this.challenges[this.activeChallengeIndex]) {
+      return this.challenges[this.activeChallengeIndex];
+    }
+    return null;
   }
 
   moveToPreviousChallenge(): void {
@@ -84,6 +112,67 @@ class Game {
     }
   }
 
+  finalizeChallenge(challengeIndex: number, force = false): void {
+    const challenge = this.challenges[challengeIndex];
+    if (!challenge) {
+      return;
+    }
+    if (force || typeof challenge.correct !== 'boolean') {
+      if (typeof challenge.correct !== 'boolean') {
+        this.store.increaseMissedCount();
+      }
+      this.challenges[challengeIndex] = null;
+    }
+    else {
+      if (challenge.correct) {
+        this.store.increaseCorrectCount();
+      }
+      else {
+        this.store.increaseWrongCount();
+      }
+      window.setTimeout(() => this.challenges[challengeIndex] = null, challengeFadeTimeoutMs);
+    }
+  }
+
+  addAnswerDigit(digit: number): void {
+    const challenge = this.getActiveChallenge();
+    if (!challenge) {
+      return;
+    }
+    if (challenge.answer === undefined) {
+      challenge.answer = digit;
+    }
+    else if (`${challenge.answer}`.length < maxAnswerDigitsCount) {
+      challenge.answer = challenge.answer * 10 + digit;
+    }
+  }
+
+  checkAnswer(): void {
+    const challenge = this.getActiveChallenge();
+    if (!challenge || challenge.answer === undefined) {
+      return;
+    }
+    challenge.correct = challenge.answer === challenge.operation.answer;
+    const { activeChallengeIndex: challengeIndex } = this;
+    this.finalizeChallenge(challengeIndex as number);
+  }
+
+  removeAnswerDigit(): void {
+    const challenge = this.getActiveChallenge();
+    if (!challenge || challenge.answer === undefined) {
+      return;
+    }
+    challenge.answer = (challenge.answer - challenge.answer % 10) / 10 || undefined;
+  }
+
+  clearAnswer(): void {
+    const challenge = this.getActiveChallenge();
+    if (!challenge) {
+      return;
+    }
+    challenge.answer = undefined;
+  }
+
   calculateHorseZoneWidth(): number {
     return this.canvas.width - operationZoneWidth;
   }
@@ -101,12 +190,6 @@ class Game {
     }, null);
   }
 
-  get challengesCount(): number {
-    return this.challenges.reduce((count, challenge) => {
-      return challenge ? count + 1 : count;
-    }, 0);
-  }
-
   animationFrame(time: number): void {
     this.updateChallenges(time);
     const context = this.canvas.getContext('2d');
@@ -122,9 +205,12 @@ class Game {
       if (!challenge) {
         return;
       }
-      const { startTime, duration } = challenge;
-      if (time > startTime + duration * 1000) {
-        this.challenges[challengeIndex] = null;
+      const { startTime, duration, fadeOutStartTime, correct } = challenge;
+      if (typeof correct === 'boolean' && time < fadeOutStartTime) {
+        challenge.fadeOutStartTime = time;
+      }
+      else if (time > startTime + duration * 1000) {
+        this.finalizeChallenge(challengeIndex, true);
         if (!this.horseLastEndTime) {
           this.horseLastEndTime = time;
         }
@@ -141,9 +227,11 @@ class Game {
       return;
     }
 
+    const duration = random(this.minChallengeDuration, this.maxChallengeDuration);
     const challenge: Challenge = {
       startTime: time,
-      duration: random(this.minChallengeDuration, this.maxChallengeDuration),
+      duration,
+      fadeOutStartTime: time + duration * 1000 - challengeFadeTimeoutMs,
       operation: createOperation({
         allowedOperators: ['add', 'subtract', 'multiply', 'divide']
       }),
@@ -180,8 +268,12 @@ class Game {
     this.challenges.forEach((challenge, challengeIndex) => {
       // Render active challenge marker
       if (this.activeChallengeIndex === challengeIndex) {
+        let markerColor = '#319fe3';
+        if (challenge && typeof challenge.correct === 'boolean') {
+          markerColor = challenge.correct ? '#090' : '#c00';
+        }
         context.beginPath();
-        context.strokeStyle = '#e80';
+        context.strokeStyle = markerColor;
         context.lineWidth = 8;
         context.lineCap = 'round';
         const startY = offsetHeight + challengeIndex * horse.height * scale + splitGapSize;
@@ -198,14 +290,25 @@ class Game {
       const {
         startTime,
         duration,
+        fadeOutStartTime,
         operation,
-        horseRenderFrame
+        horseRenderFrame,
+        answer,
+        correct
       } = challenge;
 
       // Render a horse
       const horseSpriteFrame = Math.floor(horseRenderFrame / horseRenderFramesPerSpriteFrame);
       const horseX = (time - startTime) / (duration * 1000) * (this.horseZoneWidth - horse.width * scale);
       const horseY = offsetHeight + challengeIndex * horse.height * scale;
+      let opacity = 1;
+      if (time - startTime < challengeFadeTimeoutMs) {
+        opacity = (time - startTime) / challengeFadeTimeoutMs;
+      }
+      else if (time > fadeOutStartTime && time < fadeOutStartTime + challengeFadeTimeoutMs) {
+        opacity = (fadeOutStartTime + challengeFadeTimeoutMs - time) / challengeFadeTimeoutMs;
+      }
+      context.globalAlpha = opacity;
       horse.draw(context, horseSpriteFrame, horseX, horseY, scale);
 
       // Render operation
@@ -216,7 +319,9 @@ class Game {
       context.font = `${operationFontSize}px Ubuntu Mono`;
       context.fillStyle = colors[challengeIndex % colors.length];
       context.textBaseline = 'middle';
-      context.fillText(getOperationText(operation), operationX, operationY, operationWidth);
+      const operationText = `${getOperationText(operation)} = ${typeof answer === 'number' ? answer : ''}`;
+      context.fillText(operationText, operationX, operationY, operationWidth);
+      context.globalAlpha = 1;
 
       // Render split line
       context.beginPath();
