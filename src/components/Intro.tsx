@@ -1,6 +1,7 @@
 import './less/intro.less';
 
 import React from 'react';
+import { Space } from 'antd';
 
 import { Button } from 'antd';
 
@@ -12,9 +13,17 @@ const Intro: React.FunctionComponent<IntroProps> = props => {
   const { close } = props;
   return (
     <div className="intro">
-      <Button type="primary" size="large" onClick={close}>
-        Press a button
-      </Button>
+      <Space direction="vertical">
+        <div className="intro-title">
+          Math Hunger
+        </div>
+        <div className="intro-logo" />
+        <div className="intro-buttons">
+          <Button type="primary" size="large" onClick={close}>
+            Press the button
+          </Button>
+        </div>
+      </Space>
     </div>
   );
 };

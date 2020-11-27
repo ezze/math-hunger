@@ -25,7 +25,7 @@ const Start: React.FunctionComponent<StartProps> = props => {
         </div>
         <div className="start-footer">
           <Button type="primary" size="large" danger={true} onClick={start}>
-            Start a game
+            Start the game
           </Button>
         </div>
       </Space>
