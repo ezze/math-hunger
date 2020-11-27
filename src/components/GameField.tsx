@@ -2,6 +2,7 @@ import './less/game-field.less';
 
 import React, { useRef, useState, useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
+import { sprintf } from 'sprintf-js';
 
 import { withSprites } from '../sprites';
 import Game from '../Game';
@@ -27,8 +28,7 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     throw new InjectionError('Game store');
   }
 
-  const { duration } = settingsStore;
-  const { correctCount, wrongCount, missedCount, overallCount } = gameStore;
+  const { correctCount, wrongCount, missedCount, overallCount, leftTimeFormatted } = gameStore;
 
   const gameFieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -61,8 +61,7 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
       game = new Game({
         store: gameStore,
         canvas: canvasRef.current as HTMLCanvasElement,
-        sprites,
-        duration
+        sprites
       });
     };
     createGame();
@@ -81,8 +80,13 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     <div ref={gameFieldRef} className="game-field">
       {canvas}
       <div className="game-field-score">
-        <div>{correctCount} / {wrongCount} / {missedCount}</div>
-        <div>{overallCount}</div>
+        <div className="game-field-score-overall">{sprintf('%03d', overallCount)}</div>
+        <div className="game-field-score-correct">{sprintf('%03d', correctCount)}</div>
+        <div className="game-field-score-wrong">{sprintf('%03d', wrongCount)}</div>
+        <div className="game-field-score-missed">{sprintf('%03d', missedCount)}</div>
+      </div>
+      <div className="game-field-time">
+        <div>{leftTimeFormatted}</div>
       </div>
     </div>
   );

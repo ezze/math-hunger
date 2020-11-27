@@ -10,17 +10,22 @@ import GameField from './GameField';
 import InjectionError from './helpers/InjectionError';
 
 interface AppProps extends React.HTMLAttributes<HTMLDivElement> {
+  settingsStore?: SettingsStore;
   gameStore?: GameStore;
 }
 
 const App: React.FunctionComponent<AppProps> = props => {
-  const { gameStore } = props;
+  const { settingsStore, gameStore } = props;
+  if (!settingsStore) {
+    throw new InjectionError('Settings store');
+  }
   if (!gameStore) {
     throw new InjectionError('Game store');
   }
 
+  const { duration } = settingsStore;
   const { playing } = gameStore;
-  const startGame = () => gameStore.setPlaying(true);
+  const startGame = () => gameStore.start(duration);
 
   const [intro, setIntro] = useState(true);
 
@@ -49,4 +54,4 @@ const App: React.FunctionComponent<AppProps> = props => {
   );
 };
 
-export default inject('gameStore')(observer(App));
+export default inject('settingsStore', 'gameStore')(observer(App));

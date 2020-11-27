@@ -19,10 +19,13 @@ export function createOperation(options: {
     case 'divide': return createDivideOperation();
   }
 }
+
+const maxSumResult = 30;
+
 export function createAddOperation(): Operation {
   const operator: Operator = 'add';
-  const operand1 = random(0, 10);
-  const operand2 = random(operand1, 10);
+  const operand1 = random(0, maxSumResult);
+  const operand2 = random(0, maxSumResult - operand1);
   const answer = operand1 + operand2;
   return { operator, operand1, operand2, answer };
 }
@@ -36,10 +39,13 @@ export function createSubractOperation(): Operation {
   return { operator, operand1, operand2, answer };
 }
 
+const maxMultiplyOperand1 = 10;
+const maxMultiplyOperand2 = 10;
+
 export function createMultiplyOperation(): Operation {
   const operator: Operator = 'multiply';
-  const operand1 = random(1, 10);
-  const operand2 = random(1, 10);
+  const operand1 = random(1, maxMultiplyOperand1);
+  const operand2 = random(1, maxMultiplyOperand2);
   const answer = operand1 * operand2;
   return { operator, operand1, operand2, answer };
 }

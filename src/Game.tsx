@@ -9,7 +9,6 @@ class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
   sprites: Sprites;
-  duration: number;
   challenges: Array<Challenge | null>;
   challengeConcurrency = 3;
   maxChallengesCount = 4;
@@ -27,15 +26,13 @@ class Game {
     const {
       store,
       canvas,
-      sprites,
-      duration
+      sprites
     } = options;
 
     this.store = store;
     this.canvas = canvas;
     this.horseZoneWidth = this.calculateHorseZoneWidth();
     this.sprites = sprites;
-    this.duration = duration;
     this.challenges = new Array(this.maxChallengesCount).fill(null);
 
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -73,7 +70,7 @@ class Game {
       this.clearAnswer();
     }
     else if (event.ctrlKey && event.key === 'c') {
-      this.store.setPlaying(false);
+      this.store.interrupt();
     }
   }
 

@@ -1,5 +1,6 @@
 declare module '*.jpg';
 declare module '*.png';
+declare module 'sprintf-js';
 
 declare interface StoreOptions {
   key?: string;
@@ -24,7 +25,9 @@ declare class SettingsStore extends Store {
 
 declare class GameStore extends Store {
   playing: boolean;
-  setPlaying(playing: boolean): void;
+  start(duration: number): void;
+  end(): void;
+  interrupt(): void;
   correctCount: number;
   increaseCorrectCount(): void;
   wrongCount: number;
@@ -32,13 +35,13 @@ declare class GameStore extends Store {
   missedCount: number;
   increaseMissedCount(): void;
   overallCount: number;
+  leftTimeFormatted: string;
 }
 
 declare interface GameOptions {
   store: GameStore;
   canvas: HTMLCanvasElement;
   sprites: Sprites;
-  duration: number;
 }
 
 declare interface SpriteOptions {
