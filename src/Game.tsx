@@ -32,7 +32,10 @@ class Game {
     this.duration = duration;
     this.challenges = new Array(this.maxChallengesCount).fill(null);
 
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onWindowResize = this.onWindowResize.bind(this);
+
+    document.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('resize', this.onWindowResize);
 
     this.animationFrame = this.animationFrame.bind(this);
@@ -40,7 +43,14 @@ class Game {
   }
 
   destroy(): void {
+    document.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.key === 'c') {
+      this.store.setPlaying(false);
+    }
   }
 
   onWindowResize(): void {
