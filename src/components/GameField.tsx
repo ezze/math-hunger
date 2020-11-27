@@ -1,6 +1,6 @@
 import './less/game-field.less';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import { withSprites } from '../sprites';
@@ -13,6 +13,11 @@ interface GameFieldProps extends React.HTMLAttributes<HTMLDivElement>, WithSprit
   gameStore?: GameStore;
 }
 
+interface CanvasSize {
+  width: number;
+  height: number;
+}
+
 const GameField: React.FunctionComponent<GameFieldProps> = props => {
   const { settingsStore, gameStore, sprites } = props;
   if (!settingsStore) {
@@ -22,8 +27,28 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     throw new InjectionError('Game store');
   }
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const { duration } = settingsStore;
+
+  const gameFieldRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const getGameFieldSize = () => {
+    const { offsetWidth: width, offsetHeight: height } = gameFieldRef.current as HTMLDivElement;
+    return { width, height };
+  };
+
+  const [size, setSize] = useState<CanvasSize | null>(null);
+
+  useEffect(() => {
+    setSize(getGameFieldSize);
+    const onResize = () => {
+      setSize(getGameFieldSize());
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
 
   useEffect(() => {
     const game = new Game({
@@ -37,9 +62,12 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     };
   }, []);
 
+  const width = size ? size.width : undefined;
+  const height = size ? size.height : undefined;
+
   return (
-    <div className="game-field">
-      <canvas ref={canvasRef} className="game-field-canvas"></canvas>
+    <div ref={gameFieldRef} className="game-field">
+      <canvas ref={canvasRef} className="game-field-canvas" width={width} height={height}></canvas>
     </div>
   );
 };

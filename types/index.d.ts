@@ -44,6 +44,7 @@ declare interface SpriteOptions {
 declare class Sprite {
   constructor(options: SpriteOptions)
   init: () => Promise<void>;
+  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number) => void
 }
 
 type Sprites = Record<string, Sprite>;

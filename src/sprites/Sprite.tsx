@@ -24,7 +24,7 @@ class Sprite {
           const { width: imageWidth, height: imageHeight } = image;
           this.imageWidth = imageWidth;
           this.imageHeight = imageHeight;
-          this.cropSprites();
+          this.crop();
           resolve();
         }
         catch (e) {
@@ -36,7 +36,7 @@ class Sprite {
     });
   }
 
-  cropSprites(): void {
+  crop(): void {
     if (this.image === null || this.imageWidth === null || this.imageHeight === null) {
       throw new TypeError('Image is not loaded.');
     }
@@ -54,9 +54,17 @@ class Sprite {
       if (!context) {
         throw new Error('Unable to get 2D context.');
       }
-      context.drawImage(this.image, x, y, this.width, this.height, 0, 0, this.width, this.height);
+      context.drawImage(this.image, x, y, this.imageWidth, this.imageHeight, 0, 0, this.width, this.height);
       this.sprites.push(sprite);
     }
+  }
+
+  draw(context: CanvasRenderingContext2D, index: number, x: number, y: number): void {
+    if (index < 0 || index >= this.count) {
+      throw new RangeError('Sprite index is out of bounds');
+    }
+    const sprite = this.sprites[index];
+    context.drawImage(sprite, x, y);
   }
 }
 
