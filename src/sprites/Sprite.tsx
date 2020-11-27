@@ -59,12 +59,20 @@ class Sprite {
     }
   }
 
-  draw(context: CanvasRenderingContext2D, index: number, x: number, y: number): void {
+  draw(context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1): void {
     if (index < 0 || index >= this.count) {
       throw new RangeError('Sprite index is out of bounds');
     }
     const sprite = this.sprites[index];
-    context.drawImage(sprite, x, y);
+    const sx = 0;
+    const sy = 0;
+    const sw = sprite.width;
+    const sh = sprite.height;
+    const dx = x * scale;
+    const dy = y * scale;
+    const dw = sprite.width * scale;
+    const dh = sprite.height * scale;
+    context.drawImage(sprite, sx, sy, sw, sh, dx, dy, dw, dh);
   }
 }
 

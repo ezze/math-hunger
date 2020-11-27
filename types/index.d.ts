@@ -50,7 +50,7 @@ declare class Sprite {
   sprites: Array<HTMLCanvasElement>;
   constructor(options: SpriteOptions)
   init: () => Promise<void>;
-  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number) => void
+  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1) => void
 }
 
 type Sprites = Record<string, Sprite>;

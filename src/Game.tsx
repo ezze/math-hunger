@@ -39,15 +39,17 @@ class Game {
     const { horse } = this.sprites;
     const delay = 3;
     const index = Math.floor(this.i / delay);
-    horse.draw(context, index, 0, 0);
-    horse.draw(context, index, 0, 233);
-    horse.draw(context, index, 0, 466);
+    const horseCount = 3;
+    const scalePoint = horse.height * horseCount;
+    const offsetHeight = this.canvas.height < scalePoint ? 0 : (this.canvas.height - scalePoint) / 2;
+    const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
+    for (let horseIndex = 0; horseIndex < horseCount; horseIndex++) {
+      horse.draw(context, index, 0, offsetHeight + horse.height * horseIndex, scale);
+    }
     this.i++;
     if (this.i === delay * horse.count) {
       this.i = 0;
     }
-    context.strokeStyle = 'green';
-    context.strokeText(`${index}`, 300, 50);
   }
 }
 
