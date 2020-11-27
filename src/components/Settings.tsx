@@ -2,22 +2,23 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Form, Select } from 'antd';
 
-import GameStore from '../store/GameStore';
 import { durations } from '../constants';
 
+import InjectionError from './helpers/InjectionError';
+
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
-  gameStore?: GameStore;
+  settingsStore?: SettingsStore;
 }
 
 const Settings: React.FunctionComponent<SettingsProps> = props => {
-  const { gameStore } = props;
-  if (!gameStore) {
-    throw new TypeError('Game store is not passed.');
+  const { settingsStore } = props;
+  if (!settingsStore) {
+    throw new InjectionError('Settings store');
   }
 
-  const { duration } = gameStore;
+  const { duration } = settingsStore;
   const onDurationChange = (duration: number) => {
-    gameStore.setDuration(duration);
+    settingsStore.setDuration(duration);
   };
 
   const initialValues = {
@@ -43,4 +44,4 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
   );
 };
 
-export default inject('gameStore')(observer(Settings));
+export default inject('settingsStore')(observer(Settings));

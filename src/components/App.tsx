@@ -5,8 +5,9 @@ import { inject, observer } from 'mobx-react';
 
 import Intro from './Intro';
 import Start from './Start';
+import GameField from './GameField';
 
-import GameStore from '../store/GameStore';
+import InjectionError from './helpers/InjectionError';
 
 interface AppProps extends React.HTMLAttributes<HTMLDivElement> {
   gameStore?: GameStore;
@@ -15,7 +16,7 @@ interface AppProps extends React.HTMLAttributes<HTMLDivElement> {
 const App: React.FunctionComponent<AppProps> = props => {
   const { gameStore } = props;
   if (!gameStore) {
-    throw new TypeError('Game store is not passed.');
+    throw new InjectionError('Game store');
   }
 
   const { playing } = gameStore;
@@ -36,7 +37,9 @@ const App: React.FunctionComponent<AppProps> = props => {
     );
   }
   else {
-    content = '';
+    content = (
+      <GameField />
+    );
   }
 
   return (

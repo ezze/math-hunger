@@ -18,7 +18,7 @@ class Store {
   storeLastSaveTime: Date | null = null;
   storeVerbose = true;
 
-  constructor(options: StoreOptions) {
+  constructor(options: StoreOptions = {}) {
     const {
       key,
       include,

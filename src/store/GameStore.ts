@@ -6,13 +6,10 @@ import {
 
 import Store from './Store';
 
-import { durations } from '../constants';
-
 class GameStore extends Store {
   playing = false;
-  duration = durations[0];
 
-  constructor(options: StoreOptions) {
+  constructor(options: StoreOptions = {}) {
     super({
       ...options,
       include: [
@@ -22,20 +19,12 @@ class GameStore extends Store {
 
     makeObservable(this, {
       playing: observable,
-      setPlaying: action,
-      duration: observable,
-      setDuration: action
+      setPlaying: action
     });
   }
 
   setPlaying(playing: boolean): void {
     this.playing = playing;
-  }
-
-  setDuration(duration: number): void {
-    if (durations.includes(duration)) {
-      this.duration = duration;
-    }
   }
 }
 

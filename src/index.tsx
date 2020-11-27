@@ -8,6 +8,8 @@ import { getStores } from './store';
 
 import App from './components/App';
 
+import { SpritesProvider, getSprites } from './sprites';
+
 function onDocumentReady() {
   const appContainer = createAppContainer();
   createApp(appContainer).catch(e => console.error(e));
@@ -21,10 +23,14 @@ function createAppContainer(): HTMLElement {
 }
 
 async function createApp(appContainer: HTMLElement) {
+  const sprites = await getSprites();
+
   const stores = await getStores();
   render(
     <Provider {...stores}>
-      <App />
+      <SpritesProvider value={sprites}>
+        <App />
+      </SpritesProvider>
     </Provider>,
     appContainer
   );
