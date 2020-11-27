@@ -3,14 +3,19 @@ import { random, createOperation } from './utils';
 class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
-  horseZoneWidth: number;
   sprites: Sprites;
   duration: number;
   challenges: Array<Challenge | null>;
-  challengeConcurrency = 5;
+  challengeConcurrency = 3;
   maxChallengesCount = 5;
   minChallengeDuration = 5;
   maxChallengeDuration = 10;
+  minChallengeDelay = 1;
+  maxChallengeDelay = 3;
+  challengeDelay = 0;
+  horseZoneWidth: number;
+  horseLastStartTime: number | null = null;
+  horseLastEndTime: number | null = null;
 
   constructor(options: GameOptions) {
     const {
@@ -43,7 +48,20 @@ class Game {
   }
 
   calculateHorseZoneWidth(): number {
-    return this.canvas.width - 200;
+    return this.canvas.width - 300;
+  }
+
+  updateChallengeDelay(): void {
+    this.challengeDelay = random(this.minChallengeDelay, this.maxChallengeDelay);
+  }
+
+  detectHorseLastStartTime(): number | null {
+    return this.challenges.reduce((lastEventTime: number | null, challenge) => {
+      if (!challenge || (lastEventTime && challenge.startTime <= lastEventTime)) {
+        return lastEventTime;
+      }
+      return challenge.startTime;
+    }, null);
   }
 
   get challengesCount(): number {
@@ -70,10 +88,19 @@ class Game {
       const { startTime, duration } = challenge;
       if (time > startTime + duration * 1000) {
         this.challenges[challengeIndex] = null;
+        if (!this.horseLastEndTime) {
+          this.horseLastEndTime = time;
+        }
       }
     });
 
-    if (this.challengesCount === this.challengeConcurrency) {
+    const { challengesCount } = this;
+    if (challengesCount === this.challengeConcurrency || (
+      challengesCount > 0 && (
+        (this.horseLastStartTime && this.horseLastStartTime + this.challengeDelay * 1000 >= time) ||
+        (this.horseLastEndTime && this.horseLastEndTime + this.challengeDelay * 1000 >= time)
+      )
+    )) {
       return;
     }
 
@@ -92,6 +119,11 @@ class Game {
     }
     while (this.challenges[index] !== null);
     this.challenges[index] = challenge;
+    this.horseLastStartTime = this.detectHorseLastStartTime();
+    if (this.horseLastEndTime) {
+      this.horseLastEndTime = null;
+    }
+    this.updateChallengeDelay();
   }
 
   render(context: CanvasRenderingContext2D, time: number): void {

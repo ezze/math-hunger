@@ -54,7 +54,6 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     let game: Game;
     const createGame = () => {
       if (!canvasRef.current) {
-        console.log('no canvas');
         window.setTimeout(createGame, 50);
         return;
       }
