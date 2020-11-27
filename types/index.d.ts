@@ -58,3 +58,19 @@ type Sprites = Record<string, Sprite>;
 declare interface WithSpriteOptions {
   sprites: Sprites;
 }
+
+type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
+
+interface Operation {
+  operator: Operator;
+  operand1: number;
+  operand2: number;
+  answer: number;
+}
+
+declare interface Challenge {
+  startTime: number;
+  duration: number;
+  operation: Operation;
+  horseRenderFrame: number;
+}
