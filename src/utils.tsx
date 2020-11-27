@@ -62,7 +62,7 @@ export function getOperatorSign(operator: Operator): string {
   switch (operator) {
     case 'add': return '+';
     case 'subtract': return '-';
-    case 'multiply': return 'x';
+    case 'multiply': return '*';
     case 'divide': return ':';
   }
 }

@@ -1,4 +1,6 @@
-import { random, createOperation } from './utils';
+import { random, createOperation, getOperationText } from './utils';
+
+import { operationZoneWidth, splitGapSize, colors } from './constants';
 
 class Game {
   store: GameStore;
@@ -6,13 +8,14 @@ class Game {
   sprites: Sprites;
   duration: number;
   challenges: Array<Challenge | null>;
-  challengeConcurrency = 3;
+  challengeConcurrency = 5;
   maxChallengesCount = 5;
   minChallengeDuration = 5;
   maxChallengeDuration = 10;
   minChallengeDelay = 1;
   maxChallengeDelay = 3;
   challengeDelay = 0;
+  activeChallengeIndex: number | null = null;
   horseZoneWidth: number;
   horseLastStartTime: number | null = null;
   horseLastEndTime: number | null = null;
@@ -48,7 +51,13 @@ class Game {
   }
 
   onKeyDown(event: KeyboardEvent): void {
-    if (event.ctrlKey && event.key === 'c') {
+    if (event.key === 'ArrowUp') {
+      this.moveToPreviousChallenge();
+    }
+    else if (event.key === 'ArrowDown') {
+      this.moveToNextChallenge();
+    }
+    else if (event.ctrlKey && event.key === 'c') {
       this.store.setPlaying(false);
     }
   }
@@ -57,8 +66,26 @@ class Game {
     this.horseZoneWidth = this.calculateHorseZoneWidth();
   }
 
+  moveToPreviousChallenge(): void {
+    if (this.activeChallengeIndex !== null) {
+      this.activeChallengeIndex--;
+      if (this.activeChallengeIndex < 0) {
+        this.activeChallengeIndex = this.challenges.length - 1;
+      }
+    }
+  }
+
+  moveToNextChallenge(): void {
+    if (this.activeChallengeIndex !== null) {
+      this.activeChallengeIndex++;
+      if (this.activeChallengeIndex >= this.challenges.length) {
+        this.activeChallengeIndex = 0;
+      }
+    }
+  }
+
   calculateHorseZoneWidth(): number {
-    return this.canvas.width - 300;
+    return this.canvas.width - operationZoneWidth;
   }
 
   updateChallengeDelay(): void {
@@ -134,45 +161,75 @@ class Game {
       this.horseLastEndTime = null;
     }
     this.updateChallengeDelay();
+    if (this.activeChallengeIndex === null) {
+      this.activeChallengeIndex = index;
+    }
   }
 
   render(context: CanvasRenderingContext2D, time: number): void {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // Preparing some basic constants for rendering
+    const { horse } = this.sprites;
+    const scalePoint = horse.height * this.maxChallengesCount;
+    const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
+    const offsetHeight = this.canvas.height < scalePoint ? 0 : (this.canvas.height - scalePoint) / 2;
     const horseRenderFramesPerSpriteFrame = 3;
-    const horseRenderFrames = this.sprites.horse.count * horseRenderFramesPerSpriteFrame;
+    const horseRenderFrames = horse.count * horseRenderFramesPerSpriteFrame;
+
     this.challenges.forEach((challenge, challengeIndex) => {
+      // Render active challenge marker
+      if (this.activeChallengeIndex === challengeIndex) {
+        context.beginPath();
+        context.strokeStyle = '#e80';
+        context.lineWidth = 8;
+        context.lineCap = 'round';
+        const startY = offsetHeight + challengeIndex * horse.height * scale + splitGapSize;
+        const endY = startY + horse.height * scale - 2 * splitGapSize;
+        context.moveTo(this.horseZoneWidth + splitGapSize + 0.5, startY);
+        context.lineTo(this.horseZoneWidth + splitGapSize + 0.5, endY);
+        context.stroke();
+      }
+
       if (!challenge) {
         return;
       }
 
-      const { startTime, duration, operation, horseRenderFrame } = challenge;
+      const {
+        startTime,
+        duration,
+        operation,
+        horseRenderFrame
+      } = challenge;
 
       // Render a horse
-      const { horse } = this.sprites;
       const horseSpriteFrame = Math.floor(horseRenderFrame / horseRenderFramesPerSpriteFrame);
-      const scalePoint = horse.height * this.maxChallengesCount;
-      const offsetHeight = this.canvas.height < scalePoint ? 0 : (this.canvas.height - scalePoint) / 2;
-      const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
       const horseX = (time - startTime) / (duration * 1000) * (this.horseZoneWidth - horse.width * scale);
-      const horseY = offsetHeight + horse.height * scale * challengeIndex;
+      const horseY = offsetHeight + challengeIndex * horse.height * scale;
       horse.draw(context, horseSpriteFrame, horseX, horseY, scale);
 
-      // Split horze zone and action zone
-      const splitVerticalGap = 15;
+      // Render operation
+      const operationFontSize = 36;
+      const operationX = this.horseZoneWidth + 2 * splitGapSize;
+      const operationY = offsetHeight + (challengeIndex + 0.5) * horse.height * scale;
+      const operationWidth = operationZoneWidth - 3 * splitGapSize;
+      context.font = `${operationFontSize}px Ubuntu Mono`;
+      context.fillStyle = colors[challengeIndex % colors.length];
+      context.textBaseline = 'middle';
+      context.fillText(getOperationText(operation), operationX, operationY, operationWidth);
+
+      // Render split line
       context.beginPath();
       context.strokeStyle = '#eee';
-      context.moveTo(this.horseZoneWidth + 0.5, splitVerticalGap);
       context.lineWidth = 1;
-      context.lineTo(this.horseZoneWidth + 0.5, this.canvas.height - splitVerticalGap);
+      context.moveTo(this.horseZoneWidth + 0.5, splitGapSize);
+      context.lineTo(this.horseZoneWidth + 0.5, this.canvas.height - splitGapSize);
       context.stroke();
 
       challenge.horseRenderFrame++;
       if (challenge.horseRenderFrame === horseRenderFrames) {
         challenge.horseRenderFrame = 0;
       }
-
-      // Render operation
     });
   }
 }
