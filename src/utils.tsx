@@ -52,3 +52,17 @@ export function createDivideOperation(): Operation {
   const answer = operand1 / operand2;
   return { operator, operand1, operand2, answer };
 }
+
+export function getOperationText(operation: Operation): string {
+  const { operator, operand1, operand2 } = operation;
+  return `${operand1} ${getOperatorSign(operator)} ${operand2}`;
+}
+
+export function getOperatorSign(operator: Operator): string {
+  switch (operator) {
+    case 'add': return '+';
+    case 'subtract': return '-';
+    case 'multiply': return 'x';
+    case 'divide': return ':';
+  }
+}

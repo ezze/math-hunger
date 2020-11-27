@@ -51,23 +51,35 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   }, []);
 
   useEffect(() => {
-    const game = new Game({
-      store: gameStore,
-      canvas: canvasRef.current as HTMLCanvasElement,
-      sprites,
-      duration
-    });
+    let game: Game;
+    const createGame = () => {
+      if (!canvasRef.current) {
+        console.log('no canvas');
+        window.setTimeout(createGame, 50);
+        return;
+      }
+      game = new Game({
+        store: gameStore,
+        canvas: canvasRef.current as HTMLCanvasElement,
+        sprites,
+        duration
+      });
+    };
+    createGame();
+
     return () => {
-      game.destroy();
+      if (game) {
+        game.destroy();
+      }
     };
   }, []);
 
-  const width = size ? size.width : undefined;
-  const height = size ? size.height : undefined;
-
+  const canvas = size ? (
+    <canvas ref={canvasRef} className="game-field-canvas" width={size.width} height={size.height}></canvas>
+  ) : null;
   return (
     <div ref={gameFieldRef} className="game-field">
-      <canvas ref={canvasRef} className="game-field-canvas" width={width} height={height}></canvas>
+      {canvas}
     </div>
   );
 };

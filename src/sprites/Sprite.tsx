@@ -68,8 +68,8 @@ class Sprite {
     const sy = 0;
     const sw = sprite.width;
     const sh = sprite.height;
-    const dx = x * scale;
-    const dy = y * scale;
+    const dx = x;
+    const dy = y;
     const dw = sprite.width * scale;
     const dh = sprite.height * scale;
     context.drawImage(sprite, sx, sy, sw, sh, dx, dy, dw, dh);
