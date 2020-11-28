@@ -18,7 +18,10 @@ declare class Store {
   save(data: StoreData): Promise<void>;
 }
 
+type SettingsTab = 'basic' | 'math' | 'gameplay';
+
 declare class SettingsStore extends Store {
+  tab: SettingsTab;
   duration: number;
   operators: Array<Operator>;
   maxSum: number;
@@ -27,6 +30,13 @@ declare class SettingsStore extends Store {
   maxMultiplier2: number;
   maxDivisor: number;
   maxQuotient: number;
+  challengeConcurrency: number;
+  maxChallengesCount: number;
+  minChallengeDuration: number;
+  maxChallengeDuration: number;
+  minChallengeDelay: number;
+  maxChallengeDelay: number;
+  setTab(tab: SettingsTab): void;
   setDuration(duration: number): void;
   setOperators(operators: Array<Operator>): void;
   setMaxSum(maxSum: number): void;
@@ -35,6 +45,12 @@ declare class SettingsStore extends Store {
   setMaxMultiplier2(maxMultiplier2: number): void;
   setMaxDivisor(maxDivisor: number): void;
   setMaxQuotient(maxQuotient: number): void;
+  setChallengeConcurrency(challengeConcurrency: number): void;
+  setMaxChallengesCount(maxChallengesCount: number): void;
+  setMinChallengeDuration(minChallengeDuration: number): void;
+  setMaxChallengeDuration(maxChallengeDuration: number): void;
+  setMinChallengeDelay(minChallengeDelay: number): void;
+  setMaxChallengeDelay(maxChallengeDelay: number): void;
 }
 
 declare class GameStore extends Store {
@@ -63,6 +79,12 @@ declare interface GameOptions {
   maxMultiplier2?: number;
   maxDivisor?: number;
   maxQuotient?: number;
+  challengeConcurrency?: number;
+  maxChallengesCount?: number;
+  minChallengeDuration?: number;
+  maxChallengeDuration?: number;
+  minChallengeDelay?: number;
+  maxChallengeDelay?: number;
 }
 
 declare class Game {

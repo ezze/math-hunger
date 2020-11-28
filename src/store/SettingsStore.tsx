@@ -6,18 +6,26 @@ import {
 
 import {
   durationsAvailable,
+  settingsTabDefault,
   durationDefault,
   operatorsDefault,
   maxSumDefault,
   maxMinuendDefault,
   maxMultiplierDefault,
   maxDivisorDefault,
-  maxQuotientDefault
+  maxQuotientDefault,
+  challengeConcurrencyDefault,
+  maxChallengesCountDefault,
+  minChallengeDurationDefault,
+  maxChallengeDurationDefault,
+  minChallengeDelayDefault,
+  maxChallengeDelayDefault
 } from '../constants';
 
 import Store from './Store';
 
 class SettingsStore extends Store {
+  tab: SettingsTab = settingsTabDefault;
   duration = durationDefault;
   operators: Array<Operator> = operatorsDefault;
   maxSum = maxSumDefault;
@@ -26,11 +34,18 @@ class SettingsStore extends Store {
   maxMultiplier2 = maxMultiplierDefault;
   maxDivisor = maxDivisorDefault;
   maxQuotient = maxQuotientDefault;
+  challengeConcurrency = challengeConcurrencyDefault;
+  maxChallengesCount = maxChallengesCountDefault;
+  minChallengeDuration = minChallengeDurationDefault;
+  maxChallengeDuration = maxChallengeDurationDefault;
+  minChallengeDelay = minChallengeDelayDefault;
+  maxChallengeDelay = maxChallengeDelayDefault;
 
   constructor(options: StoreOptions) {
     super({
       ...options,
       include: [
+        'tab',
         'duration',
         'operators',
         'maxSum',
@@ -38,19 +53,33 @@ class SettingsStore extends Store {
         'maxMultiplier1',
         'maxMultiplier2',
         'maxDivisor',
-        'maxQuotient'
+        'maxQuotient',
+        'challengeConcurrency',
+        'maxChallengesCount',
+        'minChallengeDuration',
+        'maxChallengeDuration',
+        'minChallengeDelay',
+        'maxChallengeDelay'
       ]
     });
 
     makeObservable(this, {
+      tab: observable,
       duration: observable,
-      operators: observable,
+      operators: observable.shallow,
       maxSum: observable,
       maxMinuend: observable,
       maxMultiplier1: observable,
       maxMultiplier2: observable,
       maxDivisor: observable,
       maxQuotient: observable,
+      challengeConcurrency: observable,
+      maxChallengesCount: observable,
+      minChallengeDuration: observable,
+      maxChallengeDuration: observable,
+      minChallengeDelay: observable,
+      maxChallengeDelay: observable,
+      setTab: action,
       setDuration: action,
       setOperators: action,
       setMaxSum: action,
@@ -58,8 +87,18 @@ class SettingsStore extends Store {
       setMaxMultiplier1: action,
       setMaxMultiplier2: action,
       setMaxDivisor: action,
-      setMaxQuotient: action
+      setMaxQuotient: action,
+      setChallengeConcurrency: action,
+      setMaxChallengesCount: action,
+      setMinChallengeDuration: action,
+      setMaxChallengeDuration: action,
+      setMinChallengeDelay: action,
+      setMaxChallengeDelay: action
     });
+  }
+
+  setTab(tab: SettingsTab): void {
+    this.tab = tab;
   }
 
   setDuration(duration: number): void {
@@ -94,6 +133,30 @@ class SettingsStore extends Store {
 
   setMaxQuotient(maxQuotient: number): void {
     this.maxQuotient = maxQuotient;
+  }
+
+  setChallengeConcurrency(challengeConcurrency: number): void {
+    this.challengeConcurrency = challengeConcurrency;
+  }
+
+  setMaxChallengesCount(maxChallengesCount: number): void {
+    this.maxChallengesCount = maxChallengesCount;
+  }
+
+  setMinChallengeDuration(minChallengeDuration: number): void {
+    this.minChallengeDuration = minChallengeDuration;
+  }
+
+  setMaxChallengeDuration(maxChallengeDuration: number): void {
+    this.maxChallengeDuration = maxChallengeDuration;
+  }
+
+  setMinChallengeDelay(minChallengeDelay: number): void {
+    this.minChallengeDelay = minChallengeDelay;
+  }
+
+  setMaxChallengeDelay(maxChallengeDelay: number): void {
+    this.maxChallengeDelay = maxChallengeDelay;
   }
 }
 

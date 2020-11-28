@@ -35,7 +35,13 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     maxMultiplier1,
     maxMultiplier2,
     maxDivisor,
-    maxQuotient
+    maxQuotient,
+    challengeConcurrency,
+    maxChallengesCount,
+    minChallengeDuration,
+    maxChallengeDuration,
+    minChallengeDelay,
+    maxChallengeDelay
   } = settingsStore;
 
   const {
@@ -84,7 +90,13 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
         maxMultiplier1,
         maxMultiplier2,
         maxDivisor,
-        maxQuotient
+        maxQuotient,
+        challengeConcurrency,
+        maxChallengesCount,
+        minChallengeDuration,
+        maxChallengeDuration,
+        minChallengeDelay,
+        maxChallengeDelay
       });
     };
     createGame();

@@ -1,4 +1,8 @@
-import { random, createOperation, getOperationText } from './utils';
+import {
+  random,
+  createOperation,
+  getOperationText
+} from './utils';
 
 import {
   operatorsDefault,
@@ -7,6 +11,12 @@ import {
   maxMultiplierDefault,
   maxDivisorDefault,
   maxQuotientDefault,
+  challengeConcurrencyDefault,
+  maxChallengesCountDefault,
+  minChallengeDurationDefault,
+  maxChallengeDurationDefault,
+  minChallengeDelayDefault,
+  maxChallengeDelayDefault,
   operationZoneWidth,
   splitGapSize,
   colors
@@ -28,13 +38,14 @@ class Game {
   maxDivisor: number;
   maxQuotient: number;
 
+  challengeConcurrency: number;
+  maxChallengesCount: number;
+  minChallengeDuration: number;
+  maxChallengeDuration: number;
+  minChallengeDelay: number;
+  maxChallengeDelay: number;
+
   challenges: Array<Challenge | null>;
-  challengeConcurrency = 3;
-  maxChallengesCount = 4;
-  minChallengeDuration = 5;
-  maxChallengeDuration = 10;
-  minChallengeDelay = 1;
-  maxChallengeDelay = 1;
   challengeDelay = 0;
   activeChallengeIndex: number | null = null;
 
@@ -53,7 +64,13 @@ class Game {
       maxMultiplier1 = maxMultiplierDefault,
       maxMultiplier2 = maxMultiplierDefault,
       maxDivisor = maxDivisorDefault,
-      maxQuotient = maxQuotientDefault
+      maxQuotient = maxQuotientDefault,
+      challengeConcurrency = challengeConcurrencyDefault,
+      maxChallengesCount = maxChallengesCountDefault,
+      minChallengeDuration = minChallengeDurationDefault,
+      maxChallengeDuration = maxChallengeDurationDefault,
+      minChallengeDelay = minChallengeDelayDefault,
+      maxChallengeDelay = maxChallengeDelayDefault
     } = options;
 
     this.store = store;
@@ -67,6 +84,13 @@ class Game {
     this.maxMultiplier2 = maxMultiplier2;
     this.maxDivisor = maxDivisor;
     this.maxQuotient = maxQuotient;
+
+    this.challengeConcurrency = challengeConcurrency;
+    this.maxChallengesCount = maxChallengesCount;
+    this.minChallengeDuration = minChallengeDuration;
+    this.maxChallengeDuration = maxChallengeDuration;
+    this.minChallengeDelay = minChallengeDelay;
+    this.maxChallengeDelay = maxChallengeDelay;
 
     this.challenges = new Array(this.maxChallengesCount).fill(null);
 
