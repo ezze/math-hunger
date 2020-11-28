@@ -21,10 +21,12 @@ const Start: React.FunctionComponent<StartProps> = props => {
         </div>
         <div className="start-content">
           <div className="start-pane">
+            <h2>Settings</h2>
             <Settings />
           </div>
           <div className="start-pane-divider"></div>
           <div className="start-pane">
+            <h2>Best results</h2>
             <BestResults />
           </div>
         </div>
