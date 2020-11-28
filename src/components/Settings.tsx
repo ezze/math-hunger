@@ -127,7 +127,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item
-                  label="Duration, min"
+                  label="Game duration, min"
                   name="duration"
                   rules={[{ required: true }]}
                 >
@@ -136,6 +136,90 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                       <Select.Option key={duration} value={duration}>{duration}</Select.Option>
                     ))}
                   </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Tracks"
+                  name="maxChallengesCount"
+                >
+                  <InputNumber
+                    type="number"
+                    min={maxChallengesCountStart}
+                    max={maxChallengesCountEnd}
+                    onChange={onMaxChallengesCountChange}
+                  >
+                  </InputNumber>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Concurrency"
+                  name="challengeConcurrency"
+                >
+                  <InputNumber
+                    type="number"
+                    min={challengeConcurrencyStart}
+                    max={Math.min(maxChallengesCount, challengeConcurrencyEnd)}
+                    onChange={onChallengeConcurrencyChange}
+                  >
+                  </InputNumber>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Min question duration, sec"
+                  name="minChallengeDuration"
+                >
+                  <InputNumber
+                    type="number"
+                    min={challengeDurationStart}
+                    max={Math.min(maxChallengeDuration, challengeDurationEnd)}
+                    onChange={onMinChallengeDurationChange}
+                  >
+                  </InputNumber>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Max question duration, sec"
+                  name="maxChallengeDuration"
+                >
+                  <InputNumber
+                    type="number"
+                    min={Math.max(minChallengeDuration, challengeDurationStart)}
+                    max={challengeDurationEnd}
+                    onChange={onMaxChallengeDurationChange}
+                  >
+                  </InputNumber>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Min question delay, sec"
+                  name="minChallengeDelay"
+                >
+                  <InputNumber
+                    type="number"
+                    min={challengeDelayStart}
+                    max={Math.min(maxChallengeDelay, challengeDelayEnd)}
+                    onChange={onMinChallengeDelayChange}
+                  >
+                  </InputNumber>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Max question delay, sec"
+                  name="maxChallengeDelay"
+                >
+                  <InputNumber
+                    type="number"
+                    min={Math.max(minChallengeDelay, challengeDelayStart)}
+                    max={challengeDelayEnd}
+                    onChange={onMaxChallengeDelayChange}
+                  >
+                  </InputNumber>
                 </Form.Item>
               </Col>
             </Row>
@@ -240,94 +324,6 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                     max={maxQuotientEnd}
                     disabled={!operators.includes('divide')}
                     onChange={onMaxQuotientChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Tabs.TabPane>
-          <Tabs.TabPane key="gameplay" tab="Gameplay">
-            <Row gutter={24}>
-              <Col span={12}>
-                <Form.Item
-                  label="Tracks"
-                  name="maxChallengesCount"
-                >
-                  <InputNumber
-                    type="number"
-                    min={maxChallengesCountStart}
-                    max={maxChallengesCountEnd}
-                    onChange={onMaxChallengesCountChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Concurrency"
-                  name="challengeConcurrency"
-                >
-                  <InputNumber
-                    type="number"
-                    min={challengeConcurrencyStart}
-                    max={Math.min(maxChallengesCount, challengeConcurrencyEnd)}
-                    onChange={onChallengeConcurrencyChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Min question duration, sec"
-                  name="minChallengeDuration"
-                >
-                  <InputNumber
-                    type="number"
-                    min={challengeDurationStart}
-                    max={Math.min(maxChallengeDuration, challengeDurationEnd)}
-                    onChange={onMinChallengeDurationChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Max question duration, sec"
-                  name="maxChallengeDuration"
-                >
-                  <InputNumber
-                    type="number"
-                    min={Math.max(minChallengeDuration, challengeDurationStart)}
-                    max={challengeDurationEnd}
-                    onChange={onMaxChallengeDurationChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Min question delay, sec"
-                  name="minChallengeDelay"
-                >
-                  <InputNumber
-                    type="number"
-                    min={challengeDelayStart}
-                    max={Math.min(maxChallengeDelay, challengeDelayEnd)}
-                    onChange={onMinChallengeDelayChange}
-                  >
-                  </InputNumber>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Max question delay, sec"
-                  name="maxChallengeDelay"
-                >
-                  <InputNumber
-                    type="number"
-                    min={Math.max(minChallengeDelay, challengeDelayStart)}
-                    max={challengeDelayEnd}
-                    onChange={onMaxChallengeDelayChange}
                   >
                   </InputNumber>
                 </Form.Item>
