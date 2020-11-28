@@ -31,7 +31,11 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   const {
     operators,
     maxSum,
-    maxMinuend
+    maxMinuend,
+    maxMultiplier1,
+    maxMultiplier2,
+    maxDivisor,
+    maxQuotient
   } = settingsStore;
 
   const {
@@ -76,7 +80,11 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
         sprites,
         operators,
         maxSum,
-        maxMinuend
+        maxMinuend,
+        maxMultiplier1,
+        maxMultiplier2,
+        maxDivisor,
+        maxQuotient
       });
     };
     createGame();
