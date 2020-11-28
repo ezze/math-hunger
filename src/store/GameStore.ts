@@ -67,8 +67,7 @@ class GameStore extends Store {
   start(duration: number): void {
     this.playing = true;
     this.gameOver = false;
-    this.leftTime = 30000;
-    //this.leftTime = duration * 60 * 1000;
+    this.leftTime = duration * 60 * 1000;
     this.endTime = new Date().getTime() + this.leftTime;
     this.lastResult = null;
     this.timeUpdater = window.setInterval(() => {

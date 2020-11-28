@@ -79,7 +79,7 @@ const BestResults = (props: BestResultsProps) => {
       {dataSource.length > 0 ? (
         <Table dataSource={dataSource} columns={columns} pagination={false} bordered={true} size="small" />
       ) : (
-        <div>
+        <div className="best-results-nothing">
           There are no results yet...
         </div>
       )}
