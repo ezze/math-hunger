@@ -20,7 +20,21 @@ declare class Store {
 
 declare class SettingsStore extends Store {
   duration: number;
+  operators: Array<Operator>;
+  maxSum: number;
+  maxMinuend: number;
+  maxMultiplier1: number;
+  maxMultiplier2: number;
+  maxDivisor: number;
+  maxQuotient: number;
   setDuration(duration: number): void;
+  setOperators(operators: Array<Operator>): void;
+  setMaxSum(maxSum: number): void;
+  setMaxMinuend(maxMinuend: number): void;
+  setMaxMultiplier1(maxMultiplier1: number): void;
+  setMaxMultiplier2(maxMultiplier2: number): void;
+  setMaxDivisor(maxDivisor: number): void;
+  setMaxQuotient(maxQuotient: number): void;
 }
 
 declare class GameStore extends Store {
@@ -42,6 +56,18 @@ declare interface GameOptions {
   store: GameStore;
   canvas: HTMLCanvasElement;
   sprites: Sprites;
+  operators?: Array<Operator>;
+  maxSum?: number;
+  maxMinuend?: number;
+  maxMultiplier1?: number;
+  maxMultiplier2?: number;
+  maxDivisor?: number;
+  maxQuotient?: number;
+}
+
+declare class Game {
+  constructor(options: GameOptions);
+  destroy(): void;
 }
 
 declare interface SpriteOptions {
@@ -70,6 +96,30 @@ declare interface WithSpriteOptions {
 }
 
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
+
+interface CreateAdditionOperationOptions {
+  maxSum: number;
+}
+
+interface CreateSubtractionOperationOptions {
+  maxMinuend: number;
+}
+
+interface CreateMultiplicationOperationOptions {
+  maxMultiplier1: number;
+  maxMultiplier2: number;
+}
+
+interface CreateDivisionOperationOptions {
+  maxDivisor: number;
+  maxQuotient: number;
+}
+
+interface CreateOperationOptions extends
+  CreateAdditionOperationOptions, CreateSubtractionOperationOptions,
+  CreateMultiplicationOperationOptions, CreateDivisionOperationOptions {
+  allowedOperators: Array<Operator>;
+}
 
 interface Operation {
   operator: Operator;

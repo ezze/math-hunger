@@ -28,7 +28,19 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     throw new InjectionError('Game store');
   }
 
-  const { correctCount, wrongCount, missedCount, overallCount, leftTimeFormatted } = gameStore;
+  const {
+    operators,
+    maxSum,
+    maxMinuend
+  } = settingsStore;
+
+  const {
+    correctCount,
+    wrongCount,
+    missedCount,
+    overallCount,
+    leftTimeFormatted
+  } = gameStore;
 
   const gameFieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -61,7 +73,10 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
       game = new Game({
         store: gameStore,
         canvas: canvasRef.current as HTMLCanvasElement,
-        sprites
+        sprites,
+        operators,
+        maxSum,
+        maxMinuend
       });
     };
     createGame();

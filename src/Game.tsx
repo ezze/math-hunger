@@ -1,6 +1,16 @@
 import { random, createOperation, getOperationText } from './utils';
 
-import { operationZoneWidth, splitGapSize, colors } from './constants';
+import {
+  operatorsDefault,
+  maxSumDefault,
+  maxMinuendDefault,
+  maxMultiplierDefault,
+  maxDivisorDefault,
+  maxQuotientDefault,
+  operationZoneWidth,
+  splitGapSize,
+  colors
+} from './constants';
 
 const challengeFadeTimeoutMs = 1000;
 const maxAnswerDigitsCount = 3;
@@ -9,6 +19,15 @@ class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
   sprites: Sprites;
+
+  operators: Array<Operator>;
+  maxSum: number;
+  maxMinuend: number;
+  maxMultiplier1: number;
+  maxMultiplier2: number;
+  maxDivisor: number;
+  maxQuotient: number;
+
   challenges: Array<Challenge | null>;
   challengeConcurrency = 3;
   maxChallengesCount = 4;
@@ -18,6 +37,7 @@ class Game {
   maxChallengeDelay = 1;
   challengeDelay = 0;
   activeChallengeIndex: number | null = null;
+
   horseZoneWidth: number;
   horseLastStartTime: number | null = null;
   horseLastEndTime: number | null = null;
@@ -26,14 +46,31 @@ class Game {
     const {
       store,
       canvas,
-      sprites
+      sprites,
+      operators = operatorsDefault,
+      maxSum = maxSumDefault,
+      maxMinuend = maxMinuendDefault,
+      maxMultiplier1 = maxMultiplierDefault,
+      maxMultiplier2 = maxMultiplierDefault,
+      maxDivisor = maxDivisorDefault,
+      maxQuotient = maxQuotientDefault
     } = options;
 
     this.store = store;
     this.canvas = canvas;
-    this.horseZoneWidth = this.calculateHorseZoneWidth();
     this.sprites = sprites;
+
+    this.operators = operators;
+    this.maxSum = maxSum;
+    this.maxMinuend = maxMinuend;
+    this.maxMultiplier1 = maxMultiplier1;
+    this.maxMultiplier2 = maxMultiplier2;
+    this.maxDivisor = maxDivisor;
+    this.maxQuotient = maxQuotient;
+
     this.challenges = new Array(this.maxChallengesCount).fill(null);
+
+    this.horseZoneWidth = this.calculateHorseZoneWidth();
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onWindowResize = this.onWindowResize.bind(this);
@@ -230,7 +267,13 @@ class Game {
       duration,
       fadeOutStartTime: time + duration * 1000 - challengeFadeTimeoutMs,
       operation: createOperation({
-        allowedOperators: ['add', 'subtract', 'multiply', 'divide']
+        allowedOperators: this.operators,
+        maxSum: this.maxSum,
+        maxMinuend: this.maxMinuend,
+        maxMultiplier1: this.maxMultiplier1,
+        maxMultiplier2: this.maxMultiplier2,
+        maxDivisor: this.maxDivisor,
+        maxQuotient: this.maxQuotient
       }),
       horseRenderFrame: 0
     };

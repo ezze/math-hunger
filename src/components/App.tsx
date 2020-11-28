@@ -25,7 +25,8 @@ const App: React.FunctionComponent<AppProps> = props => {
 
   const { duration } = settingsStore;
   const { playing } = gameStore;
-  const startGame = () => gameStore.start(duration);
+  const start = () => gameStore.start(duration);
+  const canBeStarted = settingsStore.operators.length > 0;
 
   const [intro, setIntro] = useState(true);
 
@@ -38,7 +39,7 @@ const App: React.FunctionComponent<AppProps> = props => {
   }
   else if (!playing) {
     content = (
-      <Start start={startGame} />
+      <Start start={start} canBeStarted={canBeStarted} />
     );
   }
   else {
