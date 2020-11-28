@@ -12,6 +12,7 @@ import InjectionError from './helpers/InjectionError';
 interface GameFieldProps extends React.HTMLAttributes<HTMLDivElement>, WithSpriteOptions {
   settingsStore?: SettingsStore;
   gameStore?: GameStore;
+  bestResultsStore?: BestResultsStore;
 }
 
 interface CanvasSize {
@@ -20,12 +21,15 @@ interface CanvasSize {
 }
 
 const GameField: React.FunctionComponent<GameFieldProps> = props => {
-  const { settingsStore, gameStore, sprites } = props;
+  const { settingsStore, gameStore, bestResultsStore, sprites } = props;
   if (!settingsStore) {
     throw new InjectionError('Settings store');
   }
   if (!gameStore) {
     throw new InjectionError('Game store');
+  }
+  if (!bestResultsStore) {
+    throw new InjectionError('Best results store');
   }
 
   const {
@@ -49,6 +53,7 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     wrongCount,
     missedCount,
     overallCount,
+    score,
     leftTimeFormatted
   } = gameStore;
 
@@ -111,11 +116,20 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   const canvas = size ? (
     <canvas ref={canvasRef} className="game-field-canvas" width={size.width} height={size.height}></canvas>
   ) : null;
+  let scoreSign = ' ';
+  if (score > 0) {
+    scoreSign = '+';
+  }
+  else if (score < 0) {
+    scoreSign = '-';
+  }
   return (
     <div ref={gameFieldRef} className="game-field">
       {canvas}
       <div className="game-field-score">
-        <div className="game-field-score-overall">{sprintf('%03d', overallCount)}</div>
+        <div className="game-field-score-overall">
+          {scoreSign}{sprintf('%03d', Math.abs(score))} / {sprintf('%03d', overallCount)}
+        </div>
         <div className="game-field-score-correct">{sprintf('%03d', correctCount)}</div>
         <div className="game-field-score-missed">{sprintf('%03d', missedCount)}</div>
         <div className="game-field-score-wrong">{sprintf('%03d', wrongCount)}</div>
@@ -127,4 +141,4 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
   );
 };
 
-export default withSprites(inject('settingsStore', 'gameStore')(observer(GameField)));
+export default withSprites(inject('settingsStore', 'gameStore', 'bestResultsStore')(observer(GameField)));

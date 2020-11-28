@@ -1,10 +1,14 @@
 import {
   makeObservable,
   observable,
-  action
+  action,
+  computed
 } from 'mobx';
 
+import objectHash from 'object-hash';
+
 import {
+  operatorsAvailable,
   durationsAvailable,
   settingsTabDefault,
   durationDefault,
@@ -79,6 +83,7 @@ class SettingsStore extends Store {
       maxChallengeDuration: observable,
       minChallengeDelay: observable,
       maxChallengeDelay: observable,
+      hash: computed,
       setTab: action,
       setDuration: action,
       setOperators: action,
@@ -97,6 +102,47 @@ class SettingsStore extends Store {
     });
   }
 
+  get hash(): string {
+    const object = {
+      duration: this.duration,
+      operators: this.operators,
+      challengeConcurrency: this.challengeConcurrency,
+      maxChallengesCount: this.maxChallengesCount,
+      minChallengeDuration: this.minChallengeDuration,
+      maxChallengeDuration: this.maxChallengeDuration,
+      minChallengeDelay: this.minChallengeDelay,
+      maxChallengeDelay: this.maxChallengeDelay
+    };
+
+    if (this.operators.includes('add')) {
+      Object.assign(object, {
+        maxSum: this.maxSum
+      });
+    }
+
+    if (this.operators.includes('subtract')) {
+      Object.assign(object, {
+        maxMinuend: this.maxMinuend
+      });
+    }
+
+    if (this.operators.includes('multiply')) {
+      Object.assign(object, {
+        maxMultiplier1: this.maxMultiplier1,
+        maxMultiplier2: this.maxMultiplier2
+      });
+    }
+
+    if (this.operators.includes('divide')) {
+      Object.assign(object, {
+        maxDivisor: this.maxDivisor,
+        maxQuotient: this.maxQuotient
+      });
+    }
+
+    return objectHash(object).slice(0, 6);
+  }
+
   setTab(tab: SettingsTab): void {
     this.tab = tab;
   }
@@ -108,7 +154,13 @@ class SettingsStore extends Store {
   }
 
   setOperators(operators: Array<Operator>): void {
-    this.operators = operators;
+    const orderedOperators = new Array<Operator>();
+    operatorsAvailable.forEach(operator => {
+      if (operators.includes(operator)) {
+        orderedOperators.push(operator);
+      }
+    });
+    this.operators = orderedOperators;
   }
 
   setMaxSum(maxSum: number): void {

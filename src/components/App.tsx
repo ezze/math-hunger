@@ -6,6 +6,7 @@ import { inject, observer } from 'mobx-react';
 import Intro from './Intro';
 import Start from './Start';
 import GameField from './GameField';
+import GameOver from './GameOver';
 
 import InjectionError from './helpers/InjectionError';
 
@@ -24,7 +25,7 @@ const App: React.FunctionComponent<AppProps> = props => {
   }
 
   const { duration } = settingsStore;
-  const { playing } = gameStore;
+  const { playing, gameOver } = gameStore;
   const start = () => gameStore.start(duration);
   const canBeStarted = settingsStore.operators.length > 0;
 
@@ -38,9 +39,16 @@ const App: React.FunctionComponent<AppProps> = props => {
     );
   }
   else if (!playing) {
-    content = (
-      <Start start={start} canBeStarted={canBeStarted} />
-    );
+    if (gameOver) {
+      content = (
+        <GameOver />
+      );
+    }
+    else {
+      content = (
+        <Start start={start} canBeStarted={canBeStarted}/>
+      );
+    }
   }
   else {
     content = (

@@ -2,6 +2,11 @@ declare module '*.jpg';
 declare module '*.png';
 declare module 'sprintf-js';
 
+type StoreData = Record<string, any>;
+type SettingsTab = 'basic' | 'math' | 'gameplay';
+type Sprites = Record<string, Sprite>;
+type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
+
 declare interface StoreOptions {
   key?: string;
   include?: Array<string>;
@@ -9,16 +14,12 @@ declare interface StoreOptions {
   saveDelayMs?: number;
 }
 
-type StoreData = Record<string, any>;
-
 declare class Store {
   constructor(options: StoreOptions);
   init(): Promise<StoreData>;
   load(): Promise<StoreData>;
   save(data: StoreData): Promise<void>;
 }
-
-type SettingsTab = 'basic' | 'math' | 'gameplay';
 
 declare class SettingsStore extends Store {
   tab: SettingsTab;
@@ -36,6 +37,7 @@ declare class SettingsStore extends Store {
   maxChallengeDuration: number;
   minChallengeDelay: number;
   maxChallengeDelay: number;
+  hash: string;
   setTab(tab: SettingsTab): void;
   setDuration(duration: number): void;
   setOperators(operators: Array<Operator>): void;
@@ -55,17 +57,29 @@ declare class SettingsStore extends Store {
 
 declare class GameStore extends Store {
   playing: boolean;
+  gameOver: boolean;
+  lastResult: BestResult | null;
+  correctCount: number;
+  wrongCount: number;
+  missedCount: number;
+  overallCount: number;
+  score: number;
+  leftTimeFormatted: string;
   start(duration: number): void;
   end(): void;
   interrupt(): void;
-  correctCount: number;
+  reset(): void;
+  finish(): void;
   increaseCorrectCount(): void;
-  wrongCount: number;
   increaseWrongCount(): void;
-  missedCount: number;
   increaseMissedCount(): void;
-  overallCount: number;
-  leftTimeFormatted: string;
+}
+
+declare class BestResultsStore extends Store {
+  name: string;
+  bestResults: Record<string, Array<BestResult>> = {};
+  setName(name: string): void;
+  add(hash: string, bestResult: BestResult): void
 }
 
 declare interface GameOptions {
@@ -87,11 +101,6 @@ declare interface GameOptions {
   maxChallengeDelay?: number;
 }
 
-declare class Game {
-  constructor(options: GameOptions);
-  destroy(): void;
-}
-
 declare interface SpriteOptions {
   url: string;
   width: number;
@@ -111,13 +120,9 @@ declare class Sprite {
   draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1) => void
 }
 
-type Sprites = Record<string, Sprite>;
-
 declare interface WithSpriteOptions {
   sprites: Sprites;
 }
-
-type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 
 interface CreateAdditionOperationOptions {
   maxSum: number;
@@ -158,4 +163,13 @@ declare interface Challenge {
   horseRenderFrame: number;
   answer?: number;
   correct?: boolean;
+}
+
+declare interface BestResult {
+  name: string;
+  correctCount: number;
+  wrongCount: number;
+  missedCount: number;
+  score: number;
+  time: string;
 }

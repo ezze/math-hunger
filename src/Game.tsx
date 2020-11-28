@@ -53,6 +53,8 @@ class Game {
   horseLastStartTime: number | null = null;
   horseLastEndTime: number | null = null;
 
+  destroyed = false;
+
   constructor(options: GameOptions) {
     const {
       store,
@@ -109,13 +111,17 @@ class Game {
   destroy(): void {
     document.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('resize', this.onWindowResize);
+    this.challenges.forEach((challenge, challengeIndex) => {
+      this.challenges[challengeIndex] = null;
+    });
+    this.destroyed = true;
   }
 
   onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'ArrowUp') {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       this.moveToPreviousChallenge();
     }
-    else if (event.key === 'ArrowDown') {
+    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       this.moveToNextChallenge();
     }
     else if (event.keyCode >= 48 && event.keyCode <= 57) {
@@ -207,7 +213,7 @@ class Game {
 
   checkAnswer(): void {
     const challenge = this.getActiveChallenge();
-    if (!challenge || challenge.answer === undefined) {
+    if (!challenge || challenge.answer === undefined || typeof challenge.correct === 'boolean') {
       return;
     }
     challenge.correct = challenge.answer === challenge.operation.answer;
@@ -249,6 +255,9 @@ class Game {
   }
 
   animationFrame(time: number): void {
+    if (this.destroyed) {
+      return;
+    }
     this.updateChallenges(time);
     const context = this.canvas.getContext('2d');
     if (context) {
