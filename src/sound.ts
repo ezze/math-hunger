@@ -17,7 +17,7 @@ const playingSounds: Record<Sound, boolean> = {
   gameOver: false
 };
 
-const music = new Array<HTMLAudioElement>();
+const musicTracks = new Array<HTMLAudioElement>();
 let musicIndex = 0;
 
 export async function initAudio(): Promise<void> {
@@ -27,7 +27,7 @@ export async function initAudio(): Promise<void> {
   sounds.correct = await loadAudio(correctSoundUrl);
   sounds.wrong = await loadAudio(wrongSoundUrl);
   sounds.gameOver = await loadAudio(gameOverSoundUrl);
-  music.push(await loadAudio(music1Url), await loadAudio(music2Url));
+  musicTracks.push(await loadAudio(music1Url), await loadAudio(music2Url));
 }
 
 async function loadAudio(url: string): Promise<HTMLAudioElement> {
@@ -39,7 +39,6 @@ async function loadAudio(url: string): Promise<HTMLAudioElement> {
     };
     const onError = () => {
       removeListeners();
-      console.log('error');
       reject();
     };
     const removeListeners = () => {
@@ -72,27 +71,35 @@ export async function playSound(sound: Sound): Promise<void> {
   }
 }
 
-let musicPlaying = false;
 export async function playMusic(): Promise<void> {
-  if (musicPlaying) {
-    return;
-  }
-
-  const audio = music[musicIndex];
+  const audio = musicTracks[musicIndex];
   if (!audio) {
     return;
   }
 
-  musicPlaying = true;
-  try {
-    await audio.play();
+  let onEnded;
+  let onError;
+  await new Promise<void>((resolve, reject) => {
+    onEnded = () => resolve();
+    onError = () => reject();
+    audio.addEventListener('ended', onEnded);
+    audio.addEventListener('error', onError);
+    try {
+      audio.play();
+    }
+    catch (e) {
+      console.error(e);
+    }
+  });
+  if (onEnded) {
+    audio.removeEventListener('ended', onEnded);
   }
-  catch (e) {
-    console.error(e);
+  if (onError) {
+    audio.removeEventListener('error', onError);
   }
 
   musicIndex++;
-  if (musicIndex >= music.length) {
+  if (musicIndex >= musicTracks.length) {
     musicIndex = 0;
   }
   playMusic().catch(e => console.error(e));

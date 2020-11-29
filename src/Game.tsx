@@ -117,6 +117,7 @@ class Game {
       this.challenges[challengeIndex] = null;
     });
     this.destroyed = true;
+    playSound('gameOver').catch(e => console.error(e));
   }
 
   onKeyDown(event: KeyboardEvent): void {
