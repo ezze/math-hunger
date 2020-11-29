@@ -4,6 +4,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 
+import { initAudio } from './sound';
 import { getStores } from './store';
 
 import App from './components/App';
@@ -23,9 +24,10 @@ function createAppContainer(): HTMLElement {
 }
 
 async function createApp(appContainer: HTMLElement) {
+  await initAudio();
   const sprites = await getSprites();
-
   const stores = await getStores();
+
   render(
     <Provider {...stores}>
       <SpritesProvider value={sprites}>

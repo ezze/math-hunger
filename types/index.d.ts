@@ -1,11 +1,14 @@
 declare module '*.jpg';
 declare module '*.png';
+declare module '*.mp3';
 declare module 'sprintf-js';
 
 type StoreData = Record<string, any>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
 type Sprites = Record<string, Sprite>;
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
+type Sound = 'correct' | 'wrong' | 'gameOver';
+type Sounds = Record<Sound | string, HTMLAudioElement | null>;
 
 declare interface StoreOptions {
   key?: string;

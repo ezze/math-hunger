@@ -1,7 +1,9 @@
 import './less/app.less';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { inject, observer } from 'mobx-react';
+
+import { playMusic } from '../sound';
 
 import Intro from './Intro';
 import Start from './Start';
@@ -30,6 +32,11 @@ const App: React.FunctionComponent<AppProps> = props => {
   const canBeStarted = settingsStore.operators.length > 0;
 
   const [intro, setIntro] = useState(true);
+  useEffect(() => {
+    if (!intro) {
+      playMusic().catch(e => console.error(e));
+    }
+  });
 
   let content;
   if (intro) {

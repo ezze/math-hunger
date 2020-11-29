@@ -91,6 +91,14 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
             name: 'fonts/[name].[contenthash:6].[ext]'
           }
         }
+      }, {
+        test: /\.mp3$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'audio/[name].[contenthash:6].[ext]'
+          }
+        }
       }]
     },
     resolve: {

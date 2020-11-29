@@ -1,3 +1,5 @@
+import { playSound } from './sound';
+
 import {
   random,
   createOperation,
@@ -189,9 +191,11 @@ class Game {
     }
     else {
       if (challenge.correct) {
+        playSound('correct').catch(e => console.log(e));
         this.store.increaseCorrectCount();
       }
       else {
+        playSound('wrong').catch(e => console.log(e));
         this.store.increaseWrongCount();
       }
       window.setTimeout(() => this.challenges[challengeIndex] = null, challengeFadeTimeoutMs);
@@ -366,8 +370,7 @@ class Game {
         fadeOutStartTime,
         operation,
         horseRenderFrame,
-        answer,
-        correct
+        answer
       } = challenge;
 
       // Render a horse

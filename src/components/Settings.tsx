@@ -12,36 +12,25 @@ import {
   maxSumDefault,
   maxMinuendStart,
   maxMinuendEnd,
-  maxMinuendDefault,
   maxMultiplierStart,
   maxMultiplierEnd,
-  maxMultiplierDefault,
   maxDivisorStart,
   maxDivisorEnd,
-  maxDivisorDefault,
   maxQuotientStart,
   maxQuotientEnd,
-  maxQuotientDefault,
   challengeConcurrencyStart,
   challengeConcurrencyEnd,
-  challengeConcurrencyDefault,
   maxChallengesCountStart,
   maxChallengesCountEnd,
-  maxChallengesCountDefault,
   challengeDurationStart,
   challengeDurationEnd,
-  minChallengeDurationDefault,
-  maxChallengeDurationDefault,
   challengeDelayStart,
-  challengeDelayEnd,
-  minChallengeDelayDefault,
-  maxChallengeDelayDefault
+  challengeDelayEnd
 } from '../constants';
 
 import { getOperatorLabel } from '../utils';
 
 import InjectionError from './helpers/InjectionError';
-import { create } from 'domain';
 
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   settingsStore?: SettingsStore;
