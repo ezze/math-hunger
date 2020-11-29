@@ -1,3 +1,13 @@
+import { useEffect, useRef } from 'react';
+
+export function usePrevious<T extends unknown>(value: T): T | undefined {
+  const ref = useRef<T>(value);
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 export function delay(ms = 200): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
