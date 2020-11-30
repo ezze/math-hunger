@@ -3,7 +3,6 @@ import './less/settings.less';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import {
   durationsAvailable,
