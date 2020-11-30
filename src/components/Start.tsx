@@ -3,6 +3,8 @@ import './less/start.less';
 import React from 'react';
 import { Space, Button } from 'antd';
 
+import AppTitle from './AppTitle';
+
 import Settings from './Settings';
 import BestResults from './BestResults';
 
@@ -16,9 +18,7 @@ const Start: React.FunctionComponent<StartProps> = props => {
   return (
     <div className="start">
       <Space direction="vertical" size="large">
-        <div className="start-title">
-          Math Hunger
-        </div>
+        <AppTitle />
         <div className="start-content">
           <div className="start-pane">
             <h2>Settings</h2>

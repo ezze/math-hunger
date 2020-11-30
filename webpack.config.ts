@@ -10,6 +10,8 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 import packageJson from './package.json';
 
+const { DefinePlugin } = webpack;
+
 const srcDirPath = path.resolve(__dirname, 'src');
 const distDirPath = path.resolve(__dirname, 'dist');
 
@@ -54,7 +56,7 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
             transpileOnly: true
           }
         },
-        exclude: /node_modules/
+        include: [srcDirPath]
       }, {
         test: /\.less$/,
         use: [{
@@ -80,9 +82,7 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
             name: 'img/[name].[contenthash:6].[ext]'
           }
         },
-        include: [
-          path.resolve(__dirname, 'src')
-        ]
+        include: [srcDirPath]
       }, {
         test: /\.(woff2?)$/,
         use: {
@@ -98,7 +98,8 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
           options: {
             name: 'audio/[name].[contenthash:6].[ext]'
           }
-        }
+        },
+        include: [srcDirPath]
       }]
     },
     resolve: {
@@ -113,7 +114,10 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
         filename: `css/${mode === 'development' ? '[name].css' : '[name].[contenthash:6].css'}`,
         chunkFilename: `css/${mode === 'development' ? '[name].css' : '[name].[contenthash:6].css'}`
       }),
-      new ForkTsCheckerPlugin()
+      new ForkTsCheckerPlugin(),
+      new DefinePlugin({
+        appVersion: JSON.stringify(packageJson.version)
+      })
     ],
     optimization: {
       minimize: mode === 'production',
