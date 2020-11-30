@@ -33,7 +33,7 @@ const BestResults = (props: BestResultsProps) => {
       date: `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`,
       name,
       score,
-      stats: `${correctCount}/${wrongCount}/${missedCount}`
+      stats: `${correctCount}-${missedCount}-${wrongCount}`
     };
   });
 
