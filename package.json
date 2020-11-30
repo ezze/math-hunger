@@ -1,0 +1,76 @@
+{
+  "name": "math-hunger",
+  "version": "0.1.0",
+  "description": "Math Hunger Game",
+  "main": "src/index.tsx",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "dist": "webpack --mode=production",
+    "dist:dev": "webpack --mode=development",
+    "wds": "webpack serve --mode=production",
+    "wds:dev": "webpack serve --mode=development",
+    "lint": "eslint src",
+    "raise": "raisever",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/yellowberry/math-hunger.git"
+  },
+  "private": true,
+  "keywords": [
+    "math",
+    "game"
+  ],
+  "author": "Dmitriy Pushkov <ezze@ezze.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/yellowberry/math-hunger/issues"
+  },
+  "homepage": "https://gitlab.com/yellowberry/math-hunger#readme",
+  "dependencies": {
+    "antd": "^4.8.5",
+    "mobx": "^6.0.4",
+    "mobx-react": "^7.0.5",
+    "mobx-utils": "^6.0.1",
+    "object-hash": "^2.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "sprintf-js": "^1.1.2",
+    "typeface-roboto": "^1.1.13",
+    "typeface-ubuntu-mono": "^1.1.13"
+  },
+  "devDependencies": {
+    "@types/css-minimizer-webpack-plugin": "^1.1.1",
+    "@types/mini-css-extract-plugin": "^1.2.1",
+    "@types/node": "^14.14.9",
+    "@types/object-hash": "^1.3.4",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/sprintf-js": "^1.1.2",
+    "@types/terser-webpack-plugin": "^5.0.2",
+    "@types/webpack": "^4.41.25",
+    "@typescript-eslint/eslint-plugin": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "css-minimizer-webpack-plugin": "^1.1.5",
+    "eslint": "^7.14.0",
+    "eslint-config-ezze-react-ts": "^0.9.1",
+    "eslint-plugin-react": "^7.21.5",
+    "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^6.0.3",
+    "html-webpack-plugin": "^5.0.0-alpha.14",
+    "less": "^3.12.2",
+    "less-loader": "^7.1.0",
+    "mini-css-extract-plugin": "^1.3.1",
+    "raise-version": "^0.3.2",
+    "terser-webpack-plugin": "^5.0.3",
+    "ts-loader": "^8.0.11",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.1.2",
+    "webpack": "^5.6.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

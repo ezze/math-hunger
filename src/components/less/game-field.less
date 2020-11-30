@@ -1,0 +1,62 @@
+@import "../../variables";
+
+.game-field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game-field-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+.game-field-score,
+.game-field-time {
+  position: absolute;
+  bottom: @game-field-info-gap;
+  display: flex;
+  pointer-events: none;
+  border-radius: @game-field-info-border-radius;
+  padding: @game-field-info-padding-vertical @game-field-info-padding-horizontal;
+  color: @game-field-info-text-color;
+  background-color: @game-field-info-bg-color;
+  opacity: @game-field-info-opacity;
+
+  > div {
+    font-family: "Ubuntu Mono", monospace;
+    font-size: @game-field-info-padding-horizontal;
+    font-weight: bold;
+
+    &:not(:first-child) {
+      margin-left: @game-field-info-padding-horizontal;
+    }
+  }
+}
+
+.game-field-score {
+  left: @game-field-info-gap;
+
+  > div {
+    &.game-field-score-correct {
+      color: #0c0;
+    }
+
+    &.game-field-score-wrong {
+      color: #f00;
+    }
+
+    &.game-field-score-missed {
+      color: #f90;
+    }
+  }
+}
+
+.game-field-time {
+  right: @game-field-info-gap
+}
