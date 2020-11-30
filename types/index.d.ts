@@ -2,7 +2,6 @@ declare const appVersion: string;
 declare module '*.jpg';
 declare module '*.png';
 declare module '*.mp3';
-declare module 'sprintf-js';
 
 type Stores = Record<string, Store>;
 type StoreData = Record<string, any>;
