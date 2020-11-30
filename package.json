@@ -5,8 +5,8 @@
   "main": "src/index.tsx",
   "types": "types/index.d.ts",
   "scripts": {
-    "dist": "webpack --mode=production",
-    "dist:dev": "webpack --mode=development",
+    "dist": "webpack --mode=production --progress",
+    "dist:dev": "webpack --mode=development --progress",
     "wds": "webpack serve --mode=production",
     "wds:dev": "webpack serve --mode=development",
     "lint": "eslint src",
