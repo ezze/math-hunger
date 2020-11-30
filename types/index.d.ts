@@ -3,12 +3,13 @@ declare module '*.png';
 declare module '*.mp3';
 declare module 'sprintf-js';
 
+type Stores = Record<string, Store>;
 type StoreData = Record<string, any>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
 type Sprites = Record<string, Sprite>;
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 type Sound = 'correct' | 'wrong' | 'gameOver';
-type Sounds = Record<Sound | string, HTMLAudioElement | null>;
+type SoundBlobs = Record<Sound | string, Blob | null>;
 
 declare interface StoreOptions {
   key?: string;
@@ -40,6 +41,8 @@ declare class SettingsStore extends Store {
   maxChallengeDuration: number;
   minChallengeDelay: number;
   maxChallengeDelay: number;
+  sound: boolean;
+  music: boolean;
   hash: string;
   setTab(tab: SettingsTab): void;
   setDuration(duration: number): void;
@@ -56,6 +59,8 @@ declare class SettingsStore extends Store {
   setMaxChallengeDuration(maxChallengeDuration: number): void;
   setMinChallengeDelay(minChallengeDelay: number): void;
   setMaxChallengeDelay(maxChallengeDelay: number): void;
+  setSound(sound: boolean): void;
+  setMusic(music: boolean): void;
 }
 
 declare class GameStore extends Store {

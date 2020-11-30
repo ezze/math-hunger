@@ -1,5 +1,3 @@
-import { playSound } from './sound';
-
 import {
   random,
   createOperation,
@@ -117,7 +115,6 @@ class Game {
       this.challenges[challengeIndex] = null;
     });
     this.destroyed = true;
-    playSound('gameOver').catch(e => console.error(e));
   }
 
   onKeyDown(event: KeyboardEvent): void {
@@ -192,11 +189,9 @@ class Game {
     }
     else {
       if (challenge.correct) {
-        playSound('correct').catch(e => console.log(e));
         this.store.increaseCorrectCount();
       }
       else {
-        playSound('wrong').catch(e => console.log(e));
         this.store.increaseWrongCount();
       }
       window.setTimeout(() => this.challenges[challengeIndex] = null, challengeFadeTimeoutMs);

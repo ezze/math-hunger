@@ -36,7 +36,9 @@ const App: React.FunctionComponent<AppProps> = props => {
   const prevIntro = usePrevious(intro);
   useEffect(() => {
     if (prevIntro && !intro) {
-      playMusic().catch(e => console.error(e));
+      if (settingsStore.music) {
+        playMusic().catch(e => console.error(e));
+      }
     }
   });
 

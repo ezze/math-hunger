@@ -5,7 +5,7 @@ import BestResultsStore from './BestResultsStore';
 
 let stores: Record<string, Store>;
 
-async function getStores(): Promise<Record<string, Store>> {
+async function getStores(): Promise<Stores> {
   if (!stores) {
     const settingsStore = new SettingsStore({ key: 'settings' });
     const gameStore = new GameStore();

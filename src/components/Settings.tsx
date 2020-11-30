@@ -2,7 +2,8 @@ import './less/settings.less';
 
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Form, Select, InputNumber, Tabs, Row, Col } from 'antd';
+import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import {
   durationsAvailable,
@@ -57,7 +58,9 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     minChallengeDuration,
     maxChallengeDuration,
     minChallengeDelay,
-    maxChallengeDelay
+    maxChallengeDelay,
+    sound,
+    music
   } = settingsStore;
 
   const initialValues = {
@@ -74,7 +77,9 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     minChallengeDuration,
     maxChallengeDuration,
     minChallengeDelay,
-    maxChallengeDelay
+    maxChallengeDelay,
+    sound,
+    music
   };
 
   const onTabChange = (tab: string) => {
@@ -87,6 +92,14 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
 
   const onOperatorsChange = (operators: Array<Operator>) => {
     settingsStore.setOperators(operators);
+  };
+
+  const onSoundChange = (sound: boolean) => {
+    settingsStore.setSound(sound);
+  };
+
+  const onMusicChange = (music: boolean) => {
+    settingsStore.setMusic(music);
   };
 
   const createOnNumberInputChange = (name: string): (value: number | string | undefined) => void => {
@@ -315,6 +328,20 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                     onChange={onMaxQuotientChange}
                   >
                   </InputNumber>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Tabs.TabPane>
+          <Tabs.TabPane key="misc" tab="Misc">
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="Sound" name="sound" valuePropName="checked">
+                  <Switch onChange={onSoundChange} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Music" name="music" valuePropName="checked">
+                  <Switch onChange={onMusicChange} />
                 </Form.Item>
               </Col>
             </Row>
