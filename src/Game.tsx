@@ -118,13 +118,14 @@ class Game {
   }
 
   onKeyDown(event: KeyboardEvent): void {
+    console.log(event);
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       this.moveToPreviousChallenge();
     }
     else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       this.moveToNextChallenge();
     }
-    else if (event.keyCode >= 48 && event.keyCode <= 57) {
+    else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(event.key)) {
       this.addAnswerDigit(parseInt(event.key, 10));
     }
     else if (event.key === 'Enter') {
@@ -136,7 +137,7 @@ class Game {
     else if (event.key === 'Escape') {
       this.clearAnswer();
     }
-    else if (event.ctrlKey && event.key === 'c') {
+    else if (event.ctrlKey && event.code === 'KeyC') {
       this.store.interrupt();
     }
   }
