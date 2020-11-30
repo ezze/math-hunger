@@ -118,7 +118,6 @@ class Game {
   }
 
   onKeyDown(event: KeyboardEvent): void {
-    console.log(event);
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       this.moveToPreviousChallenge();
     }
