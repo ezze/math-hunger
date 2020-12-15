@@ -4,9 +4,17 @@
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: @start-padding-top;
+  min-height: @start-min-height;
+  padding: @start-padding-vertical 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+
+  > .ant-space {
+    display: flex;
+    flex-direction: column;
+    min-height: @start-min-height - 2 * @start-padding-vertical;
+  }
 }
 
 .start-content {
