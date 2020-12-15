@@ -2,7 +2,7 @@
 
 .game-over {
   position: relative;
-  width: 600px;
+  width: @game-over-width;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -10,20 +10,20 @@
 }
 
 .game-over-name {
-  width: 600px;
+  width: @game-over-width;
   text-align: center;
   display: flex;
   justify-content: space-around;
 
   input {
-    width: 250px;
+    width: @game-over-input-width;
   }
 }
 
 .game-over-title {
-  width: 600px;
-  font-size: 36px;
+  width: @game-over-width;
+  font-size: @game-over-title-size;
   font-weight: bold;
-  color: #c00;
+  color: @game-over-title-color;
   text-align: center;
 }

@@ -1,13 +1,12 @@
-@import "../../variables.less";
-
+@import "../../variables";
 
 .start {
   position: relative;
   width: 100%;
   height: 100%;
+  padding-top: @start-padding-top;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
 }
 
 .start-content {
@@ -16,13 +15,13 @@
 }
 
 .start-pane {
-  width: 420px;
+  width: @start-pane-width;
 }
 
 .start-pane-divider {
   background-color: @divider-color;
-  width: 1px;
-  margin: 0 24px;
+  width: @start-divider-width;
+  margin: 0 @start-divider-gap;
 }
 
 .start-footer {

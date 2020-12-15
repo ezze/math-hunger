@@ -13,7 +13,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: @game-field-bg-color;
 }
 
 .game-field-score,
@@ -29,7 +29,7 @@
   opacity: @game-field-info-opacity;
 
   > div {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: @game-field-font;
     font-size: @game-field-info-padding-horizontal;
     font-weight: bold;
 
@@ -44,15 +44,15 @@
 
   > div {
     &.game-field-score-correct {
-      color: #0c0;
-    }
-
-    &.game-field-score-wrong {
-      color: #f00;
+      color: @game-field-correct-color;
     }
 
     &.game-field-score-missed {
-      color: #f90;
+      color: @game-field-missed-color;
+    }
+
+    &.game-field-score-wrong {
+      color: @game-field-wrong-color;
     }
   }
 }

@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .intro {
   position: relative;
   width: 100%;
@@ -13,9 +15,9 @@
 
 .intro-logo {
   display: inline-block;
-  width: 600px;
-  height: 222px;
+  width: @intro-logo-width;
+  height: @intro-logo-height;
   overflow: hidden;
   background-image: url('../../img/logo.png');
-  margin: 20px 0 40px;
+  margin: @intro-logo-gap-top 0 @intro-logo-gap-bottom;
 }
