@@ -84,22 +84,24 @@ const GameOver = (props: GameOverProps) => {
 
   return (
     <div className="game-over">
-      <Space direction="vertical" size="large">
-        <div className="game-over-title">{t('game-over')}</div>
-        <div className="game-over-name">
-          <Form name="game-over" layout="inline" initialValues={initialValues} onSubmitCapture={onNameSubmit}>
-            <Form.Item name="name">
-              <Input onChange={onNameChange} placeholder={t('input-your-name')} />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" onSubmit={onNameSubmit} onClick={onNameSubmit} disabled={!name.trim()}>
-                {t('enter')}
-              </Button>
-            </Form.Item>
-          </Form>
-        </div>
-        <Table dataSource={dataSource} columns={columns} showHeader={false} bordered={true} pagination={false} />
-      </Space>
+      <div className="game-over-inner">
+        <Space direction="vertical" size="large">
+          <div className="game-over-title">{t('game-over')}</div>
+          <div className="game-over-name">
+            <Form name="game-over" layout="inline" initialValues={initialValues} onSubmitCapture={onNameSubmit}>
+              <Form.Item name="name">
+                <Input onChange={onNameChange} placeholder={t('input-your-name')} />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" onSubmit={onNameSubmit} onClick={onNameSubmit} disabled={!name.trim()}>
+                  {t('enter')}
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+          <Table dataSource={dataSource} columns={columns} showHeader={false} bordered={true} pagination={false} />
+        </Space>
+      </div>
     </div>
   );
 };

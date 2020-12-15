@@ -52,6 +52,7 @@
   "game-over": {
     "game-over": "Game over",
     "input-your-name": "Input your name...",
+    "enter": "Enter",
     "score": "Score",
     "correct": "Correct answers",
     "wrong": "Wrong answers",
