@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.3.1 (2020-12-16)
+
 - Loading indicator should be hidden just before app rendering.
 
 ## 0.3.0 (2020-12-16)
