@@ -171,7 +171,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                   <InputNumber
                     type="number"
                     min={challengeConcurrencyStart}
-                    max={challengeConcurrencyEnd}
+                    max={Math.min(maxChallengesCount, challengeConcurrencyEnd)}
                     onChange={onChallengeConcurrencyChange}
                   >
                   </InputNumber>
