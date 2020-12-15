@@ -9,7 +9,6 @@ import {
   operatorsAvailable,
   maxSumStart,
   maxSumEnd,
-  maxSumDefault,
   maxMinuendStart,
   maxMinuendEnd,
   maxMultiplierStart,
@@ -103,7 +102,9 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
 
   const createOnNumberInputChange = (name: string): (value: number | string | undefined) => void => {
     return (value: number | string | undefined) => {
-      (settingsStore as any)[name](typeof value === 'number' ? value : maxSumDefault);
+      if (typeof value === 'number') {
+        (settingsStore as any)[name](value);
+      }
     };
   };
 
@@ -161,7 +162,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                   <InputNumber
                     type="number"
                     min={challengeConcurrencyStart}
-                    max={Math.min(maxChallengesCount, challengeConcurrencyEnd)}
+                    max={challengeConcurrencyEnd}
                     onChange={onChallengeConcurrencyChange}
                   >
                   </InputNumber>
@@ -175,7 +176,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                   <InputNumber
                     type="number"
                     min={challengeDurationStart}
-                    max={Math.min(maxChallengeDuration, challengeDurationEnd)}
+                    max={challengeDurationEnd}
                     onChange={onMinChallengeDurationChange}
                   >
                   </InputNumber>
@@ -188,7 +189,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                 >
                   <InputNumber
                     type="number"
-                    min={Math.max(minChallengeDuration, challengeDurationStart)}
+                    min={challengeDurationStart}
                     max={challengeDurationEnd}
                     onChange={onMaxChallengeDurationChange}
                   >
@@ -203,7 +204,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                   <InputNumber
                     type="number"
                     min={challengeDelayStart}
-                    max={Math.min(maxChallengeDelay, challengeDelayEnd)}
+                    max={challengeDelayEnd}
                     onChange={onMinChallengeDelayChange}
                   >
                   </InputNumber>
@@ -216,7 +217,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                 >
                   <InputNumber
                     type="number"
-                    min={Math.max(minChallengeDelay, challengeDelayStart)}
+                    min={challengeDelayStart}
                     max={challengeDelayEnd}
                     onChange={onMaxChallengeDelayChange}
                   >
