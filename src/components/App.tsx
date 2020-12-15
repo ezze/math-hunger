@@ -30,7 +30,11 @@ const App: React.FunctionComponent<AppProps> = props => {
   const { duration } = settingsStore;
   const { playing, gameOver } = gameStore;
   const start = () => gameStore.start(duration);
-  const canBeStarted = settingsStore.operators.length > 0;
+  const canBeStarted = (
+    settingsStore.operators.length > 0 &&
+    settingsStore.minChallengeDuration <= settingsStore.maxChallengeDuration &&
+    settingsStore.minChallengeDelay <= settingsStore.maxChallengeDelay
+  );
 
   const [intro, setIntro] = useState(true);
   const prevIntro = usePrevious(intro);

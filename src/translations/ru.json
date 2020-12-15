@@ -1,0 +1,62 @@
+{
+  "app": {
+    "name": "Math Hunger"
+  },
+  "language": {
+    "en": "Английский",
+    "ru": "Русский"
+  },
+  "operator": {
+    "add": "Сложение",
+    "subtract": "Вычитание",
+    "multiply": "Умножение",
+    "divide": "Деление"
+  },
+  "intro": {
+    "press-the-button": "Нажмите кнопку"
+  },
+  "start": {
+    "settings": "Настройки",
+    "best-results": "Лучшие результаты",
+    "start-the-game": "Начать игру"
+  },
+  "settings": {
+    "basic": "Основные",
+    "math": "Математические",
+    "misc": "Прочие",
+    "game-duration": "Время игры, мин",
+    "max-challenges-count": "Дорожки",
+    "concurrency": "Конкуренция",
+    "min-challenge-duration": "Мин. время примера, сек",
+    "max-challenge-duration": "Макс. время примера, сек",
+    "min-challenge-delay": "Мин. задержка примера, сек",
+    "max-challenge-delay": "Макс. задержка примера, сек",
+    "operators": "Операции",
+    "max-sum": "Макс. сумма",
+    "max-minuend": "Макс. уменьшаемое",
+    "max-multiplier-1": "Макс. первый множитель",
+    "max-multiplier-2": "Макс. второй множитель",
+    "max-divisor": "Макс. делитель",
+    "max-quotient": "Макс. частное",
+    "language": "Язык",
+    "sound": "Звук",
+    "music": "Музыка"
+  },
+  "best-results": {
+    "no-results": "Для выбранных настроек игры пока нет результатов...",
+    "name": "Имя",
+    "date": "Дата",
+    "stats": "Результат",
+    "score": "Очки"
+  },
+  "game-over": {
+    "game-over": "Конец игры",
+    "input-your-name": "Введите Ваше имя...",
+    "enter": "Ввод",
+    "score": "Очки",
+    "correct": "Правильные ответы",
+    "wrong": "Неправильные ответы",
+    "missed": "Пропущенные примеры",
+    "incorrect-list": "Список нерешённых примеров"
+  }
+}

@@ -88,12 +88,3 @@ export function getOperatorSign(operator: Operator): string {
     case 'divide': return ':';
   }
 }
-
-export function getOperatorLabel(operator: Operator): string {
-  switch (operator) {
-    case 'add': return 'Addition';
-    case 'subtract': return 'Subtraction';
-    case 'multiply': return 'Multiplication';
-    case 'divide': return 'Division';
-  }
-}

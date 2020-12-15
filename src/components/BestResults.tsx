@@ -4,6 +4,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { useTranslation } from 'react-i18next';
 
 import InjectionError from './helpers/InjectionError';
 
@@ -21,6 +22,8 @@ const BestResults = (props: BestResultsProps) => {
     throw new InjectionError('Best results store');
   }
 
+  const { t } = useTranslation('best-results');
+
   const { hash } = settingsStore;
   const { bestResults } = bestResultsStore;
 
@@ -33,7 +36,7 @@ const BestResults = (props: BestResultsProps) => {
       date: `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`,
       name,
       score,
-      stats: `${correctCount}-${missedCount}-${wrongCount}`
+      stats: `${correctCount}-${wrongCount}-${missedCount}`
     };
   });
 
@@ -51,24 +54,24 @@ const BestResults = (props: BestResultsProps) => {
     align: 'right'
   }, {
     key: 'name',
-    title: 'Name',
+    title: t('name'),
     dataIndex: 'name',
     className: 'best-results-name'
   }, {
     key: 'date',
-    title: 'Date',
+    title: t('date'),
     dataIndex: 'date',
     className: 'best-result-date',
     align: 'center'
   }, {
     key: 'stats',
-    title: 'Stats',
+    title: t('stats'),
     dataIndex: 'stats',
     className: 'best-results-stats',
     align: 'right'
   }, {
     key: 'score',
-    title: 'Score',
+    title: t('score'),
     dataIndex: 'score',
     className: 'best-results-score',
     align: 'right'
@@ -80,7 +83,7 @@ const BestResults = (props: BestResultsProps) => {
         <Table dataSource={dataSource} columns={columns} pagination={false} bordered={true} size="small" />
       ) : (
         <div className="best-results-nothing">
-          There are no results yet...
+          {t('no-results')}
         </div>
       )}
     </div>
