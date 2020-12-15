@@ -89,15 +89,13 @@ const GameOver = (props: GameOverProps) => {
     <div className="game-over-incorrect">
       <h3>{t('incorrect-list')}</h3>
       <Row gutter={24}>
-        {incorrectItems.map(item => {
-          return (
-            <Col span={8}>
-              <div className={`game-over-incorrect-item game-over-incorrect-item-${item.type}`}>
-                {item.operation}
-              </div>
-            </Col>
-          );
-        })}
+        {incorrectItems.map((item, index) => (
+          <Col key={index} span={8}>
+            <div className={`game-over-incorrect-item game-over-incorrect-item-${item.type}`}>
+              {item.operation}
+            </div>
+          </Col>
+        ))}
       </Row>
     </div>
   ) : '';
