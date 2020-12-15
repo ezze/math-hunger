@@ -14,10 +14,6 @@ import App from './components/App';
 import { SpritesProvider, getSprites } from './sprites';
 
 function onDocumentReady() {
-  const loadingSpinner = document.querySelector('.loading-spinner');
-  if (loadingSpinner) {
-    loadingSpinner.remove();
-  }
   const appContainer = createAppContainer();
   createApp(appContainer).catch(e => console.error(e));
 }
@@ -75,6 +71,11 @@ async function createApp(appContainer: HTMLElement) {
   const sprites = await getSprites();
   await initI18n(stores);
   await initAudio(stores);
+  
+  const loadingSpinner = document.querySelector('.loading-spinner');
+  if (loadingSpinner) {
+    loadingSpinner.remove();
+  }
 
   render(
     <Provider {...stores}>
