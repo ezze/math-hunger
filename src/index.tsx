@@ -14,6 +14,10 @@ import App from './components/App';
 import { SpritesProvider, getSprites } from './sprites';
 
 function onDocumentReady() {
+  const loadingSpinner = document.querySelector('.loading-spinner');
+  if (loadingSpinner) {
+    loadingSpinner.remove();
+  }
   const appContainer = createAppContainer();
   createApp(appContainer).catch(e => console.error(e));
 }
