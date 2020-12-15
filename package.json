@@ -1,6 +1,6 @@
 {
   "name": "math-hunger",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Math Hunger Game",
   "main": "src/index.tsx",
   "types": "types/types.d.ts",

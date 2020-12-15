@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.2.0 (2020-12-16)
+
 - Game is translated to Russian language, control to change interface language is added.
 - Linked challenge parameters manipulation is fixed.
 - Intro, start and game over scroll issues are fixed.
