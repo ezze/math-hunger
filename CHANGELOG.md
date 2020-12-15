@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.3.0 (2020-12-16)
+
 - Loading indicator on application startup is shown.
 
 ## 0.2.0 (2020-12-16)
