@@ -200,7 +200,7 @@ class Game {
 
   addAnswerDigit(digit: number): void {
     const challenge = this.getActiveChallenge();
-    if (!challenge) {
+    if (!challenge || typeof challenge.correct === 'boolean') {
       return;
     }
     if (challenge.answer === undefined) {
@@ -223,7 +223,7 @@ class Game {
 
   removeAnswerDigit(): void {
     const challenge = this.getActiveChallenge();
-    if (!challenge || challenge.answer === undefined) {
+    if (!challenge || challenge.answer === undefined || typeof challenge.correct === 'boolean') {
       return;
     }
     challenge.answer = (challenge.answer - challenge.answer % 10) / 10 || undefined;
@@ -231,7 +231,7 @@ class Game {
 
   clearAnswer(): void {
     const challenge = this.getActiveChallenge();
-    if (!challenge) {
+    if (!challenge || challenge.answer === undefined || typeof challenge.correct === 'boolean') {
       return;
     }
     challenge.answer = undefined;
