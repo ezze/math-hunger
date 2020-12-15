@@ -108,7 +108,8 @@ const config = (env: string, argv: ObjectWithAnyProps): WebpackConfiguration => 
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlPlugin({
-        title: packageJson.description
+        title: packageJson.description,
+        template: 'src/index.html'
       }),
       new MiniCssExtractPlugin({
         filename: `css/${mode === 'development' ? '[name].css' : '[name].[contenthash:6].css'}`,
