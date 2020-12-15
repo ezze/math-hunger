@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Math Hunger Game",
   "main": "src/index.tsx",
-  "types": "types/index.d.ts",
+  "types": "types/types.d.ts",
   "scripts": {
     "dist": "webpack --mode=production --progress",
     "dist:dev": "webpack --mode=development --progress",
