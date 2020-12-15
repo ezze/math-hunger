@@ -7,6 +7,8 @@ import {
 
 import { sprintf } from 'sprintf-js';
 
+import { getOperationText } from '../utils';
+
 import Store from './Store';
 
 class GameStore extends Store {
@@ -16,6 +18,10 @@ class GameStore extends Store {
   correctCount = 0;
   wrongCount = 0;
   missedCount = 0;
+  incorrectItems: Array<{
+    type: string;
+    operation: string;
+  }> = [];
   endTime: number | null = null;
   lastResult: BestResult | null = null;
   timeUpdater: number | null = null;
@@ -31,6 +37,7 @@ class GameStore extends Store {
       correctCount: observable,
       wrongCount: observable,
       missedCount: observable,
+      incorrectItems: observable.shallow,
       overallCount: computed,
       score: computed,
       leftTime: observable,
@@ -38,6 +45,7 @@ class GameStore extends Store {
       start: action,
       end: action,
       interrupt: action,
+      reset: action,
       finish: action,
       increaseCorrectCount: action,
       increaseWrongCount: action,
@@ -82,7 +90,6 @@ class GameStore extends Store {
   }
 
   end(): void {
-    // TODO
     this.playing = false;
     this.gameOver = true;
     this.endTime = null;
@@ -92,6 +99,7 @@ class GameStore extends Store {
       wrongCount: this.wrongCount,
       missedCount: this.missedCount,
       score: this.score,
+      incorrectItems: this.incorrectItems,
       time: new Date().toISOString()
     };
     this.reset();
@@ -117,6 +125,7 @@ class GameStore extends Store {
     this.correctCount = 0;
     this.wrongCount = 0;
     this.missedCount = 0;
+    this.incorrectItems = [];
   }
 
   finish(): void {
@@ -127,12 +136,14 @@ class GameStore extends Store {
     this.correctCount++;
   }
 
-  increaseWrongCount(): void {
+  increaseWrongCount(operation: Operation): void {
     this.wrongCount++;
+    this.incorrectItems.push({ type: 'wrong', operation: getOperationText(operation) });
   }
 
-  increaseMissedCount(): void {
+  increaseMissedCount(operation: Operation): void {
     this.missedCount++;
+    this.incorrectItems.push({ type: 'missed', operation: getOperationText(operation) });
   }
 
   updateLeftTime(leftTime: number): void {

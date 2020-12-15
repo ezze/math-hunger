@@ -56,6 +56,7 @@
     "score": "Score",
     "correct": "Correct answers",
     "wrong": "Wrong answers",
-    "missed": "Missed challenges"
+    "missed": "Missed challenges",
+    "incorrect-list": "List of incomplete challenges"
   }
 }

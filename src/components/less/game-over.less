@@ -3,18 +3,18 @@
 .game-over {
   position: relative;
   width: @game-over-width;
-  height: 100%;
-  min-height: @game-over-min-height;
   padding: @game-over-padding-vertical 0;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
 }
 
-.game-over-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+.game-over-title {
+  width: @game-over-width;
+  font-size: @game-over-title-size;
+  font-weight: bold;
+  color: @game-over-title-color;
+  text-align: center;
 }
 
 .game-over-name {
@@ -28,10 +28,42 @@
   }
 }
 
-.game-over-title {
-  width: @game-over-width;
-  font-size: @game-over-title-size;
+.game-over-column {
+  &.game-over-column-value {
+    text-align: right;
+  }
+}
+
+.game-over-row {
+  &.game-over-row-score {
+    font-weight: bold;
+    color: @game-over-score-color;
+  }
+
+  &.game-over-row-correct {
+    color: @game-over-correct-color;
+  }
+
+  &.game-over-row-wrong {
+    color: @game-over-wrong-color;
+  }
+
+  &.game-over-row-missed {
+    color: @game-over-missed-color;
+  }
+}
+
+.game-over-incorrect-item {
+  font-family: @game-over-incorrect-item-font;
+  font-size: @game-over-incorrect-item-font-size;
   font-weight: bold;
-  color: @game-over-title-color;
   text-align: center;
+
+  &.game-over-incorrect-item-wrong {
+    color: @game-over-wrong-color;
+  }
+
+  &.game-over-incorrect-item-missed {
+    color: @game-over-missed-color;
+  }
 }

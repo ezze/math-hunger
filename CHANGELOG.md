@@ -4,6 +4,7 @@
 - Linked challenge parameters manipulation is fixed.
 - Intro, start and game over scroll issues are fixed.
 - Default game duration is 5 minutes now.
+- List of incorrect operations is shown at the end of the game.
 
 ## 0.1.0 (2020-11-30)
 

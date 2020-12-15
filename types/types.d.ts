@@ -81,8 +81,8 @@ declare class GameStore extends Store {
   reset(): void;
   finish(): void;
   increaseCorrectCount(): void;
-  increaseWrongCount(): void;
-  increaseMissedCount(): void;
+  increaseWrongCount(operation: Operation): void;
+  increaseMissedCount(operation: Operation): void;
 }
 
 declare class BestResultsStore extends Store {
@@ -181,5 +181,9 @@ declare interface BestResult {
   wrongCount: number;
   missedCount: number;
   score: number;
+  incorrectItems: Array<{
+    type: string;
+    operation: string;
+  }>;
   time: string;
 }

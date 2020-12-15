@@ -183,7 +183,7 @@ class Game {
     }
     if (force || typeof challenge.correct !== 'boolean') {
       if (typeof challenge.correct !== 'boolean') {
-        this.store.increaseMissedCount();
+        this.store.increaseMissedCount(challenge.operation);
       }
       this.challenges[challengeIndex] = null;
     }
@@ -192,7 +192,7 @@ class Game {
         this.store.increaseCorrectCount();
       }
       else {
-        this.store.increaseWrongCount();
+        this.store.increaseWrongCount(challenge.operation);
       }
       window.setTimeout(() => this.challenges[challengeIndex] = null, challengeFadeTimeoutMs);
     }
