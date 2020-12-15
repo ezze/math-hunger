@@ -5,6 +5,7 @@ import { render } from 'react-dom';
 import { reaction } from 'mobx';
 import { Provider } from 'mobx-react';
 
+import { initI18n } from './i18n';
 import { initSounds, initMusic, playSound, playMusic, stopMusic } from './sound';
 import { getStores } from './store';
 
@@ -68,6 +69,7 @@ async function initAudio(stores: Stores) {
 async function createApp(appContainer: HTMLElement) {
   const stores = await getStores();
   const sprites = await getSprites();
+  await initI18n(stores);
   await initAudio(stores);
 
   render(

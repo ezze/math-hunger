@@ -1,7 +1,9 @@
+export const languages = ['ru', 'en'];
 export const durationsAvailable = [1, 2, 3, 5, 7, 10, 15, 20];
 export const operatorsAvailable = new Array<Operator>('add', 'subtract', 'multiply', 'divide');
 
 export const settingsTabDefault = 'basic';
+export const languageDefault = languages[0];
 export const durationDefault = durationsAvailable[3];
 export const operatorsDefault = operatorsAvailable;
 

@@ -131,8 +131,8 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
           {scoreSign}{sprintf('%03d', Math.abs(score))} / {sprintf('%03d', overallCount)}
         </div>
         <div className="game-field-score-correct">{sprintf('%03d', correctCount)}</div>
-        <div className="game-field-score-missed">{sprintf('%03d', missedCount)}</div>
         <div className="game-field-score-wrong">{sprintf('%03d', wrongCount)}</div>
+        <div className="game-field-score-missed">{sprintf('%03d', missedCount)}</div>
       </div>
       <div className="game-field-time">
         <div>{leftTimeFormatted}</div>

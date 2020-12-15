@@ -30,12 +30,14 @@
   "homepage": "https://gitlab.com/yellowberry/math-hunger#readme",
   "dependencies": {
     "antd": "^4.8.5",
+    "i18next": "^19.8.4",
     "mobx": "^6.0.4",
     "mobx-react": "^7.0.5",
     "mobx-utils": "^6.0.1",
     "object-hash": "^2.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.4",
     "sprintf-js": "^1.1.2",
     "typeface-roboto": "^1.1.13",
     "typeface-ubuntu-mono": "^1.1.13"

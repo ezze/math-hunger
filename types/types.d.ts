@@ -27,6 +27,7 @@ declare class Store {
 
 declare class SettingsStore extends Store {
   tab: SettingsTab;
+  language: string;
   duration: number;
   operators: Array<Operator>;
   maxSum: number;
@@ -45,6 +46,7 @@ declare class SettingsStore extends Store {
   music: boolean;
   hash: string;
   setTab(tab: SettingsTab): void;
+  setLanguage(language: string): void;
   setDuration(duration: number): void;
   setOperators(operators: Array<Operator>): void;
   setMaxSum(maxSum: number): void;

@@ -1,0 +1,60 @@
+{
+  "app": {
+    "name": "Math Hunger"
+  },
+  "language": {
+    "en": "English",
+    "ru": "Russian"
+  },
+  "operator": {
+    "add": "Addition",
+    "subtract": "Subtraction",
+    "multiply": "Multiplication",
+    "divide": "Division"
+  },
+  "intro": {
+    "press-the-button": "Press the button"
+  },
+  "start": {
+    "settings": "Settings",
+    "best-results": "Best results",
+    "start-the-game": "Start the game"
+  },
+  "settings": {
+    "basic": "Basic",
+    "math": "Math",
+    "misc": "Misc",
+    "game-duration": "Game duration, min",
+    "max-challenges-count": "Tracks",
+    "concurrency": "Concurrency",
+    "min-challenge-duration": "Min challenge duration, sec",
+    "max-challenge-duration": "Max challenge duration, sec",
+    "min-challenge-delay": "Min challenge delay, sec",
+    "max-challenge-delay": "Max challenge delay, sec",
+    "operators": "Operations",
+    "max-sum": "Max sum",
+    "max-minuend": "Max minuend",
+    "max-multiplier-1": "Max first multiplier",
+    "max-multiplier-2": "Max second multiplier",
+    "max-divisor": "Max divisor",
+    "max-quotient": "Max quotient",
+    "language": "Language",
+    "sound": "Sound",
+    "music": "Music"
+  },
+  "best-results": {
+    "no-results": "There are no results for selected game settings yet...",
+    "name": "Name",
+    "date": "Date",
+    "stats": "Stats",
+    "score": "Score"
+  },
+  "game-over": {
+    "game-over": "Game over",
+    "input-your-name": "Input your name...",
+    "score": "Score",
+    "correct": "Correct answers",
+    "wrong": "Wrong answers",
+    "missed": "Missed challenges"
+  }
+}

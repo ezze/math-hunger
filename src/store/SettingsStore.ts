@@ -8,9 +8,11 @@ import {
 import objectHash from 'object-hash';
 
 import {
+  languages,
   operatorsAvailable,
   durationsAvailable,
   settingsTabDefault,
+  languageDefault,
   durationDefault,
   operatorsDefault,
   maxSumDefault,
@@ -30,6 +32,7 @@ import Store from './Store';
 
 class SettingsStore extends Store {
   tab: SettingsTab = settingsTabDefault;
+  language = languageDefault;
   duration = durationDefault;
   operators: Array<Operator> = operatorsDefault;
   maxSum = maxSumDefault;
@@ -52,6 +55,7 @@ class SettingsStore extends Store {
       ...options,
       include: [
         'tab',
+        'language',
         'duration',
         'operators',
         'maxSum',
@@ -73,6 +77,7 @@ class SettingsStore extends Store {
 
     makeObservable(this, {
       tab: observable,
+      language: observable,
       duration: observable,
       operators: observable.shallow,
       maxSum: observable,
@@ -91,6 +96,7 @@ class SettingsStore extends Store {
       music: observable,
       hash: computed,
       setTab: action,
+      setLanguage: action,
       setDuration: action,
       setOperators: action,
       setMaxSum: action,
@@ -151,6 +157,12 @@ class SettingsStore extends Store {
 
   setTab(tab: SettingsTab): void {
     this.tab = tab;
+  }
+
+  setLanguage(language: string): void {
+    if (languages.includes(language)) {
+      this.language = language;
+    }
   }
 
   setDuration(duration: number): void {

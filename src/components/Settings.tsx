@@ -3,6 +3,7 @@ import './less/settings.less';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import {
   durationsAvailable,
@@ -27,9 +28,9 @@ import {
   challengeDelayEnd
 } from '../constants';
 
-import { getOperatorLabel } from '../utils';
-
 import InjectionError from './helpers/InjectionError';
+
+import { languages } from '../constants';
 
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   settingsStore?: SettingsStore;
@@ -41,8 +42,11 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     throw new InjectionError('Settings store');
   }
 
+  const { t } = useTranslation(['settings', 'language']);
+
   const {
     tab,
+    language,
     duration,
     operators,
     maxSum,
@@ -63,6 +67,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
 
   const initialValues = {
     duration,
+    language,
     operators,
     maxSum,
     maxMinuend,
@@ -121,15 +126,19 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
   const onMinChallengeDelayChange = createOnNumberInputChange('setMinChallengeDelay');
   const onMaxChallengeDelayChange = createOnNumberInputChange('setMaxChallengeDelay');
 
+  const onLanguageChange = (language: string) => {
+    settingsStore.setLanguage(language);
+  };
+
   return (
     <div className="settings">
       <Form name="settings" layout="vertical" initialValues={initialValues} requiredMark={false}>
         <Tabs defaultActiveKey={tab} onChange={onTabChange}>
-          <Tabs.TabPane key="basic" tab="Basic">
+          <Tabs.TabPane key="basic" tab={t('basic')}>
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item
-                  label="Game duration, min"
+                  label={t('game-duration')}
                   name="duration"
                   rules={[{ required: true }]}
                 >
@@ -142,7 +151,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Tracks"
+                  label={t('max-challenges-count')}
                   name="maxChallengesCount"
                 >
                   <InputNumber
@@ -156,7 +165,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Concurrency"
+                  label={t('concurrency')}
                   name="challengeConcurrency"
                 >
                   <InputNumber
@@ -170,7 +179,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Min question duration, sec"
+                  label={t('min-challenge-duration')}
                   name="minChallengeDuration"
                 >
                   <InputNumber
@@ -184,7 +193,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max question duration, sec"
+                  label={t('max-challenge-duration')}
                   name="maxChallengeDuration"
                 >
                   <InputNumber
@@ -198,7 +207,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Min question delay, sec"
+                  label={t('min-challenge-delay')}
                   name="minChallengeDelay"
                 >
                   <InputNumber
@@ -212,7 +221,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max question delay, sec"
+                  label={t('max-challenge-delay')}
                   name="maxChallengeDelay"
                 >
                   <InputNumber
@@ -226,23 +235,23 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane key="math" tab="Math">
+          <Tabs.TabPane key="math" tab={t('math')}>
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item
-                  label="Operators"
+                  label={t('operators')}
                   name="operators"
                 >
                   <Select mode="multiple" allowClear={false} onChange={onOperatorsChange}>
                     {operatorsAvailable.map(operator => (
-                      <Select.Option key={operator} value={operator}>{getOperatorLabel(operator)}</Select.Option>
+                      <Select.Option key={operator} value={operator}>{t(`operator:${operator}`)}</Select.Option>
                     ))}
                   </Select>
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max sum"
+                  label={t('max-sum')}
                   name="maxSum"
                 >
                   <InputNumber
@@ -257,7 +266,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max minuend"
+                  label={t('max-minuend')}
                   name="maxMinuend"
                 >
                   <InputNumber
@@ -272,7 +281,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max multiplier 1"
+                  label={t('max-multiplier-1')}
                   name="maxMultiplier1"
                 >
                   <InputNumber
@@ -287,7 +296,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max multiplier 2"
+                  label={t('max-multiplier-2')}
                   name="maxMultiplier2"
                 >
                   <InputNumber
@@ -302,7 +311,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max divisor"
+                  label={t('max-divisor')}
                   name="maxDivisor"
                 >
                   <InputNumber
@@ -317,7 +326,7 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label="Max quotient"
+                  label={t('max-quotient')}
                   name="maxQuotient"
                 >
                   <InputNumber
@@ -332,15 +341,28 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
               </Col>
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane key="misc" tab="Misc">
+          <Tabs.TabPane key="misc" tab={t('misc')}>
             <Row gutter={24}>
+              <Col span={24}>
+                <Form.Item
+                  label={t('language')}
+                  name="language"
+                  rules={[{ required: true }]}
+                >
+                  <Select onChange={onLanguageChange}>
+                    {languages.map(language => (
+                      <Select.Option key={language} value={language}>{t(`language:${language}`)}</Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
               <Col span={12}>
-                <Form.Item label="Sound" name="sound" valuePropName="checked">
+                <Form.Item label={t('sound')} name="sound" valuePropName="checked">
                   <Switch onChange={onSoundChange} />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Music" name="music" valuePropName="checked">
+                <Form.Item label={t('music')} name="music" valuePropName="checked">
                   <Switch onChange={onMusicChange} />
                 </Form.Item>
               </Col>

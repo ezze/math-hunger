@@ -1,5 +1,6 @@
 # Changelog
 
+- Game is translated to Russian language, control to change interface language is added.
 - Linked challenge parameters manipulation is fixed.
 - Intro and start scroll issues are fixed.
 - Default game duration is 5 minutes now.
