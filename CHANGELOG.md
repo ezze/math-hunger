@@ -1,5 +1,7 @@
 # Changelog
 
+- Concurrency should be less than or equal to max challenges count.
+
 ## 0.3.1 (2020-12-16)
 
 - Loading indicator should be hidden just before app rendering.
