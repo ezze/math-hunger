@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 (2021-03-21)
+
+- Different animation themes are supported — Formula 1 theme is introduced.
+- Logic error in `createDivisionOperation` is fixed.
+- Sprite opacity flickering on fade out is fixed.
+- Maximum challenges count is increased up to 7.
+- Dependencies are upgraded.
+- Remote repository is migrated to https://github.com/ezze/math-hunger.
+
 ## 0.3.2 (2020-12-16)
 
 - Concurrency should be less than or equal to max challenges count.

@@ -6,6 +6,10 @@
     "en": "English",
     "ru": "Russian"
   },
+  "animation-type": {
+    "horse": "Horse",
+    "formula-car": "Formula 1 car"
+  },
   "operator": {
     "add": "Addition",
     "subtract": "Subtraction",
@@ -39,6 +43,7 @@
     "max-divisor": "Max divisor",
     "max-quotient": "Max quotient",
     "language": "Language",
+    "animation-type": "Animation type",
     "sound": "Sound",
     "music": "Music"
   },

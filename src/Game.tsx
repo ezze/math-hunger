@@ -28,7 +28,7 @@ const maxAnswerDigitsCount = 3;
 class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
-  sprites: Sprites;
+  animationSprites: AnimationSprites;
 
   operators: Array<Operator>;
   maxSum: number;
@@ -49,9 +49,9 @@ class Game {
   challengeDelay = 0;
   activeChallengeIndex: number | null = null;
 
-  horseZoneWidth: number;
-  horseLastStartTime: number | null = null;
-  horseLastEndTime: number | null = null;
+  animationZoneWidth: number;
+  lastStartTime: number | null = null;
+  lastEndTime: number | null = null;
 
   destroyed = false;
 
@@ -59,7 +59,7 @@ class Game {
     const {
       store,
       canvas,
-      sprites,
+      animationSprites,
       operators = operatorsDefault,
       maxSum = maxSumDefault,
       maxMinuend = maxMinuendDefault,
@@ -77,7 +77,7 @@ class Game {
 
     this.store = store;
     this.canvas = canvas;
-    this.sprites = sprites;
+    this.animationSprites = animationSprites;
 
     this.operators = operators;
     this.maxSum = maxSum;
@@ -96,7 +96,7 @@ class Game {
 
     this.challenges = new Array(this.maxChallengesCount).fill(null);
 
-    this.horseZoneWidth = this.calculateHorseZoneWidth();
+    this.animationZoneWidth = this.calculateAnimationZoneWidth();
 
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onWindowResize = this.onWindowResize.bind(this);
@@ -142,7 +142,7 @@ class Game {
   }
 
   onWindowResize(): void {
-    this.horseZoneWidth = this.calculateHorseZoneWidth();
+    this.animationZoneWidth = this.calculateAnimationZoneWidth();
   }
 
   get challengesCount(): number {
@@ -194,7 +194,9 @@ class Game {
       else {
         this.store.increaseWrongCount(challenge.operation);
       }
-      window.setTimeout(() => this.challenges[challengeIndex] = null, challengeFadeTimeoutMs);
+      window.setTimeout(() => {
+        this.challenges[challengeIndex] = null;
+      }, challengeFadeTimeoutMs);
     }
   }
 
@@ -237,7 +239,7 @@ class Game {
     challenge.answer = undefined;
   }
 
-  calculateHorseZoneWidth(): number {
+  calculateAnimationZoneWidth(): number {
     return this.canvas.width - operationZoneWidth;
   }
 
@@ -245,7 +247,7 @@ class Game {
     this.challengeDelay = random(this.minChallengeDelay, this.maxChallengeDelay);
   }
 
-  detectHorseLastStartTime(): number | null {
+  detectLastStartTime(): number | null {
     return this.challenges.reduce((lastEventTime: number | null, challenge) => {
       if (!challenge || (lastEventTime && challenge.startTime <= lastEventTime)) {
         return lastEventTime;
@@ -267,7 +269,7 @@ class Game {
   }
 
   updateChallenges(time: number): void {
-    // Checking whether time for some challenges are over
+    // Checking whether times for some challenges are over
     this.challenges.forEach((challenge, challengeIndex) => {
       if (!challenge) {
         return;
@@ -278,8 +280,8 @@ class Game {
       }
       else if (time > startTime + duration * 1000) {
         this.finalizeChallenge(challengeIndex, true);
-        if (!this.horseLastEndTime) {
-          this.horseLastEndTime = time;
+        if (!this.lastEndTime) {
+          this.lastEndTime = time;
         }
       }
     });
@@ -287,8 +289,8 @@ class Game {
     const { challengesCount } = this;
     if (challengesCount === this.challengeConcurrency || (
       challengesCount > 0 && (
-        (this.horseLastStartTime && this.horseLastStartTime + this.challengeDelay * 1000 >= time) ||
-        (this.horseLastEndTime && this.horseLastEndTime + this.challengeDelay * 1000 >= time)
+        (this.lastStartTime && this.lastStartTime + this.challengeDelay * 1000 >= time) ||
+        (this.lastEndTime && this.lastEndTime + this.challengeDelay * 1000 >= time)
       )
     )) {
       return;
@@ -296,6 +298,7 @@ class Game {
 
     const duration = random(this.minChallengeDuration, this.maxChallengeDuration);
     const challenge: Challenge = {
+      numericId: random(0, 100000),
       startTime: time,
       duration,
       fadeOutStartTime: time + duration * 1000 - challengeFadeTimeoutMs,
@@ -308,7 +311,7 @@ class Game {
         maxDivisor: this.maxDivisor,
         maxQuotient: this.maxQuotient
       }),
-      horseRenderFrame: 0
+      renderFrame: 0
     };
 
     let index;
@@ -317,9 +320,9 @@ class Game {
     }
     while (this.challenges[index] !== null);
     this.challenges[index] = challenge;
-    this.horseLastStartTime = this.detectHorseLastStartTime();
-    if (this.horseLastEndTime) {
-      this.horseLastEndTime = null;
+    this.lastStartTime = this.detectLastStartTime();
+    if (this.lastEndTime) {
+      this.lastEndTime = null;
     }
     this.updateChallengeDelay();
     if (this.activeChallengeIndex === null) {
@@ -331,12 +334,13 @@ class Game {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Preparing some basic constants for rendering
-    const { horse } = this.sprites;
-    const scalePoint = horse.height * this.maxChallengesCount;
+    const { animationSprites } = this;
+    const mainSprite = Array.isArray(animationSprites[0]) ? animationSprites[0][0] : animationSprites[0];
+    const { width: spriteWidth, height: spriteHeight } = mainSprite;
+
+    const scalePoint = spriteHeight * this.maxChallengesCount;
     const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
     const offsetHeight = this.canvas.height < scalePoint ? 0 : (this.canvas.height - scalePoint) / 2;
-    const horseRenderFramesPerSpriteFrame = 3;
-    const horseRenderFrames = horse.count * horseRenderFramesPerSpriteFrame;
 
     this.challenges.forEach((challenge, challengeIndex) => {
       // Render active challenge marker
@@ -349,10 +353,10 @@ class Game {
         context.strokeStyle = markerColor;
         context.lineWidth = 8;
         context.lineCap = 'round';
-        const startY = offsetHeight + challengeIndex * horse.height * scale + splitGapSize;
-        const endY = startY + horse.height * scale - 2 * splitGapSize;
-        context.moveTo(this.horseZoneWidth + splitGapSize + 0.5, startY);
-        context.lineTo(this.horseZoneWidth + splitGapSize + 0.5, endY);
+        const startY = offsetHeight + challengeIndex * spriteHeight * scale + splitGapSize;
+        const endY = startY + spriteHeight * scale - 2 * splitGapSize;
+        context.moveTo(this.animationZoneWidth + splitGapSize + 0.5, startY);
+        context.lineTo(this.animationZoneWidth + splitGapSize + 0.5, endY);
         context.stroke();
       }
 
@@ -360,33 +364,42 @@ class Game {
         return;
       }
 
-      const {
-        startTime,
-        duration,
-        fadeOutStartTime,
-        operation,
-        horseRenderFrame,
-        answer
-      } = challenge;
+      const { startTime, duration, fadeOutStartTime, operation, answer } = challenge;
 
-      // Render a horse
-      const horseSpriteFrame = Math.floor(horseRenderFrame / horseRenderFramesPerSpriteFrame);
-      const horseX = (time - startTime) / (duration * 1000) * (this.horseZoneWidth - horse.width * scale);
-      const horseY = offsetHeight + challengeIndex * horse.height * scale;
+      // Render animation sprites
       let opacity = 1;
-      if (time - startTime < challengeFadeTimeoutMs) {
+      if (time - startTime <= challengeFadeTimeoutMs) {
         opacity = (time - startTime) / challengeFadeTimeoutMs;
       }
-      else if (time > fadeOutStartTime && time < fadeOutStartTime + challengeFadeTimeoutMs) {
+      else if (time >= fadeOutStartTime && time <= fadeOutStartTime + challengeFadeTimeoutMs) {
         opacity = (fadeOutStartTime + challengeFadeTimeoutMs - time) / challengeFadeTimeoutMs;
       }
+      else if (time > fadeOutStartTime + challengeFadeTimeoutMs) {
+        opacity = 0;
+      }
       context.globalAlpha = opacity;
-      horse.draw(context, horseSpriteFrame, horseX, horseY, scale);
+
+      animationSprites.forEach(spriteItem => {
+        let sprite: Sprite;
+        if (Array.isArray(spriteItem)) {
+          sprite = spriteItem[(challenge.numericId + challengeIndex) % spriteItem.length];
+        }
+        else {
+          sprite = spriteItem;
+        }
+        const spriteRenderFramesCount = sprite.count * sprite.framesPerSprite;
+        const renderFrame = challenge.renderFrame % spriteRenderFramesCount;
+        const spriteFrame = Math.floor(renderFrame / sprite.framesPerSprite);
+        const x = (time - startTime) / (duration * 1000) *
+          (this.animationZoneWidth - spriteWidth * scale) + sprite.offsetX * scale;
+        const y = offsetHeight + challengeIndex * spriteHeight * scale + sprite.offsetY * scale;
+        sprite.draw(context, spriteFrame, x, y, scale);
+      });
 
       // Render operation
       const operationFontSize = 36;
-      const operationX = this.horseZoneWidth + 2 * splitGapSize;
-      const operationY = offsetHeight + (challengeIndex + 0.5) * horse.height * scale;
+      const operationX = this.animationZoneWidth + 2 * splitGapSize;
+      const operationY = offsetHeight + (challengeIndex + 0.5) * spriteHeight * scale;
       const operationWidth = operationZoneWidth - 3 * splitGapSize;
       context.font = `${operationFontSize}px Ubuntu Mono`;
       context.fillStyle = colors[challengeIndex % colors.length];
@@ -399,14 +412,11 @@ class Game {
       context.beginPath();
       context.strokeStyle = '#eee';
       context.lineWidth = 1;
-      context.moveTo(this.horseZoneWidth + 0.5, splitGapSize);
-      context.lineTo(this.horseZoneWidth + 0.5, this.canvas.height - splitGapSize);
+      context.moveTo(this.animationZoneWidth + 0.5, splitGapSize);
+      context.lineTo(this.animationZoneWidth + 0.5, this.canvas.height - splitGapSize);
       context.stroke();
 
-      challenge.horseRenderFrame++;
-      if (challenge.horseRenderFrame === horseRenderFrames) {
-        challenge.horseRenderFrame = 0;
-      }
+      challenge.renderFrame++;
     });
   }
 }

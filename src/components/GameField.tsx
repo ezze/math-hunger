@@ -45,7 +45,8 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
     minChallengeDuration,
     maxChallengeDuration,
     minChallengeDelay,
-    maxChallengeDelay
+    maxChallengeDelay,
+    animationType
   } = settingsStore;
 
   const {
@@ -85,10 +86,11 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
         window.setTimeout(createGame, 50);
         return;
       }
+      const animationSprites = sprites[animationType];
       game = new Game({
         store: gameStore,
         canvas: canvasRef.current as HTMLCanvasElement,
-        sprites,
+        animationSprites,
         operators,
         maxSum,
         maxMinuend,

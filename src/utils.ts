@@ -68,10 +68,9 @@ export function createMultiplicationOperation(options: CreateMultiplicationOpera
 export function createDivisionOperation(options: CreateDivisionOperationOptions): Operation {
   const { maxDivisor, maxQuotient } = options;
   const operator: Operator = 'divide';
-  const multiplyOperation = createMultiplicationOperation({ maxMultiplier1: maxDivisor, maxMultiplier2: maxQuotient });
-  const operand1 = multiplyOperation.answer;
-  const operand2 = random(0, 1) ? multiplyOperation.operand1 : multiplyOperation.operand2;
-  const answer = operand1 / operand2;
+  const operand2 = random(1, maxDivisor);
+  const answer = random(1, maxQuotient);
+  const operand1 = answer * operand2;
   return { operator, operand1, operand2, answer };
 }
 
