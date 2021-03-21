@@ -1,11 +1,23 @@
 import Sprite from './Sprite';
 
-import formulaCarWheelUrl from '../img/formula-1-wheel.png';
+import formulaCarWheelBlueUrl from '../img/formula-1-car-wheel-blue.png';
+import formulaCarWheelGreenUrl from '../img/formula-1-car-wheel-green.png';
+import formulaCarWheelPurpleUrl from '../img/formula-1-car-wheel-purple.png';
+import formulaCarWheelRedUrl from '../img/formula-1-car-wheel-red.png';
+import formulaCarWheelYellowUrl from '../img/formula-1-car-wheel-yellow.png';
+
+const colorUrlMap: Record<string, string> = {
+  blue: formulaCarWheelBlueUrl,
+  green: formulaCarWheelGreenUrl,
+  purple: formulaCarWheelPurpleUrl,
+  red: formulaCarWheelRedUrl,
+  yellow: formulaCarWheelYellowUrl
+};
 
 class FormulaCarWheelSprite extends Sprite {
-  constructor(type: 'front' | 'rear') {
+  constructor(type: 'front' | 'rear', color: string) {
     super({
-      url: formulaCarWheelUrl,
+      url: colorUrlMap[color],
       width: 50,
       height: 50,
       offsetX: type === 'front' ? 248 : 21,

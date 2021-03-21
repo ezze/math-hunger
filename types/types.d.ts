@@ -7,7 +7,7 @@ type Stores = Record<string, Store>;
 type StoreData = Record<string, any>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
 type AnimationType = 'horse' | 'formulaCar';
-type AnimationSprites = Array<Sprite>;
+type AnimationSprites = Array<Sprite | Array<Sprite>>;
 type Sprites = Record<AnimationType, AnimationSprites>;
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 type Sound = 'correct' | 'wrong' | 'gameOver';
@@ -176,6 +176,7 @@ interface Operation {
 }
 
 declare interface Challenge {
+  numericId: number;
   startTime: number;
   duration: number;
   fadeOutStartTime: number;

@@ -298,6 +298,7 @@ class Game {
 
     const duration = random(this.minChallengeDuration, this.maxChallengeDuration);
     const challenge: Challenge = {
+      numericId: random(0, 100000),
       startTime: time,
       duration,
       fadeOutStartTime: time + duration * 1000 - challengeFadeTimeoutMs,
@@ -334,7 +335,8 @@ class Game {
 
     // Preparing some basic constants for rendering
     const { animationSprites } = this;
-    const { width: spriteWidth, height: spriteHeight } = animationSprites[0];
+    const mainSprite = Array.isArray(animationSprites[0]) ? animationSprites[0][0] : animationSprites[0];
+    const { width: spriteWidth, height: spriteHeight } = mainSprite;
 
     const scalePoint = spriteHeight * this.maxChallengesCount;
     const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
@@ -377,7 +379,14 @@ class Game {
       }
       context.globalAlpha = opacity;
 
-      animationSprites.forEach(sprite => {
+      animationSprites.forEach(spriteItem => {
+        let sprite: Sprite;
+        if (Array.isArray(spriteItem)) {
+          sprite = spriteItem[(challenge.numericId + challengeIndex) % spriteItem.length];
+        }
+        else {
+          sprite = spriteItem;
+        }
         const spriteRenderFramesCount = sprite.count * sprite.framesPerSprite;
         const renderFrame = challenge.renderFrame % spriteRenderFramesCount;
         const spriteFrame = Math.floor(renderFrame / sprite.framesPerSprite);
