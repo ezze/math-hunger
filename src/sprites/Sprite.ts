@@ -2,18 +2,32 @@ class Sprite {
   url: string;
   width: number;
   height: number;
-  count: number;
+  offsetX = 0;
+  offsetY = 0;
+  count = 1;
+  framesPerSprite = 1;
   imageWidth: number | null = null;
   imageHeight: number | null = null;
   image: HTMLImageElement | null = null;
   sprites: Array<HTMLCanvasElement> = [];
 
   constructor(options: SpriteOptions) {
-    const { url, width, height, count } = options;
+    const { url, width, height, offsetX, offsetY, count, framesPerSprite } = options;
     this.url = url;
     this.width = width;
     this.height = height;
-    this.count = count;
+    if (offsetX) {
+      this.offsetX = offsetX;
+    }
+    if (offsetY) {
+      this.offsetY = offsetY;
+    }
+    if (count) {
+      this.count = count;
+    }
+    if (framesPerSprite) {
+      this.framesPerSprite = framesPerSprite;
+    }
   }
 
   async init(): Promise<void> {

@@ -4,6 +4,7 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
+import kebabCase from 'lodash.kebabcase';
 
 import {
   durationsAvailable,
@@ -30,7 +31,7 @@ import {
 
 import InjectionError from './helpers/InjectionError';
 
-import { languages } from '../constants';
+import { languages, animationTypes } from '../constants';
 
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   settingsStore?: SettingsStore;
@@ -62,7 +63,8 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     minChallengeDelay,
     maxChallengeDelay,
     sound,
-    music
+    music,
+    animationType
   } = settingsStore;
 
   const initialValues = {
@@ -82,7 +84,8 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     minChallengeDelay,
     maxChallengeDelay,
     sound,
-    music
+    music,
+    animationType
   };
 
   const onTabChange = (tab: string) => {
@@ -95,14 +98,6 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
 
   const onOperatorsChange = (operators: Array<Operator>) => {
     settingsStore.setOperators(operators);
-  };
-
-  const onSoundChange = (sound: boolean) => {
-    settingsStore.setSound(sound);
-  };
-
-  const onMusicChange = (music: boolean) => {
-    settingsStore.setMusic(music);
   };
 
   const createOnNumberInputChange = (name: string): (value: number | string | undefined) => void => {
@@ -128,6 +123,18 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
 
   const onLanguageChange = (language: string) => {
     settingsStore.setLanguage(language);
+  };
+
+  const onAnimationTypeChange = (animationType: string) => {
+    settingsStore.setAnimationType(animationType as AnimationType);
+  };
+
+  const onSoundChange = (sound: boolean) => {
+    settingsStore.setSound(sound);
+  };
+
+  const onMusicChange = (music: boolean) => {
+    settingsStore.setMusic(music);
   };
 
   return (
@@ -351,7 +358,24 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
                 >
                   <Select onChange={onLanguageChange}>
                     {languages.map(language => (
-                      <Select.Option key={language} value={language}>{t(`language:${language}`)}</Select.Option>
+                      <Select.Option key={language} value={language}>
+                        {t(language, { ns: 'language' })}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  label={t('animation-type')}
+                  name="animationType"
+                  rules={[{ required: true }]}
+                >
+                  <Select onChange={onAnimationTypeChange}>
+                    {animationTypes.map(animationType => (
+                      <Select.Option key={animationType} value={animationType}>
+                        {t(kebabCase(animationType), { ns: 'animation-type' })}
+                      </Select.Option>
                     ))}
                   </Select>
                 </Form.Item>

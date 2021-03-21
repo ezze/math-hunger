@@ -28,7 +28,7 @@ const maxAnswerDigitsCount = 3;
 class Game {
   store: GameStore;
   canvas: HTMLCanvasElement;
-  sprites: Sprites;
+  animationSprites: AnimationSprites;
 
   operators: Array<Operator>;
   maxSum: number;
@@ -59,7 +59,7 @@ class Game {
     const {
       store,
       canvas,
-      sprites,
+      animationSprites,
       operators = operatorsDefault,
       maxSum = maxSumDefault,
       maxMinuend = maxMinuendDefault,
@@ -77,7 +77,7 @@ class Game {
 
     this.store = store;
     this.canvas = canvas;
-    this.sprites = sprites;
+    this.animationSprites = animationSprites;
 
     this.operators = operators;
     this.maxSum = maxSum;
@@ -298,6 +298,7 @@ class Game {
 
     const duration = random(this.minChallengeDuration, this.maxChallengeDuration);
     const challenge: Challenge = {
+      numericId: random(0, 100000),
       startTime: time,
       duration,
       fadeOutStartTime: time + duration * 1000 - challengeFadeTimeoutMs,
@@ -333,12 +334,13 @@ class Game {
     context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Preparing some basic constants for rendering
-    const { horse } = this.sprites;
-    const scalePoint = horse.height * this.maxChallengesCount;
+    const { animationSprites } = this;
+    const mainSprite = Array.isArray(animationSprites[0]) ? animationSprites[0][0] : animationSprites[0];
+    const { width: spriteWidth, height: spriteHeight } = mainSprite;
+
+    const scalePoint = spriteHeight * this.maxChallengesCount;
     const scale = this.canvas.height < scalePoint ? this.canvas.height / scalePoint : 1;
     const offsetHeight = this.canvas.height < scalePoint ? 0 : (this.canvas.height - scalePoint) / 2;
-    const renderFramesPerSpriteFrame = 3;
-    const renderFrames = horse.count * renderFramesPerSpriteFrame;
 
     this.challenges.forEach((challenge, challengeIndex) => {
       // Render active challenge marker
@@ -351,8 +353,8 @@ class Game {
         context.strokeStyle = markerColor;
         context.lineWidth = 8;
         context.lineCap = 'round';
-        const startY = offsetHeight + challengeIndex * horse.height * scale + splitGapSize;
-        const endY = startY + horse.height * scale - 2 * splitGapSize;
+        const startY = offsetHeight + challengeIndex * spriteHeight * scale + splitGapSize;
+        const endY = startY + spriteHeight * scale - 2 * splitGapSize;
         context.moveTo(this.animationZoneWidth + splitGapSize + 0.5, startY);
         context.lineTo(this.animationZoneWidth + splitGapSize + 0.5, endY);
         context.stroke();
@@ -362,12 +364,9 @@ class Game {
         return;
       }
 
-      const { startTime, duration, fadeOutStartTime, operation, renderFrame, answer } = challenge;
+      const { startTime, duration, fadeOutStartTime, operation, answer } = challenge;
 
-      // Render a horse
-      const spriteFrame = Math.floor(renderFrame / renderFramesPerSpriteFrame);
-      const x = (time - startTime) / (duration * 1000) * (this.animationZoneWidth - horse.width * scale);
-      const y = offsetHeight + challengeIndex * horse.height * scale;
+      // Render animation sprites
       let opacity = 1;
       if (time - startTime <= challengeFadeTimeoutMs) {
         opacity = (time - startTime) / challengeFadeTimeoutMs;
@@ -379,12 +378,28 @@ class Game {
         opacity = 0;
       }
       context.globalAlpha = opacity;
-      horse.draw(context, spriteFrame, x, y, scale);
+
+      animationSprites.forEach(spriteItem => {
+        let sprite: Sprite;
+        if (Array.isArray(spriteItem)) {
+          sprite = spriteItem[(challenge.numericId + challengeIndex) % spriteItem.length];
+        }
+        else {
+          sprite = spriteItem;
+        }
+        const spriteRenderFramesCount = sprite.count * sprite.framesPerSprite;
+        const renderFrame = challenge.renderFrame % spriteRenderFramesCount;
+        const spriteFrame = Math.floor(renderFrame / sprite.framesPerSprite);
+        const x = (time - startTime) / (duration * 1000) *
+          (this.animationZoneWidth - spriteWidth * scale) + sprite.offsetX * scale;
+        const y = offsetHeight + challengeIndex * spriteHeight * scale + sprite.offsetY * scale;
+        sprite.draw(context, spriteFrame, x, y, scale);
+      });
 
       // Render operation
       const operationFontSize = 36;
       const operationX = this.animationZoneWidth + 2 * splitGapSize;
-      const operationY = offsetHeight + (challengeIndex + 0.5) * horse.height * scale;
+      const operationY = offsetHeight + (challengeIndex + 0.5) * spriteHeight * scale;
       const operationWidth = operationZoneWidth - 3 * splitGapSize;
       context.font = `${operationFontSize}px Ubuntu Mono`;
       context.fillStyle = colors[challengeIndex % colors.length];
@@ -402,9 +417,6 @@ class Game {
       context.stroke();
 
       challenge.renderFrame++;
-      if (challenge.renderFrame === renderFrames) {
-        challenge.renderFrame = 0;
-      }
     });
   }
 }

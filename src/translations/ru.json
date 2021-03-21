@@ -6,6 +6,10 @@
     "en": "Английский",
     "ru": "Русский"
   },
+  "animation-type": {
+    "horse": "Лошадь",
+    "formula-car": "Болид Формулы 1"
+  },
   "operator": {
     "add": "Сложение",
     "subtract": "Вычитание",
@@ -38,6 +42,7 @@
     "max-multiplier-2": "Макс. второй множитель",
     "max-divisor": "Макс. делитель",
     "max-quotient": "Макс. частное",
+    "animation-type": "Вид анимации",
     "language": "Язык",
     "sound": "Звук",
     "music": "Музыка"

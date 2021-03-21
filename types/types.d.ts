@@ -6,7 +6,9 @@ declare module '*.mp3';
 type Stores = Record<string, Store>;
 type StoreData = Record<string, any>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
-type Sprites = Record<string, Sprite>;
+type AnimationType = 'horse' | 'formulaCar';
+type AnimationSprites = Array<Sprite | Array<Sprite>>;
+type Sprites = Record<AnimationType, AnimationSprites>;
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 type Sound = 'correct' | 'wrong' | 'gameOver';
 type SoundBlobs = Record<Sound | string, Blob | null>;
@@ -44,6 +46,7 @@ declare class SettingsStore extends Store {
   maxChallengeDelay: number;
   sound: boolean;
   music: boolean;
+  animationType: AnimationType;
   hash: string;
   setTab(tab: SettingsTab): void;
   setLanguage(language: string): void;
@@ -61,6 +64,7 @@ declare class SettingsStore extends Store {
   setMaxChallengeDuration(maxChallengeDuration: number): void;
   setMinChallengeDelay(minChallengeDelay: number): void;
   setMaxChallengeDelay(maxChallengeDelay: number): void;
+  setAnimationType(animationType: AnimationType): void;
   setSound(sound: boolean): void;
   setMusic(music: boolean): void;
 }
@@ -95,7 +99,7 @@ declare class BestResultsStore extends Store {
 declare interface GameOptions {
   store: GameStore;
   canvas: HTMLCanvasElement;
-  sprites: Sprites;
+  animationSprites: AnimationSprites;
   operators?: Array<Operator>;
   maxSum?: number;
   maxMinuend?: number;
@@ -115,14 +119,20 @@ declare interface SpriteOptions {
   url: string;
   width: number;
   height: number;
-  count: number;
+  offsetX?: number;
+  offsetY?: number;
+  count?: number;
+  framesPerSprite?: number;
 }
 
 declare class Sprite {
   url: string;
   width: number;
   height: number;
+  offsetX: number;
+  offsetY: number;
   count: number;
+  framesPerSprite: number;
   image: HTMLImageElement | null;
   sprites: Array<HTMLCanvasElement>;
   constructor(options: SpriteOptions)
@@ -166,6 +176,7 @@ interface Operation {
 }
 
 declare interface Challenge {
+  numericId: number;
   startTime: number;
   duration: number;
   fadeOutStartTime: number;

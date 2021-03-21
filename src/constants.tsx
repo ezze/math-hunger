@@ -1,4 +1,5 @@
 export const languages = ['ru', 'en'];
+export const animationTypes = ['horse', 'formulaCar'];
 export const durationsAvailable = [0, 1, 2, 3, 5, 7, 10, 15, 20];
 export const operatorsAvailable = new Array<Operator>('add', 'subtract', 'multiply', 'divide');
 
@@ -28,11 +29,11 @@ export const maxQuotientEnd = 20;
 export const maxQuotientDefault = 10;
 
 export const challengeConcurrencyStart = 1;
-export const challengeConcurrencyEnd = 5;
+export const challengeConcurrencyEnd = 7;
 export const challengeConcurrencyDefault = 1;
 
 export const maxChallengesCountStart = 1;
-export const maxChallengesCountEnd = 5;
+export const maxChallengesCountEnd = 7;
 export const maxChallengesCountDefault = 3;
 
 export const challengeDurationStart = 3;
