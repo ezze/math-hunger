@@ -64,9 +64,9 @@ declare class SettingsStore extends Store {
   setMaxChallengeDuration(maxChallengeDuration: number): void;
   setMinChallengeDelay(minChallengeDelay: number): void;
   setMaxChallengeDelay(maxChallengeDelay: number): void;
+  setAnimationType(animationType: AnimationType): void;
   setSound(sound: boolean): void;
   setMusic(music: boolean): void;
-  setAnimationType(animationType: AnimationType): void;
 }
 
 declare class GameStore extends Store {

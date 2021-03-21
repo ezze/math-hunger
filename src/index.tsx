@@ -49,9 +49,16 @@ async function initAudio(stores: Stores) {
     }
   });
 
+  const disposeAnimationType = reaction(() => settingsStore.animationType, () => {
+    if (settingsStore.music) {
+      stopMusic();
+      playMusic(settingsStore.animationType).catch(e => console.error(e));
+    }
+  });
+
   const disposeMusic = reaction(() => settingsStore.music, music => {
     if (music) {
-      playMusic().catch(e => console.error(e));
+      playMusic(settingsStore.animationType).catch(e => console.error(e));
     }
     else {
       stopMusic().catch(e => console.error(e));
@@ -62,6 +69,7 @@ async function initAudio(stores: Stores) {
     disposeCorrect,
     disposeWrong,
     disposeGameOver,
+    disposeAnimationType,
     disposeMusic
   ];
 }
@@ -71,7 +79,7 @@ async function createApp(appContainer: HTMLElement) {
   const sprites = await getSprites();
   await initI18n(stores);
   await initAudio(stores);
-  
+
   const loadingSpinner = document.querySelector('.loading-spinner');
   if (loadingSpinner) {
     loadingSpinner.remove();

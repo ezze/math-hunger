@@ -113,7 +113,10 @@ class SettingsStore extends Store {
       setMinChallengeDuration: action,
       setMaxChallengeDuration: action,
       setMinChallengeDelay: action,
-      setMaxChallengeDelay: action
+      setMaxChallengeDelay: action,
+      setAnimationType: action,
+      setSound: action,
+      setMusic: action
     });
   }
 
@@ -232,16 +235,16 @@ class SettingsStore extends Store {
     this.maxChallengeDelay = maxChallengeDelay;
   }
 
+  setAnimationType(animationType: AnimationType): void {
+    this.animationType = animationType;
+  }
+
   setSound(sound: boolean): void {
     this.sound = sound;
   }
 
   setMusic(music: boolean): void {
     this.music = music;
-  }
-
-  setAnimationType(animationType: AnimationType): void {
-    this.animationType = animationType;
   }
 }
 
