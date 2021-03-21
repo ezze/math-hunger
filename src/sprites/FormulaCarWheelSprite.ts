@@ -3,13 +3,14 @@ import Sprite from './Sprite';
 import formulaCarWheelUrl from '../img/formula-1-wheel.png';
 
 class FormulaCarWheelSprite extends Sprite {
-  constructor() {
+  constructor(type: 'front' | 'rear') {
     super({
       url: formulaCarWheelUrl,
       width: 50,
       height: 50,
-      count: 1,
-      rotationFrames: 12
+      offsetX: type === 'front' ? 248 : 21,
+      offsetY: 65,
+      count: 12
     });
   }
 }

@@ -8,7 +8,8 @@ class HorseSprite extends Sprite {
       url: horseUrl,
       width: 272,
       height: 233,
-      count: 16
+      count: 16,
+      framesPerSprite: 3
     });
   }
 }

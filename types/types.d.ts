@@ -119,20 +119,25 @@ declare interface SpriteOptions {
   url: string;
   width: number;
   height: number;
-  count: number;
-  rotationFrames?: number;
+  offsetX?: number;
+  offsetY?: number;
+  count?: number;
+  framesPerSprite?: number;
 }
 
 declare class Sprite {
   url: string;
   width: number;
   height: number;
+  offsetX: number;
+  offsetY: number;
   count: number;
+  framesPerSprite: number;
   image: HTMLImageElement | null;
   sprites: Array<HTMLCanvasElement>;
   constructor(options: SpriteOptions)
   init: () => Promise<void>;
-  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1, frame = 0) => void
+  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1) => void
 }
 
 declare interface WithSpriteOptions {

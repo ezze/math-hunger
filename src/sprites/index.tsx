@@ -9,7 +9,11 @@ export async function getSprites(): Promise<Sprites> {
   if (!sprites) {
     sprites = {
       horse: [new HorseSprite()],
-      formulaCar: [new FormulaCarSprite(), new FormulaCarWheelSprite()]
+      formulaCar: [
+        new FormulaCarSprite(),
+        new FormulaCarWheelSprite('front'),
+        new FormulaCarWheelSprite('rear')
+      ]
     };
     await Promise.allSettled(Object.keys(sprites).map((type => {
       sprites[type as AnimationType].forEach(sprite => sprite.init());

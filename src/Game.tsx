@@ -378,13 +378,13 @@ class Game {
       context.globalAlpha = opacity;
 
       animationSprites.forEach(sprite => {
-        const renderFramesPerSpriteFrame = 3;
-        const spriteRenderFramesCount = sprite.count * renderFramesPerSpriteFrame;
+        const spriteRenderFramesCount = sprite.count * sprite.framesPerSprite;
         const renderFrame = challenge.renderFrame % spriteRenderFramesCount;
-        const spriteFrame = Math.floor(renderFrame / renderFramesPerSpriteFrame);
-        const x = (time - startTime) / (duration * 1000) * (this.animationZoneWidth - spriteWidth * scale);
-        const y = offsetHeight + challengeIndex * spriteHeight * scale;
-        sprite.draw(context, spriteFrame, x, y, scale, renderFrame);
+        const spriteFrame = Math.floor(renderFrame / sprite.framesPerSprite);
+        const x = (time - startTime) / (duration * 1000) *
+          (this.animationZoneWidth - spriteWidth * scale) + sprite.offsetX * scale;
+        const y = offsetHeight + challengeIndex * spriteHeight * scale + sprite.offsetY * scale;
+        sprite.draw(context, spriteFrame, x, y, scale);
       });
 
       // Render operation
@@ -408,9 +408,6 @@ class Game {
       context.stroke();
 
       challenge.renderFrame++;
-      // if (challenge.renderFrame === renderFrames) {
-      //   challenge.renderFrame = 0;
-      // }
     });
   }
 }
