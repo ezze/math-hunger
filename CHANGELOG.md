@@ -1,6 +1,7 @@
 # Changelog
 
 - Logic error in `createDivisionOperation` is fixed.
+- Sprite opacity flickering on fade out is fixed.
 - Dependencies are upgraded.
 - Remote repository is migrated to https://github.com/ezze/math-hunger.
 

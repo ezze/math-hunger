@@ -170,7 +170,7 @@ declare interface Challenge {
   duration: number;
   fadeOutStartTime: number;
   operation: Operation;
-  horseRenderFrame: number;
+  renderFrame: number;
   answer?: number;
   correct?: boolean;
 }
