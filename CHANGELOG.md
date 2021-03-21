@@ -1,6 +1,7 @@
 # Changelog
 
 - Logic error in `createDivisionOperation` is fixed.
+- Dependencies are upgraded.
 
 ## 0.3.2 (2020-12-16)
 
