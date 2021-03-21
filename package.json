@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/yellowberry/math-hunger.git"
+    "url": "git+ssh://git@github.com/ezze/math-hunger.git"
   },
   "private": true,
   "keywords": [
@@ -25,9 +25,9 @@
   "author": "Dmitriy Pushkov <ezze@ezze.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/yellowberry/math-hunger/issues"
+    "url": "https://gitlab.com/ezze/math-hunger/issues"
   },
-  "homepage": "https://gitlab.com/yellowberry/math-hunger#readme",
+  "homepage": "https://gitlab.com/ezze/math-hunger#readme",
   "dependencies": {
     "antd": "^4.14.0",
     "i18next": "^19.9.2",

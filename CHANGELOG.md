@@ -2,6 +2,7 @@
 
 - Logic error in `createDivisionOperation` is fixed.
 - Dependencies are upgraded.
+- Remote repository is migrated to https://github.com/ezze/math-hunger.
 
 ## 0.3.2 (2020-12-16)
 
