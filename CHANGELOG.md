@@ -1,5 +1,7 @@
 # Changelog
 
+- Logic error in `createDivisionOperation` is fixed.
+
 ## 0.3.2 (2020-12-16)
 
 - Concurrency should be less than or equal to max challenges count.

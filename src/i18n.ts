@@ -9,7 +9,7 @@ import { languageDefault } from './constants';
 
 export async function initI18n(stores: Stores): Promise<void> {
   const settingsStore = stores.settingsStore as SettingsStore;
-  const { language } = settingsStore as SettingsStore;
+  const { language } = settingsStore;
 
   reaction(() => settingsStore.language, language => {
     i18n.changeLanguage(language);
