@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.4.0 (2021-03-21)
+
 - Different animation themes are supported — Formula 1 theme is introduced.
 - Logic error in `createDivisionOperation` is fixed.
 - Sprite opacity flickering on fade out is fixed.
