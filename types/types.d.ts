@@ -6,7 +6,9 @@ declare module '*.mp3';
 type Stores = Record<string, Store>;
 type StoreData = Record<string, any>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
-type Sprites = Record<string, Sprite>;
+type AnimationType = 'horse' | 'formulaCar';
+type AnimationSprites = Array<Sprite>;
+type Sprites = Record<AnimationType, AnimationSprites>;
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 type Sound = 'correct' | 'wrong' | 'gameOver';
 type SoundBlobs = Record<Sound | string, Blob | null>;
@@ -44,6 +46,7 @@ declare class SettingsStore extends Store {
   maxChallengeDelay: number;
   sound: boolean;
   music: boolean;
+  animationType: AnimationType;
   hash: string;
   setTab(tab: SettingsTab): void;
   setLanguage(language: string): void;
@@ -63,6 +66,7 @@ declare class SettingsStore extends Store {
   setMaxChallengeDelay(maxChallengeDelay: number): void;
   setSound(sound: boolean): void;
   setMusic(music: boolean): void;
+  setAnimationType(animationType: AnimationType): void;
 }
 
 declare class GameStore extends Store {
@@ -95,7 +99,7 @@ declare class BestResultsStore extends Store {
 declare interface GameOptions {
   store: GameStore;
   canvas: HTMLCanvasElement;
-  sprites: Sprites;
+  animationSprites: AnimationSprites;
   operators?: Array<Operator>;
   maxSum?: number;
   maxMinuend?: number;
@@ -116,6 +120,7 @@ declare interface SpriteOptions {
   width: number;
   height: number;
   count: number;
+  rotationFrames?: number;
 }
 
 declare class Sprite {
@@ -127,7 +132,7 @@ declare class Sprite {
   sprites: Array<HTMLCanvasElement>;
   constructor(options: SpriteOptions)
   init: () => Promise<void>;
-  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1) => void
+  draw: (context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1, frame = 0) => void
 }
 
 declare interface WithSpriteOptions {

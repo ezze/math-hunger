@@ -49,6 +49,7 @@ class SettingsStore extends Store {
   maxChallengeDelay = maxChallengeDelayDefault;
   sound = true;
   music = true;
+  animationType = 'horse';
 
   constructor(options: StoreOptions) {
     super({
@@ -71,7 +72,8 @@ class SettingsStore extends Store {
         'minChallengeDelay',
         'maxChallengeDelay',
         'sound',
-        'music'
+        'music',
+        'animationType'
       ]
     });
 
@@ -94,6 +96,7 @@ class SettingsStore extends Store {
       maxChallengeDelay: observable,
       sound: observable,
       music: observable,
+      animationType: observable,
       hash: computed,
       setTab: action,
       setLanguage: action,
@@ -235,6 +238,10 @@ class SettingsStore extends Store {
 
   setMusic(music: boolean): void {
     this.music = music;
+  }
+
+  setAnimationType(animationType: AnimationType): void {
+    this.animationType = animationType;
   }
 }
 

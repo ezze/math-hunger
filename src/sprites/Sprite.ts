@@ -3,17 +3,19 @@ class Sprite {
   width: number;
   height: number;
   count: number;
+  rotationFrames: number | null = null;
   imageWidth: number | null = null;
   imageHeight: number | null = null;
   image: HTMLImageElement | null = null;
   sprites: Array<HTMLCanvasElement> = [];
 
   constructor(options: SpriteOptions) {
-    const { url, width, height, count } = options;
+    const { url, width, height, count, rotationFrames } = options;
     this.url = url;
     this.width = width;
     this.height = height;
     this.count = count;
+    this.rotationFrames = rotationFrames || null;
   }
 
   async init(): Promise<void> {
@@ -59,7 +61,7 @@ class Sprite {
     }
   }
 
-  draw(context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1): void {
+  draw(context: CanvasRenderingContext2D, index: number, x: number, y: number, scale = 1, frame = 0): void {
     if (index < 0 || index >= this.count) {
       throw new RangeError('Sprite index is out of bounds');
     }
@@ -72,7 +74,13 @@ class Sprite {
     const dy = y;
     const dw = sprite.width * scale;
     const dh = sprite.height * scale;
+    
+    if (this.rotationFrames && this.rotationFrames > 1) {
+      const rotationFrame = frame % this.rotationFrames;
+      context.rotate((rotationFrame / this.rotationFrames) * 2 * Math.PI);
+    }
     context.drawImage(sprite, sx, sy, sw, sh, dx, dy, dw, dh);
+    context.rotate(0);
   }
 }
 

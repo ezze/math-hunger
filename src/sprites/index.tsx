@@ -1,14 +1,19 @@
 import React from 'react';
 
 import HorseSprite from './HorseSprite';
+import FormulaCarSprite from './FormulaCarSprite';
+import FormulaCarWheelSprite from './FormulaCarWheelSprite';
 
 let sprites: Sprites;
 export async function getSprites(): Promise<Sprites> {
   if (!sprites) {
     sprites = {
-      horse: new HorseSprite()
+      horse: [new HorseSprite()],
+      formulaCar: [new FormulaCarSprite(), new FormulaCarWheelSprite()]
     };
-    await Promise.allSettled(Object.keys(sprites).map(name => sprites[name].init()));
+    await Promise.allSettled(Object.keys(sprites).map((type => {
+      sprites[type as AnimationType].forEach(sprite => sprite.init());
+    })));
   }
   return sprites;
 }
