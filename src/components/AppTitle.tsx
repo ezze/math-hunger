@@ -6,7 +6,7 @@ const AppTitle: React.FunctionComponent = () => {
   return (
     <div className="app-title">
       <div className="app-title-name">{t('name')}</div>
-      <div className="app-title-version">v{appVersion}</div>
+      <div className="app-title-version">v{process.env.REACT_APP_VERSION}</div>
     </div>
   );
 };

@@ -123,7 +123,8 @@ class Store {
         if (value === undefined) {
           return;
         }
-        (this as any)[name] = value;
+        // @ts-ignore
+        this[name] = value;
       });
     }
     catch (e) {
@@ -181,7 +182,7 @@ class Store {
 
 const regExpIso8601 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
 
-function restoreValue(value: any): any {
+function restoreValue(value: unknown): unknown {
   if (typeof value === 'string' && regExpIso8601.test(value)) {
     return new Date(value);
   }

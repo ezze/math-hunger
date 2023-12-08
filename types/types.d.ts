@@ -1,10 +1,7 @@
-declare const appVersion: string;
-declare module '*.jpg';
-declare module '*.png';
-declare module '*.mp3';
+type TypedKeys<T, V> = keyof { [ P in keyof T as T[P] extends V ? P : never ] : P };
 
 type Stores = Record<string, Store>;
-type StoreData = Record<string, any>;
+type StoreData = Record<string, unknown>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
 type AnimationType = 'horse' | 'formulaCar';
 type AnimationSprites = Array<Sprite | Array<Sprite>>;

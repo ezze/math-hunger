@@ -32,6 +32,7 @@ import {
 import InjectionError from './helpers/InjectionError';
 
 import { languages, animationTypes } from '../constants';
+import SettingsStore from '../store/SettingsStore';
 
 interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
   settingsStore?: SettingsStore;
@@ -100,10 +101,10 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
     settingsStore.setOperators(operators);
   };
 
-  const createOnNumberInputChange = (name: string): (value: number | string | undefined) => void => {
-    return (value: number | string | undefined) => {
+  const createOnNumberInputChange = (name: TypedKeys<SettingsStore, (value: number) => void>): (value: number | null) => void => {
+    return (value: number | null) => {
       if (typeof value === 'number') {
-        (settingsStore as any)[name](value);
+        (settingsStore)[name](value);
       }
     };
   };

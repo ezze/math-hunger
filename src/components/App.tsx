@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import { usePrevious } from '../utils';
-import { playMusic } from '../sound';
+import { playMusic } from '../audio/music';
 
 import Intro from './Intro';
 import Start from './Start';
