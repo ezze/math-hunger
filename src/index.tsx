@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const StoresContext = createStoresContext();
   const SpritesContext = createSpritesContext();
 
-  // const loadingSpinner = document.querySelector('.loading-spinner');
-  // if (loadingSpinner) {
-  //   loadingSpinner.remove();
-  // }
+  const loadingSpinner = document.querySelector('.loading-spinner');
+  if (loadingSpinner) {
+    loadingSpinner.remove();
+  }
 
   const root = createRoot(rootElement);
   root.render(
