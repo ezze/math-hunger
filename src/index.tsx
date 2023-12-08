@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { getStores } from './store';
 import { getSprites } from './sprites';
@@ -8,6 +8,8 @@ import { initAudio } from './audio';
 import App from './components/App';
 import { createStoresContext } from './store/utils';
 import { createSpritesContext } from './sprites/utils';
+
+import './index.less';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const rootElement = document.getElementById('root');
@@ -28,14 +30,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   //   loadingSpinner.remove();
   // }
 
-  const root = ReactDOM.createRoot(rootElement);
+  const root = createRoot(rootElement);
   root.render(
     <StrictMode>
       <StoresContext.Provider value={stores}>
         <SpritesContext.Provider value={sprites}>
           <App />
         </SpritesContext.Provider>
-      </StoresContext.Provider>,
+      </StoresContext.Provider>
     </StrictMode>
   );
 });
