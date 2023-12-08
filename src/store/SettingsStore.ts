@@ -29,6 +29,7 @@ import {
 } from '../constants';
 
 import Store from './Store';
+import { AnimationType } from '../sprites/types';
 
 class SettingsStore extends Store {
   tab: SettingsTab = settingsTabDefault;
@@ -49,7 +50,7 @@ class SettingsStore extends Store {
   maxChallengeDelay = maxChallengeDelayDefault;
   sound = true;
   music = true;
-  animationType = 'horse';
+  animationType: AnimationType = 'horse';
 
   constructor(options: StoreOptions) {
     super({

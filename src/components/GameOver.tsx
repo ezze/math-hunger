@@ -1,29 +1,13 @@
 import './less/game-over.less';
 
 import React, { ChangeEvent, useState } from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { Space, Table, Form, Input, Button, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useStoresContext } from '../store/utils';
 
-import InjectionError from './helpers/InjectionError';
-
-interface GameOverProps {
-  settingsStore?: SettingsStore;
-  gameStore?: GameStore;
-  bestResultsStore?: BestResultsStore;
-}
-
-const GameOver = (props: GameOverProps) => {
-  const { settingsStore, gameStore, bestResultsStore } = props;
-  if (!settingsStore) {
-    throw new InjectionError('Settings store');
-  }
-  if (!gameStore) {
-    throw new InjectionError('Game store');
-  }
-  if (!bestResultsStore) {
-    throw new InjectionError('Best results store');
-  }
+const GameOver = observer(() => {
+  const { settingsStore, gameStore, bestResultsStore } = useStoresContext();
 
   const { lastResult } = gameStore;
   if (!lastResult) {
@@ -128,6 +112,6 @@ const GameOver = (props: GameOverProps) => {
       </Space>
     </div>
   );
-};
+});
 
-export default inject('settingsStore', 'gameStore', 'bestResultsStore')(observer(GameOver));
+export default GameOver;

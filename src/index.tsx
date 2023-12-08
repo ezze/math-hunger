@@ -1,12 +1,13 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { getStores } from './store';
-import { getSprites, SpritesProvider } from './sprites';
+import { getSprites } from './sprites';
 import { initI18n } from './i18n';
 import { initAudio } from './audio';
-import { Provider } from 'mobx-react';
 import App from './components/App';
+import { createStoresContext } from './store/utils';
+import { createSpritesContext } from './sprites/utils';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const rootElement = document.getElementById('root');
@@ -19,6 +20,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   await initI18n(stores);
   await initAudio(stores);
 
+  const StoresContext = createStoresContext();
+  const SpritesContext = createSpritesContext();
+
   // const loadingSpinner = document.querySelector('.loading-spinner');
   // if (loadingSpinner) {
   //   loadingSpinner.remove();
@@ -26,14 +30,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <React.StrictMode>
-      <Provider {...stores}>
-        <SpritesProvider value={sprites}>
+    <StrictMode>
+      <StoresContext.Provider value={stores}>
+        <SpritesContext.Provider value={sprites}>
           <App />
-        </SpritesProvider>
-      </Provider>,
-      <App />
-    </React.StrictMode>
+        </SpritesContext.Provider>
+      </StoresContext.Provider>,
+    </StrictMode>
   );
 });
 

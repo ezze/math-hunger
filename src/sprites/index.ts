@@ -1,8 +1,7 @@
-import React from 'react';
-
 import HorseSprite from './HorseSprite';
 import FormulaCarSprite from './FormulaCarSprite';
 import FormulaCarWheelSprite from './FormulaCarWheelSprite';
+import { AnimationType, Sprites } from './types';
 
 const formulaCarColors = ['blue', 'cyan', 'green', 'orange', 'pink', 'red', 'yellow'];
 const formulaCarWheelColors = ['blue', 'green', 'purple', 'red', 'yellow'];
@@ -29,26 +28,3 @@ export async function getSprites(): Promise<Sprites> {
   }
   return sprites;
 }
-
-const SpritesContext = React.createContext<Sprites | null>(null);
-const { Provider: SpritesProvider, Consumer: SpritesConsumer } = SpritesContext;
-
-const withSprites = <P extends WithSpriteOptions>(WrappedComponent: React.ComponentType<P>):
-  React.FunctionComponent<Omit<P, keyof WithSpriteOptions>> => {
-  return props => {
-    return (
-      <SpritesConsumer>
-        {sprites => {
-          return (
-            <WrappedComponent {...props as P} sprites={sprites} />
-          );
-        }}
-      </SpritesConsumer>
-    );
-  };
-};
-
-export {
-  SpritesProvider,
-  withSprites
-};

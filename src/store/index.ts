@@ -1,25 +1,19 @@
-import Store from './Store';
 import SettingsStore from './SettingsStore';
 import GameStore from './GameStore';
 import BestResultsStore from './BestResultsStore';
+import { Stores } from './types';
+import Store from './Store';
 
-let stores: Record<string, Store>;
+let stores: Stores;
 
-async function getStores(): Promise<Stores> {
+export async function getStores(): Promise<Stores> {
   if (!stores) {
     const settingsStore = new SettingsStore({ key: 'settings' });
     const gameStore = new GameStore();
     const bestResultsStore = new BestResultsStore({ key: 'bestResults' });
-    stores = {
-      settingsStore,
-      gameStore,
-      bestResultsStore
-    };
-    await Promise.allSettled(Object.keys(stores).map(name => stores[name].init()));
+    const orderedStores: Array<Store> = [settingsStore, gameStore, bestResultsStore];
+    await Promise.allSettled(orderedStores.map(store => store.init()));
+    stores = { settingsStore, gameStore, bestResultsStore };
   }
   return stores;
 }
-
-export {
-  getStores
-};

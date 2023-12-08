@@ -6,9 +6,10 @@ import en from './translations/en.json';
 import ru from './translations/ru.json';
 
 import { languageDefault } from './constants';
+import { Stores } from './store/types';
 
 export async function initI18n(stores: Stores): Promise<void> {
-  const settingsStore = stores.settingsStore as SettingsStore;
+  const { settingsStore } = stores;
   const { language } = settingsStore;
 
   reaction(() => settingsStore.language, language => {

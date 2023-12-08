@@ -14,12 +14,15 @@ dependencies:
   lodash.kebabcase:
     specifier: ^4.1.1
     version: 4.1.1
+  lodash.once:
+    specifier: ^4.1.1
+    version: 4.1.1
   mobx:
     specifier: ^6.12.0
     version: 6.12.0
-  mobx-react:
-    specifier: ^9.1.0
-    version: 9.1.0(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
+  mobx-react-lite:
+    specifier: ^4.0.5
+    version: 4.0.5(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
   mobx-utils:
     specifier: ^6.0.8
     version: 6.0.8(mobx@6.12.0)
@@ -59,6 +62,9 @@ devDependencies:
     specifier: ^27.5.2
     version: 27.5.2
   '@types/lodash.kebabcase':
+    specifier: ^4.1.9
+    version: 4.1.9
+  '@types/lodash.once':
     specifier: ^4.1.9
     version: 4.1.9
   '@types/node':
@@ -2635,6 +2641,12 @@ packages:
 
   /@types/lodash.kebabcase@4.1.9:
     resolution: {integrity: sha512-kPrrmcVOhSsjAVRovN0lRfrbuidfg0wYsrQa5IYuoQO1fpHHGSme66oyiYA/5eQPVl8Z95OA3HG0+d2SvYC85w==}
+    dependencies:
+      '@types/lodash': 4.14.202
+    dev: true
+
+  /@types/lodash.once@4.1.9:
+    resolution: {integrity: sha512-nvZ7GYfyZB6CUmXL+7HSXg53rFpc49FsKuRmMiCIGhgJB/yyTip8uHk4mxGyVJOl87dXPlf3qy42WsjOcIrnmg==}
     dependencies:
       '@types/lodash': 4.14.202
     dev: true
@@ -7456,6 +7468,10 @@ packages:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
 
+  /lodash.once@4.1.1:
+    resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
+    dev: false
+
   /lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
     dev: true
@@ -7652,25 +7668,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
-    dev: false
-
-  /mobx-react@9.1.0(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-DeDRTYw4AlgHw8xEXtiZdKKEnp+c5/jeUgTbTQXEqnAzfkrgYRWP3p3Nv3Whc2CEcM/mDycbDWGjxKokQdlffg==}
-    peerDependencies:
-      mobx: ^6.9.0
-      react: ^16.8.0 || ^17 || ^18
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      mobx: 6.12.0
-      mobx-react-lite: 4.0.5(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /mobx-utils@6.0.8(mobx@6.12.0):

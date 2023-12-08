@@ -1,7 +1,7 @@
 import './less/settings.less';
 
 import React from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
 import kebabCase from 'lodash.kebabcase';
@@ -29,20 +29,13 @@ import {
   challengeDelayEnd
 } from '../constants';
 
-import InjectionError from './helpers/InjectionError';
-
 import { languages, animationTypes } from '../constants';
 import SettingsStore from '../store/SettingsStore';
+import { useStoresContext } from '../store/utils';
+import { AnimationType } from '../sprites/types';
 
-interface SettingsProps extends React.HTMLAttributes<HTMLDivElement> {
-  settingsStore?: SettingsStore;
-}
-
-const Settings: React.FunctionComponent<SettingsProps> = props => {
-  const { settingsStore } = props;
-  if (!settingsStore) {
-    throw new InjectionError('Settings store');
-  }
+const Settings = observer(() => {
+  const { settingsStore } = useStoresContext();
 
   const { t } = useTranslation(['settings', 'language']);
 
@@ -397,6 +390,6 @@ const Settings: React.FunctionComponent<SettingsProps> = props => {
       </Form>
     </div>
   );
-};
+});
 
-export default inject('settingsStore')(observer(Settings));
+export default Settings;

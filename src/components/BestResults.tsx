@@ -1,26 +1,14 @@
 import './less/best-results.less';
 
 import React from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { useTranslation } from 'react-i18next';
+import { useStoresContext } from '../store/utils';
 
-import InjectionError from './helpers/InjectionError';
-
-interface BestResultsProps {
-  settingsStore?: SettingsStore;
-  bestResultsStore?: BestResultsStore;
-}
-
-const BestResults = (props: BestResultsProps) => {
-  const { settingsStore, bestResultsStore } = props;
-  if (!settingsStore) {
-    throw new InjectionError('Settings store');
-  }
-  if (!bestResultsStore) {
-    throw new InjectionError('Best results store');
-  }
+const BestResults = observer(() => {
+  const { settingsStore, bestResultsStore } = useStoresContext();
 
   const { t } = useTranslation('best-results');
 
@@ -88,6 +76,6 @@ const BestResults = (props: BestResultsProps) => {
       )}
     </div>
   );
-};
+});
 
-export default inject('settingsStore', 'bestResultsStore')(observer(BestResults));
+export default BestResults;

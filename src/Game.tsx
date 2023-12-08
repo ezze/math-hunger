@@ -21,6 +21,8 @@ import {
   splitGapSize,
   colors
 } from './constants';
+import GameStore from './store/GameStore';
+import { AnimationSprites } from './sprites/types';
 
 const challengeFadeTimeoutMs = 1000;
 const maxAnswerDigitsCount = 3;

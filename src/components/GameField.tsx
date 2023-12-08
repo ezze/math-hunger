@@ -1,36 +1,21 @@
 import './less/game-field.less';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { sprintf } from 'sprintf-js';
 
-import { withSprites } from '../sprites';
 import Game from '../Game';
-
-import InjectionError from './helpers/InjectionError';
-
-interface GameFieldProps extends React.HTMLAttributes<HTMLDivElement>, WithSpriteOptions {
-  settingsStore?: SettingsStore;
-  gameStore?: GameStore;
-  bestResultsStore?: BestResultsStore;
-}
+import { useStoresContext } from '../store/utils';
+import { useSpritesContext } from '../sprites/utils';
 
 interface CanvasSize {
   width: number;
   height: number;
 }
 
-const GameField: React.FunctionComponent<GameFieldProps> = props => {
-  const { settingsStore, gameStore, bestResultsStore, sprites } = props;
-  if (!settingsStore) {
-    throw new InjectionError('Settings store');
-  }
-  if (!gameStore) {
-    throw new InjectionError('Game store');
-  }
-  if (!bestResultsStore) {
-    throw new InjectionError('Best results store');
-  }
+const GameField = observer(() => {
+  const { settingsStore, gameStore } = useStoresContext();
+  const sprites = useSpritesContext();
 
   const {
     operators,
@@ -141,6 +126,6 @@ const GameField: React.FunctionComponent<GameFieldProps> = props => {
       </div>
     </div>
   );
-};
+});
 
-export default withSprites(inject('settingsStore', 'gameStore', 'bestResultsStore')(observer(GameField)));
+export default GameField;

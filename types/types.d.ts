@@ -1,11 +1,8 @@
 type TypedKeys<T, V> = keyof { [ P in keyof T as T[P] extends V ? P : never ] : P };
 
-type Stores = Record<string, Store>;
 type StoreData = Record<string, unknown>;
 type SettingsTab = 'basic' | 'math' | 'gameplay';
-type AnimationType = 'horse' | 'formulaCar';
-type AnimationSprites = Array<Sprite | Array<Sprite>>;
-type Sprites = Record<AnimationType, AnimationSprites>;
+
 type Operator = 'add' | 'subtract' | 'multiply' | 'divide';
 type Sound = 'correct' | 'wrong' | 'gameOver';
 type SoundBlobs = Record<Sound | string, Blob | null>;
@@ -15,82 +12,6 @@ declare interface StoreOptions {
   include?: Array<string>;
   exclude?: Array<string>;
   saveDelayMs?: number;
-}
-
-declare class Store {
-  constructor(options: StoreOptions);
-  init(): Promise<StoreData>;
-  load(): Promise<StoreData>;
-  save(data: StoreData): Promise<void>;
-}
-
-declare class SettingsStore extends Store {
-  tab: SettingsTab;
-  language: string;
-  duration: number;
-  operators: Array<Operator>;
-  maxSum: number;
-  maxMinuend: number;
-  maxMultiplier1: number;
-  maxMultiplier2: number;
-  maxDivisor: number;
-  maxQuotient: number;
-  challengeConcurrency: number;
-  maxChallengesCount: number;
-  minChallengeDuration: number;
-  maxChallengeDuration: number;
-  minChallengeDelay: number;
-  maxChallengeDelay: number;
-  sound: boolean;
-  music: boolean;
-  animationType: AnimationType;
-  hash: string;
-  setTab(tab: SettingsTab): void;
-  setLanguage(language: string): void;
-  setDuration(duration: number): void;
-  setOperators(operators: Array<Operator>): void;
-  setMaxSum(maxSum: number): void;
-  setMaxMinuend(maxMinuend: number): void;
-  setMaxMultiplier1(maxMultiplier1: number): void;
-  setMaxMultiplier2(maxMultiplier2: number): void;
-  setMaxDivisor(maxDivisor: number): void;
-  setMaxQuotient(maxQuotient: number): void;
-  setChallengeConcurrency(challengeConcurrency: number): void;
-  setMaxChallengesCount(maxChallengesCount: number): void;
-  setMinChallengeDuration(minChallengeDuration: number): void;
-  setMaxChallengeDuration(maxChallengeDuration: number): void;
-  setMinChallengeDelay(minChallengeDelay: number): void;
-  setMaxChallengeDelay(maxChallengeDelay: number): void;
-  setAnimationType(animationType: AnimationType): void;
-  setSound(sound: boolean): void;
-  setMusic(music: boolean): void;
-}
-
-declare class GameStore extends Store {
-  playing: boolean;
-  gameOver: boolean;
-  lastResult: BestResult | null;
-  correctCount: number;
-  wrongCount: number;
-  missedCount: number;
-  overallCount: number;
-  score: number;
-  leftTimeFormatted: string;
-  start(duration: number): void;
-  end(): void;
-  interrupt(): void;
-  reset(): void;
-  finish(): void;
-  increaseCorrectCount(): void;
-  increaseWrongCount(operation: Operation): void;
-  increaseMissedCount(operation: Operation): void;
-}
-
-declare class BestResultsStore extends Store {
-  name: string;
-  bestResults: Record<string, Array<BestResult>> = {};
-  setName(name: string): void;
-  add(hash: string, bestResult: BestResult): void
 }
 
 declare interface GameOptions {
