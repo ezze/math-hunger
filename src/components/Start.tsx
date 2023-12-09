@@ -1,13 +1,12 @@
 import './less/start.less';
 
-import React from 'react';
 import { Space, Button } from 'antd';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import AppTitle from './AppTitle';
-
-import Settings from './Settings';
 import BestResults from './BestResults';
+import Settings from './Settings';
 
 interface StartProps extends React.HTMLAttributes<HTMLDivElement> {
   start: () => void;

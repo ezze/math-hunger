@@ -1,17 +1,17 @@
 import './less/app.less';
 
-import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import React, { useEffect, useState } from 'react';
 
-import { usePrevious } from '../utils';
 import { playMusic } from '../audio/music';
+import { useStoresContext } from '../store/utils';
+import { usePrevious } from '../utils';
 
-import Intro from './Intro';
-import Start from './Start';
 import GameField from './GameField';
 import GameOver from './GameOver';
+import Intro from './Intro';
+import Start from './Start';
 
-import { useStoresContext } from '../store/utils';
 
 const App = observer(() => {
   const { settingsStore, gameStore } = useStoresContext();

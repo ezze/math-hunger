@@ -1,10 +1,10 @@
 import './less/settings.less';
 
-import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Form, Select, InputNumber, Switch, Tabs, Row, Col } from 'antd';
-import { useTranslation } from 'react-i18next';
 import kebabCase from 'lodash.kebabcase';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import {
   durationsAvailable,
@@ -28,11 +28,10 @@ import {
   challengeDelayStart,
   challengeDelayEnd
 } from '../constants';
-
 import { languages, animationTypes } from '../constants';
+import { AnimationType } from '../sprites/types';
 import SettingsStore from '../store/SettingsStore';
 import { useStoresContext } from '../store/utils';
-import { AnimationType } from '../sprites/types';
 
 const Settings = observer(() => {
   const { settingsStore } = useStoresContext();

@@ -1,7 +1,8 @@
-import correctSoundUrl from './correct.mp3';
-import wrongSoundUrl from './wrong.mp3';
-import gameOverSoundUrl from './game-over.mp3';
 import { createAudio, loadAudioBlob, playAudio } from '../utils';
+
+import correctSoundUrl from './correct.mp3';
+import gameOverSoundUrl from './game-over.mp3';
+import wrongSoundUrl from './wrong.mp3';
 
 const soundBlobs: SoundBlobs = {
   correct: null,

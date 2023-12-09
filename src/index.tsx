@@ -1,13 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import { getStores } from './store';
-import { getSprites } from './sprites';
-import { initI18n } from './i18n';
+
 import { initAudio } from './audio';
 import App from './components/App';
-import { createStoresContext } from './store/utils';
+import { initI18n } from './i18n';
+import reportWebVitals from './reportWebVitals';
+import { getSprites } from './sprites';
 import { createSpritesContext } from './sprites/utils';
+import { getStores } from './store';
+import { createStoresContext } from './store/utils';
 
 import './index.less';
 

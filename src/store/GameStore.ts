@@ -4,7 +4,6 @@ import {
   computed,
   action
 } from 'mobx';
-
 import { sprintf } from 'sprintf-js';
 
 import { getOperationText } from '../utils';

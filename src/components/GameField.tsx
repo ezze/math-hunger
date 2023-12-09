@@ -1,12 +1,12 @@
 import './less/game-field.less';
 
-import React, { useRef, useState, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import React, { useRef, useState, useEffect } from 'react';
 import { sprintf } from 'sprintf-js';
 
 import Game from '../Game';
-import { useStoresContext } from '../store/utils';
 import { useSpritesContext } from '../sprites/utils';
+import { useStoresContext } from '../store/utils';
 
 interface CanvasSize {
   width: number;

@@ -1,8 +1,3 @@
-import {
-  random,
-  createOperation,
-  getOperationText
-} from './utils';
 
 import {
   operatorsDefault,
@@ -21,8 +16,13 @@ import {
   splitGapSize,
   colors
 } from './constants';
-import GameStore from './store/GameStore';
 import { AnimationSprites } from './sprites/types';
+import GameStore from './store/GameStore';
+import {
+  random,
+  createOperation,
+  getOperationText
+} from './utils';
 
 const challengeFadeTimeoutMs = 1000;
 const maxAnswerDigitsCount = 3;

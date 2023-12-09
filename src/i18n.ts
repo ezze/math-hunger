@@ -2,11 +2,11 @@ import i18n from 'i18next';
 import { reaction } from 'mobx';
 import { initReactI18next } from 'react-i18next';
 
+import { languageDefault } from './constants';
+import { Stores } from './store/types';
 import en from './translations/en.json';
 import ru from './translations/ru.json';
 
-import { languageDefault } from './constants';
-import { Stores } from './store/types';
 
 export async function initI18n(stores: Stores): Promise<void> {
   const { settingsStore } = stores;

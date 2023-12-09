@@ -1,8 +1,8 @@
-import SettingsStore from './SettingsStore';
-import GameStore from './GameStore';
 import BestResultsStore from './BestResultsStore';
-import { Stores } from './types';
+import GameStore from './GameStore';
+import SettingsStore from './SettingsStore';
 import Store from './Store';
+import { Stores } from './types';
 
 let stores: Stores;
 

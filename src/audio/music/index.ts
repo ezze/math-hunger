@@ -1,8 +1,10 @@
-import f1Url from './f1.mp3';
+import { AnimationType } from '../../sprites/types';
+import { createAudio, loadAudioBlob, playAudio } from '../utils';
+
 import bttfUrl1 from './bttf-1.mp3';
 import bttfUrl2 from './bttf-2.mp3';
-import { createAudio, loadAudioBlob, playAudio } from '../utils';
-import { AnimationType } from '../../sprites/types';
+import f1Url from './f1.mp3';
+
 
 let musicIndex = 0;
 let musicAudio: HTMLAudioElement | null = null;

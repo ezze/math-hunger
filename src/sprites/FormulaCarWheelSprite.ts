@@ -1,10 +1,10 @@
-import Sprite from './Sprite';
-
 import formulaCarWheelBlueUrl from '../img/formula-1-car-wheel-blue.png';
 import formulaCarWheelGreenUrl from '../img/formula-1-car-wheel-green.png';
 import formulaCarWheelPurpleUrl from '../img/formula-1-car-wheel-purple.png';
 import formulaCarWheelRedUrl from '../img/formula-1-car-wheel-red.png';
 import formulaCarWheelYellowUrl from '../img/formula-1-car-wheel-yellow.png';
+
+import Sprite from './Sprite';
 
 const colorUrlMap: Record<string, string> = {
   blue: formulaCarWheelBlueUrl,

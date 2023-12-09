@@ -1,9 +1,10 @@
 import './less/game-over.less';
 
-import React, { ChangeEvent, useState } from 'react';
-import { observer } from 'mobx-react-lite';
 import { Space, Table, Form, Input, Button, Row, Col } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { useStoresContext } from '../store/utils';
 
 const GameOver = observer(() => {

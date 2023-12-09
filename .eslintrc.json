@@ -5,7 +5,7 @@
     "plugin:import/typescript"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "import"],
+  "plugins": ["@typescript-eslint", "@stylistic/js", "@stylistic/ts", "react", "import"],
   "root": true,
   "settings": {
     "import/extensions": [".js", ".jsx"],
@@ -22,7 +22,43 @@
     }
   },
   "rules": {
+    "@stylistic/js/eol-last": ["error", "always"],
+    "@stylistic/js/no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0 }],
+    "@stylistic/ts/block-spacing": ["error", "always"],
+    "@stylistic/ts/brace-style": ["error", "1tbs"],
+    "@stylistic/ts/comma-dangle": ["error", "never"],
+    "@stylistic/ts/comma-spacing": ["error", { "before": false, "after": true }],
+    "@stylistic/ts/function-call-spacing": ["error", "never"],
+    "@stylistic/ts/indent": ["error", 2],
+    "@stylistic/ts/key-spacing": ["error", { "mode": "strict", "beforeColon": false, "afterColon": true }],
+    "@stylistic/ts/keyword-spacing": ["error", { "before": true, "after": true }],
+    "@stylistic/ts/lines-between-class-members": [
+      "error", {
+        "enforce": [
+          { "blankLine": "always", "prev": "*", "next": "method" },
+          { "blankLine": "always", "prev": "method", "next": "*" }
+        ]
+      }
+    ],
+    "@stylistic/ts/object-curly-spacing": ["error", "always", { "arraysInObjects": true, "objectsInObjects": false }],
+    "@stylistic/ts/quotes": ["error", "single"],
+    "@stylistic/ts/semi": ["error", "always"],
+    "@stylistic/ts/space-before-blocks": ["error", "always"],
+    "@stylistic/ts/space-before-function-paren": ["error", "never"],
+    "@stylistic/ts/space-infix-ops": ["error", { "int32Hint": true }],
+    "@stylistic/ts/type-annotation-spacing": ["error", { "before": false, "after": true }],
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-unused-vars": "warn"
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        }
+      }
+    ]
   }
 }

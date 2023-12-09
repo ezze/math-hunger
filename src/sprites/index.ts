@@ -1,6 +1,6 @@
-import HorseSprite from './HorseSprite';
 import FormulaCarSprite from './FormulaCarSprite';
 import FormulaCarWheelSprite from './FormulaCarWheelSprite';
+import HorseSprite from './HorseSprite';
 import { AnimationType, Sprites } from './types';
 
 const formulaCarColors = ['blue', 'cyan', 'green', 'orange', 'pink', 'red', 'yellow'];

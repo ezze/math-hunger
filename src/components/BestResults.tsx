@@ -1,10 +1,11 @@
 import './less/best-results.less';
 
-import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+
 import { useStoresContext } from '../store/utils';
 
 const BestResults = observer(() => {

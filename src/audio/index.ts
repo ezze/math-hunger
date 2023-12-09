@@ -1,7 +1,9 @@
 import { IReactionDisposer, reaction } from 'mobx';
+
+import { Stores } from '../store/types';
+
 import { initMusic, playMusic, stopMusic } from './music';
 import { initSounds, playSound } from './sounds';
-import { Stores } from '../store/types';
 
 export async function initAudio(stores: Stores): Promise<Array<IReactionDisposer>> {
   const { settingsStore, gameStore } = stores;

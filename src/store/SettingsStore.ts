@@ -4,7 +4,6 @@ import {
   action,
   computed
 } from 'mobx';
-
 import objectHash from 'object-hash';
 
 import {
@@ -27,9 +26,9 @@ import {
   minChallengeDelayDefault,
   maxChallengeDelayDefault
 } from '../constants';
+import { AnimationType } from '../sprites/types';
 
 import Store from './Store';
-import { AnimationType } from '../sprites/types';
 
 class SettingsStore extends Store {
   tab: SettingsTab = settingsTabDefault;

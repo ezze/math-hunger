@@ -1,4 +1,3 @@
-import Sprite from './Sprite';
 
 import formulaCarBlueUrl from '../img/formula-1-car-blue.png';
 import formulaCarCyanUrl from '../img/formula-1-car-cyan.png';
@@ -7,6 +6,8 @@ import formulaCarOrangeUrl from '../img/formula-1-car-orange.png';
 import formulaCarPinkUrl from '../img/formula-1-car-pink.png';
 import formulaCarRedUrl from '../img/formula-1-car-red.png';
 import formulaCarYellowUrl from '../img/formula-1-car-yellow.png';
+
+import Sprite from './Sprite';
 
 const colorUrlMap: Record<string, string> = {
   blue: formulaCarBlueUrl,
