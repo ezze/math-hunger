@@ -32,6 +32,7 @@ import { languages, animationTypes } from '../constants';
 import { AnimationType } from '../sprites/types';
 import SettingsStore from '../store/SettingsStore';
 import { useStoresContext } from '../store/utils';
+import { Operator, SettingsTab } from '../types';
 
 const Settings = observer(() => {
   const { settingsStore } = useStoresContext();

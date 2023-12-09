@@ -27,8 +27,9 @@ import {
   maxChallengeDelayDefault
 } from '../constants';
 import { AnimationType } from '../sprites/types';
+import { Operator, SettingsTab } from '../types';
 
-import Store from './Store';
+import Store, { StoreOptions } from './Store';
 
 class SettingsStore extends Store {
   tab: SettingsTab = settingsTabDefault;

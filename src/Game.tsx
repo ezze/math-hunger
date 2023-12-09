@@ -15,8 +15,10 @@ import {
   splitGapSize,
   colors
 } from './constants';
+import Sprite from './sprites/Sprite';
 import { AnimationSprites } from './sprites/types';
 import GameStore from './store/GameStore';
+import { Challenge, Operator } from './types';
 import {
   random,
   createOperation,
@@ -25,6 +27,25 @@ import {
 
 const challengeFadeTimeoutMs = 1000;
 const maxAnswerDigitsCount = 3;
+
+declare interface GameOptions {
+  store: GameStore;
+  canvas: HTMLCanvasElement;
+  animationSprites: AnimationSprites;
+  operators?: Array<Operator>;
+  maxSum?: number;
+  maxMinuend?: number;
+  maxMultiplier1?: number;
+  maxMultiplier2?: number;
+  maxDivisor?: number;
+  maxQuotient?: number;
+  challengeConcurrency?: number;
+  maxChallengesCount?: number;
+  minChallengeDuration?: number;
+  maxChallengeDuration?: number;
+  minChallengeDelay?: number;
+  maxChallengeDelay?: number;
+}
 
 class Game {
   store: GameStore;

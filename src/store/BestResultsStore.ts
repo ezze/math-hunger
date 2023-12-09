@@ -4,7 +4,9 @@ import {
   action
 } from 'mobx';
 
-import Store from './Store';
+import { BestResult } from '../types';
+
+import Store, { StoreOptions } from './Store';
 
 const maxCount = 10;
 

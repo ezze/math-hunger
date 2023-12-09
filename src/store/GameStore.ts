@@ -6,9 +6,10 @@ import {
 } from 'mobx';
 import { sprintf } from 'sprintf-js';
 
+import { BestResult, Operation } from '../types';
 import { getOperationText } from '../utils';
 
-import Store from './Store';
+import Store, { StoreOptions } from './Store';
 
 class GameStore extends Store {
   name = '';

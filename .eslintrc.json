@@ -74,7 +74,7 @@
     ],
     "@stylistic/ts/object-curly-spacing": ["error", "always", { "arraysInObjects": true, "objectsInObjects": false }],
     "@stylistic/ts/quotes": ["error", "single"],
-    "@stylistic/ts/semi": "error",
+    "@stylistic/ts/semi": ["error", "always"],
     "@stylistic/ts/space-before-blocks": "error",
     "@stylistic/ts/space-before-function-paren": ["error", "never"],
     "@stylistic/ts/space-infix-ops": ["error", { "int32Hint": true }],

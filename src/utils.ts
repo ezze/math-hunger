@@ -1,5 +1,14 @@
 import { useEffect, useRef } from 'react';
 
+import {
+  CreateAdditionOperationOptions, CreateDivisionOperationOptions,
+  CreateMultiplicationOperationOptions,
+  CreateOperationOptions,
+  CreateSubtractionOperationOptions,
+  Operation,
+  Operator
+} from './types';
+
 export function usePrevious<T>(value: T): T {
   const ref = useRef<T>(value);
   useEffect(() => {

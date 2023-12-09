@@ -1,3 +1,13 @@
+declare interface SpriteOptions {
+  url: string;
+  width: number;
+  height: number;
+  offsetX?: number;
+  offsetY?: number;
+  count?: number;
+  framesPerSprite?: number;
+}
+
 class Sprite {
   url: string;
   width: number;

@@ -41,13 +41,14 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-react": "^7.33.2",
     "react-scripts": "5.0.1",
+    "rimraf": "^5.0.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "rimraf node_modules/.cache/.eslintcache && craco start",
     "build": "craco build",
-    "lint": "eslint src && tsc --noemit",
+    "lint": "rimraf node_modules/.cache/.eslintcache && eslint src && tsc --noemit",
     "test": "craco test"
   },
   "browserslist": {

@@ -1,12 +1,13 @@
 import './less/best-results.less';
 
 import { Table } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType } from 'antd/es/table';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useStoresContext } from '../store/utils';
+import { BestResult } from '../types';
 
 const BestResults = observer(() => {
   const { settingsStore, bestResultsStore } = useStoresContext();

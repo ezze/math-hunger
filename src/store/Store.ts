@@ -7,6 +7,15 @@ import {
   reaction
 } from 'mobx';
 
+type StoreData = Record<string, unknown>;
+
+export declare interface StoreOptions {
+  key?: string;
+  include?: Array<string>;
+  exclude?: Array<string>;
+  saveDelayMs?: number;
+}
+
 class Store {
   storeInitializing = false;
   storeReady = false;

@@ -2,6 +2,7 @@ import { createAudio, loadAudioBlob, playAudio } from '../utils';
 
 import correctSoundUrl from './correct.mp3';
 import gameOverSoundUrl from './game-over.mp3';
+import { Sound, SoundBlobs } from './types';
 import wrongSoundUrl from './wrong.mp3';
 
 const soundBlobs: SoundBlobs = {
