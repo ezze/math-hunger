@@ -7,12 +7,11 @@ import { Stores } from './store/types';
 import en from './translations/en.json';
 import ru from './translations/ru.json';
 
-
 export async function initI18n(stores: Stores): Promise<void> {
   const { settingsStore } = stores;
   const { language } = settingsStore;
 
-  reaction(() => settingsStore.language, language => {
+  reaction(() => settingsStore.language, (language) => {
     i18n.changeLanguage(language);
   });
 

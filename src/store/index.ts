@@ -12,7 +12,7 @@ export async function getStores(): Promise<Stores> {
     const gameStore = new GameStore();
     const bestResultsStore = new BestResultsStore({ key: 'bestResults' });
     const orderedStores: Array<Store> = [settingsStore, gameStore, bestResultsStore];
-    await Promise.allSettled(orderedStores.map(store => store.init()));
+    await Promise.allSettled(orderedStores.map((store) => store.init()));
     stores = { settingsStore, gameStore, bestResultsStore };
   }
   return stores;

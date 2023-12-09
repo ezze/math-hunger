@@ -6,4 +6,4 @@ export type Stores = {
   settingsStore: SettingsStore;
   gameStore: GameStore;
   bestResultsStore: BestResultsStore;
-}
+};

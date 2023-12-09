@@ -9,7 +9,7 @@ export function usePrevious<T>(value: T): T {
 }
 
 export function delay(ms = 200): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export function random(min: number, max: number): number {

@@ -179,7 +179,7 @@ class SettingsStore extends Store {
 
   setOperators(operators: Array<Operator>): void {
     const orderedOperators = new Array<Operator>();
-    operatorsAvailable.forEach(operator => {
+    operatorsAvailable.forEach((operator) => {
       if (operators.includes(operator)) {
         orderedOperators.push(operator);
       }

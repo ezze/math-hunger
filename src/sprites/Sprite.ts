@@ -40,12 +40,11 @@ class Sprite {
           this.imageHeight = imageHeight;
           this.crop();
           resolve();
-        }
-        catch (e) {
+        } catch (e) {
           reject(e);
         }
       };
-      image.onerror = e => reject(e);
+      image.onerror = (e) => reject(e);
       image.src = this.url;
     });
   }

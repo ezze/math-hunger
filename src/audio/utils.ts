@@ -2,8 +2,7 @@ export async function loadAudioBlob(url: string): Promise<Blob> {
   try {
     const response = await fetch(url);
     return response.blob();
-  }
-  catch (e) {
+  } catch (e) {
     return Promise.reject(`Unable to load audio "${url}"`);
   }
 }
@@ -18,8 +17,7 @@ export async function playAudio(audio: HTMLAudioElement): Promise<void> {
       audio.addEventListener('ended', () => resolve());
       audio.addEventListener('error', () => reject());
       audio.play();
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e);
       reject();
     }

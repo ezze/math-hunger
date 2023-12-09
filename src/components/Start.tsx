@@ -13,7 +13,7 @@ interface StartProps extends React.HTMLAttributes<HTMLDivElement> {
   canBeStarted: boolean;
 }
 
-const Start: React.FunctionComponent<StartProps> = props => {
+const Start: React.FunctionComponent<StartProps> = (props) => {
   const { t } = useTranslation('start');
   const { start, canBeStarted } = props;
   return (

@@ -13,35 +13,34 @@ export async function initAudio(stores: Stores): Promise<Array<IReactionDisposer
 
   const disposeCorrect = reaction(() => gameStore.correctCount, (correctCount, prevCorrectCount) => {
     if (settingsStore.sound && correctCount > prevCorrectCount) {
-      playSound('correct').catch(e => console.error(e));
+      playSound('correct').catch((e) => console.error(e));
     }
   });
 
   const disposeWrong = reaction(() => gameStore.wrongCount, (wrongCount, prevWrongCount) => {
     if (settingsStore.sound && wrongCount > prevWrongCount) {
-      playSound('wrong').catch(e => console.error(e));
+      playSound('wrong').catch((e) => console.error(e));
     }
   });
 
   const disposeGameOver = reaction(() => gameStore.gameOver, (gameOver, prevGameOver) => {
     if (settingsStore.sound && gameOver && !prevGameOver) {
-      playSound('gameOver').catch(e => console.error(e));
+      playSound('gameOver').catch((e) => console.error(e));
     }
   });
 
   const disposeAnimationType = reaction(() => settingsStore.animationType, () => {
     if (settingsStore.music) {
       stopMusic();
-      playMusic(settingsStore.animationType).catch(e => console.error(e));
+      playMusic(settingsStore.animationType).catch((e) => console.error(e));
     }
   });
 
-  const disposeMusic = reaction(() => settingsStore.music, music => {
+  const disposeMusic = reaction(() => settingsStore.music, (music) => {
     if (music) {
-      playMusic(settingsStore.animationType).catch(e => console.error(e));
-    }
-    else {
-      stopMusic().catch(e => console.error(e));
+      playMusic(settingsStore.animationType).catch((e) => console.error(e));
+    } else {
+      stopMusic().catch((e) => console.error(e));
     }
   });
 
@@ -53,4 +52,3 @@ export async function initAudio(stores: Stores): Promise<Array<IReactionDisposer
     disposeMusic
   ];
 }
-

@@ -1,4 +1,3 @@
-
 import {
   operatorsDefault,
   maxSumDefault,
@@ -122,23 +121,17 @@ class Game {
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
       this.moveToPreviousChallenge();
-    }
-    else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+    } else if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
       this.moveToNextChallenge();
-    }
-    else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(event.key)) {
+    } else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(event.key)) {
       this.addAnswerDigit(parseInt(event.key, 10));
-    }
-    else if (event.key === 'Enter') {
+    } else if (event.key === 'Enter') {
       this.checkAnswer();
-    }
-    else if (event.key === 'Backspace') {
+    } else if (event.key === 'Backspace') {
       this.removeAnswerDigit();
-    }
-    else if (event.key === 'Escape') {
+    } else if (event.key === 'Escape') {
       this.clearAnswer();
-    }
-    else if (event.ctrlKey && event.code === 'KeyC') {
+    } else if (event.ctrlKey && event.code === 'KeyC') {
       this.store.interrupt();
     }
   }
@@ -188,12 +181,10 @@ class Game {
         this.store.increaseMissedCount(challenge.operation);
       }
       this.challenges[challengeIndex] = null;
-    }
-    else {
+    } else {
       if (challenge.correct) {
         this.store.increaseCorrectCount();
-      }
-      else {
+      } else {
         this.store.increaseWrongCount(challenge.operation);
       }
       window.setTimeout(() => {
@@ -209,8 +200,7 @@ class Game {
     }
     if (challenge.answer === undefined) {
       challenge.answer = digit;
-    }
-    else if (`${challenge.answer}`.length < maxAnswerDigitsCount) {
+    } else if (`${challenge.answer}`.length < maxAnswerDigitsCount) {
       challenge.answer = challenge.answer * 10 + digit;
     }
   }
@@ -279,8 +269,7 @@ class Game {
       const { startTime, duration, fadeOutStartTime, correct } = challenge;
       if (typeof correct === 'boolean' && time < fadeOutStartTime) {
         challenge.fadeOutStartTime = time;
-      }
-      else if (time > startTime + duration * 1000) {
+      } else if (time > startTime + duration * 1000) {
         this.finalizeChallenge(challengeIndex, true);
         if (!this.lastEndTime) {
           this.lastEndTime = time;
@@ -372,21 +361,18 @@ class Game {
       let opacity = 1;
       if (time - startTime <= challengeFadeTimeoutMs) {
         opacity = (time - startTime) / challengeFadeTimeoutMs;
-      }
-      else if (time >= fadeOutStartTime && time <= fadeOutStartTime + challengeFadeTimeoutMs) {
+      } else if (time >= fadeOutStartTime && time <= fadeOutStartTime + challengeFadeTimeoutMs) {
         opacity = (fadeOutStartTime + challengeFadeTimeoutMs - time) / challengeFadeTimeoutMs;
-      }
-      else if (time > fadeOutStartTime + challengeFadeTimeoutMs) {
+      } else if (time > fadeOutStartTime + challengeFadeTimeoutMs) {
         opacity = 0;
       }
       context.globalAlpha = opacity;
 
-      animationSprites.forEach(spriteItem => {
+      animationSprites.forEach((spriteItem) => {
         let sprite: Sprite;
         if (Array.isArray(spriteItem)) {
           sprite = spriteItem[(challenge.numericId + challengeIndex) % spriteItem.length];
-        }
-        else {
+        } else {
           sprite = spriteItem;
         }
         const spriteRenderFramesCount = sprite.count * sprite.framesPerSprite;

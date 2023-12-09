@@ -61,8 +61,7 @@ class Store {
           }
           this.triggerReady();
         });
-      }
-      catch (e) {
+      } catch (e) {
         if (this.storeVerbose) {
           console.error(e);
         }
@@ -70,7 +69,7 @@ class Store {
       }
     }
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.storeReady) {
         resolve(this.getObservableData());
         return;
@@ -126,8 +125,7 @@ class Store {
         // @ts-ignore
         this[name] = value;
       });
-    }
-    catch (e) {
+    } catch (e) {
       if (this.storeVerbose) {
         console.error(e);
       }
@@ -155,7 +153,7 @@ class Store {
     if (this.storeSaveDelayMs !== null && this.storeLastSaveTime !== null) {
       if (new Date().getTime() - this.storeLastSaveTime.getTime() < this.storeSaveDelayMs) {
         this.storeSaveTimeout = window.setTimeout(() => {
-          this.save(data).catch(e => {
+          this.save(data).catch((e) => {
             if (this.storeVerbose) {
               console.error(e);
             }
@@ -171,8 +169,7 @@ class Store {
       if (this.storeVerbose) {
         console.log(`Data of store "${this.storeKey}" is saved.`);
       }
-    }
-    catch (e) {
+    } catch (e) {
       if (this.storeVerbose) {
         console.error(e);
       }

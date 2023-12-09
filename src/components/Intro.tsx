@@ -10,7 +10,7 @@ interface IntroProps extends React.HTMLAttributes<HTMLDivElement> {
   close: () => void;
 }
 
-const Intro: React.FunctionComponent<IntroProps> = props => {
+const Intro: React.FunctionComponent<IntroProps> = (props) => {
   const { t } = useTranslation('intro');
   const { close } = props;
   return (

@@ -12,7 +12,7 @@ import { createStoresContext } from './store/utils';
 
 import './index.less';
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', async() => {
   const rootElement = document.getElementById('root');
   if (rootElement === null) {
     throw new TypeError('Root element is not found');

@@ -2,7 +2,6 @@ import horseUrl from '../img/horse.png';
 
 import Sprite from './Sprite';
 
-
 class HorseSprite extends Sprite {
   constructor() {
     super({

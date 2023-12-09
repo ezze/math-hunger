@@ -1,4 +1,3 @@
-
 import formulaCarBlueUrl from '../img/formula-1-car-blue.png';
 import formulaCarCyanUrl from '../img/formula-1-car-cyan.png';
 import formulaCarGreenUrl from '../img/formula-1-car-green.png';

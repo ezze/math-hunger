@@ -93,7 +93,7 @@ const Settings = observer(() => {
     settingsStore.setOperators(operators);
   };
 
-  const createOnNumberInputChange = (name: TypedKeys<SettingsStore, (value: number) => void>): (value: number | null) => void => {
+  const createOnNumberInputChange = (name: TypedKeys<SettingsStore, (value: number) => void>) => {
     return (value: number | null) => {
       if (typeof value === 'number') {
         (settingsStore)[name](value);
@@ -143,7 +143,7 @@ const Settings = observer(() => {
                   rules={[{ required: true }]}
                 >
                   <Select onChange={onDurationChange}>
-                    {durationsAvailable.map(duration => (
+                    {durationsAvailable.map((duration) => (
                       <Select.Option key={duration} value={duration}>{duration}</Select.Option>
                     ))}
                   </Select>
@@ -243,7 +243,7 @@ const Settings = observer(() => {
                   name="operators"
                 >
                   <Select mode="multiple" allowClear={false} onChange={onOperatorsChange}>
-                    {operatorsAvailable.map(operator => (
+                    {operatorsAvailable.map((operator) => (
                       <Select.Option key={operator} value={operator}>{t(`operator:${operator}`)}</Select.Option>
                     ))}
                   </Select>
@@ -350,7 +350,7 @@ const Settings = observer(() => {
                   rules={[{ required: true }]}
                 >
                   <Select onChange={onLanguageChange}>
-                    {languages.map(language => (
+                    {languages.map((language) => (
                       <Select.Option key={language} value={language}>
                         {t(language, { ns: 'language' })}
                       </Select.Option>
@@ -365,7 +365,7 @@ const Settings = observer(() => {
                   rules={[{ required: true }]}
                 >
                   <Select onChange={onAnimationTypeChange}>
-                    {animationTypes.map(animationType => (
+                    {animationTypes.map((animationType) => (
                       <Select.Option key={animationType} value={animationType}>
                         {t(kebabCase(animationType), { ns: 'animation-type' })}
                       </Select.Option>

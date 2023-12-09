@@ -12,7 +12,6 @@ import GameOver from './GameOver';
 import Intro from './Intro';
 import Start from './Start';
 
-
 const App = observer(() => {
   const { settingsStore, gameStore } = useStoresContext();
 
@@ -30,7 +29,7 @@ const App = observer(() => {
   useEffect(() => {
     if (prevIntro && !intro) {
       if (settingsStore.music) {
-        playMusic(settingsStore.animationType).catch(e => console.error(e));
+        playMusic(settingsStore.animationType).catch((e) => console.error(e));
       }
     }
   });
@@ -41,20 +40,17 @@ const App = observer(() => {
     content = (
       <Intro close={closeIntro} />
     );
-  }
-  else if (!playing) {
+  } else if (!playing) {
     if (gameOver) {
       content = (
         <GameOver />
       );
-    }
-    else {
+    } else {
       content = (
         <Start start={start} canBeStarted={canBeStarted}/>
       );
     }
-  }
-  else {
+  } else {
     content = (
       <GameField />
     );

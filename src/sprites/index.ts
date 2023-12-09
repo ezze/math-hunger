@@ -12,19 +12,19 @@ export async function getSprites(): Promise<Sprites> {
     sprites = {
       horse: [new HorseSprite()],
       formulaCar: [
-        formulaCarColors.map(color => new FormulaCarSprite(color)),
-        formulaCarWheelColors.map(color => new FormulaCarWheelSprite('front', color)),
-        formulaCarWheelColors.map(color => new FormulaCarWheelSprite('rear', color))
+        formulaCarColors.map((color) => new FormulaCarSprite(color)),
+        formulaCarWheelColors.map((color) => new FormulaCarWheelSprite('front', color)),
+        formulaCarWheelColors.map((color) => new FormulaCarWheelSprite('rear', color))
       ]
     };
-    await Promise.allSettled(Object.keys(sprites).map((type => {
-      sprites[type as AnimationType].forEach(sprite => {
+    await Promise.allSettled(Object.keys(sprites).map((type) => {
+      sprites[type as AnimationType].forEach((sprite) => {
         if (Array.isArray(sprite)) {
-          return Promise.allSettled(sprite.map(sprite => sprite.init()));
+          return Promise.allSettled(sprite.map((sprite) => sprite.init()));
         }
         return sprite.init();
       });
-    })));
+    }));
   }
   return sprites;
 }

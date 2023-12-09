@@ -5,7 +5,6 @@ import bttfUrl1 from './bttf-1.mp3';
 import bttfUrl2 from './bttf-2.mp3';
 import f1Url from './f1.mp3';
 
-
 let musicIndex = 0;
 let musicAudio: HTMLAudioElement | null = null;
 const musicBlobs: Record<AnimationType, Array<Blob>> = {
@@ -41,7 +40,7 @@ export async function playMusic(animationType: AnimationType, singleTrack = fals
   if (musicIndex >= musicItems.length) {
     musicIndex = 0;
   }
-  playMusic(animationType).catch(e => console.error(e));
+  playMusic(animationType).catch((e) => console.error(e));
 }
 
 export async function stopMusic(): Promise<void> {

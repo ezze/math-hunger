@@ -106,8 +106,7 @@ const GameField = observer(() => {
   let scoreSign = ' ';
   if (score > 0) {
     scoreSign = '+';
-  }
-  else if (score < 0) {
+  } else if (score < 0) {
     scoreSign = '-';
   }
   return (
